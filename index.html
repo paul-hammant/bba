@@ -157,19 +157,13 @@
 
         $(elem).find('tspan:contains("New")').filter(function () {
             return $(this).text() == "New";
-        }).parent().parent().attr('stroke', yesColor);
-
-        $(elem).find('tspan:contains("New")').filter(function () {
-            return $(this).text() == "New";
-        }).parent().parent().next().attr('stroke', yesColor);
+        }).parent().parent().attr('stroke', yesColor)
+            .next().attr('stroke', yesColor);
 
         $(elem).find('tspan:contains("Legacy")').filter(function () {
             return $(this).text() == "Legacy";
-        }).parent().parent().attr('stroke', noColor);
-
-        $(elem).find('tspan:contains("Legacy")').filter(function () {
-            return $(this).text() == "Legacy";
-        }).parent().parent().next().attr('stroke', noColor);
+        }).parent().parent().attr('stroke', noColor)
+            .next().attr('stroke', noColor);
 
         $(elem).find('tspan:contains("Legacy")').filter(function () {
             return $(this).text() == "Legacy";
@@ -212,11 +206,8 @@
 
     $('tspan:contains("Your New")').filter(function () {
         return $(this).text() == "Your New";
-    }).parent().parent().attr('stroke', 'lime');
-
-    $('tspan:contains("Your New")').filter(function () {
-        return $(this).text() == "Your New";
-    }).parent().parent().next().attr('stroke', 'lime');
+    }).parent().parent().attr('stroke', 'lime')
+        .next().attr('stroke', 'lime');
 
 
 </script>
