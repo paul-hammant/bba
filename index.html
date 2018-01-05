@@ -165,13 +165,12 @@
         var img_height = $(item).height();
         var div_width = $(item).parent().width();
         if(img_width < div_width){
-            console.log("narrower");
             //IMAGE IS NARROWER THAN CONTAINER WIDTH - CENTER IT HORIZONTALLY
             var newMargin = (div_width-img_width)/2+'px';
             $(item).css({'margin-left': newMargin });
-        } else if(img_width>div_width){
+        } else if(img_width>div_width) {
+            $(item).addClass("z-depth-2");
             var ratio = img_width / div_width;
-            console.log("bigger" + ratio);
             //IMAGE IS GREATER THAN CONTAINER HEIGHT - REDUCE HEIGHT TO CONTAINER MAX - SET WIDTH TO AUTO
             $(item).removeAttr("width");
             $(item).removeAttr("height");
