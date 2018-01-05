@@ -190,15 +190,13 @@
             //IMAGE IS NARROWER THAN CONTAINER WIDTH - CENTER IT HORIZONTALLY
             var newMargin = (div_width-img_width)/2+'px';
             $(item).attr({'style': "font-size: 16px; font-family: Andale Mono, monospace; margin-left: " + newMargin});
-        } else if(img_width>div_width) {
-            var ratio = img_width / div_width;
-            //IMAGE IS GREATER THAN CONTAINER HEIGHT - REDUCE WIDTH/HEIGHT PROPORTIONALLY
+        } else if(img_width > div_width) {
+            //IMAGE IS GREATER THAN CONTAINER HEIGHT - VIEWBOX NEEDED
             $(item).removeAttr("width");
             $(item).removeAttr("height");
             $(item).attr({'style': "width: 100%; height: auto; font-size: 16px; font-family: Andale Mono, monospace;"});
             $(item).attr({'preserveAspectRatio': "xMinYMin meet"});
-            $(item).attr({'viewBox': "0 0 " + img_width * ratio + " " + img_height * ratio});
-
+            $(item).attr({'viewBox': "0 0 " + img_width + " " + img_height});
         }
         $(item).addClass("z-depth-2");
 
