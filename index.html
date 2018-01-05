@@ -32,8 +32,8 @@
 
     <h2>Branch By Abstraction?</h2>
 
-    <p>Yes, by abstraction instead of by source control control. And no, that doesn't mean sprinkle if conditions in
-        your source code it means use an abstraction concept that's idiomatic for the language in question.</p>
+    <p>Yes, by abstraction instead of by source control control. And no, that doesn't mean sprinkle <b>if conditions</b> into
+        your source code, it means use an abstraction concept that's idiomatic for the language in question.</p>
 
     <p>Some non-functional changes to code are so quick that the migration barely registers in the team. Some are so long that they're
         going to be inconvenient for the development of normal functional deliverables. Specifically the non-functional changes
@@ -47,6 +47,15 @@
 
     <h3>1. Identify the change that will take a while</h3>
 
+    <p>The classic case discussed for branch by abstraction is the changing of one persistence technology for another. In the original
+        article it was swapping out Java's Hibernate technology for iBatis (now MyBatis). That was hypothetical for the blog entry. In real
+        life, ThoughtWorks' Go team replaced iBatis with Hibernate (life indeed imitates art). </p>
+
+    <p>For this telling of the branch by abstraction story, I will revisit the non-functional nd time-consuming swap persistence
+        technology A for B. A being the old undesired tech, and B being the new hotness.  For the hypothetical app, there were
+        hundreds of components that uses the same tech and followed the applicable patterns. On the business name for those
+        persistable thing would last.  Lets start with "ShoppingCart" because it is tangible to most readers.</p>
+
     <svg xmlns="http://www.w3.org/2000/svg" width="566" height="487" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[Add To\nShoppingCart\nRoute -> Shopping\nCart: addItem
         Shopping\nCart->Your\nPersistence\nTech: getDao
         Your\nPersistence\nTech->Shopping\nCart DAO: findOrCreate
@@ -56,6 +65,19 @@
         Shopping\nCart->Add To\nShoppingCart\nRoute: added]]></source><desc></desc><defs><marker viewBox="0 0 5 5" markerWidth="5" markerHeight="5" orient="auto" refX="5" refY="2.5" id="markerArrowBlock"><path d="M 0 0 L 5 2.5 L 0 5 z"></path></marker><marker viewBox="0 0 9.6 16" markerWidth="4" markerHeight="16" orient="auto" refX="9.6" refY="8" id="markerArrowOpen"><path d="M 9.6,8 1.9,16 0,13.7 5.7,8 0,2.2 1.9,0 9.6,8 z"></path></marker></defs><g class="title"></g><g class="actor"><rect x="10" y="20" width="137.1" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="21" y="45" ><tspan x="20">Add To</tspan><tspan dy="1.2em" x="20">ShoppingCart</tspan><tspan dy="1.2em" x="20">Route</tspan></text></g><g class="actor"><rect x="10" y="390.4" width="137.1" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="21" y="415.4" ><tspan x="20">Add To</tspan><tspan dy="1.2em" x="20">ShoppingCart</tspan><tspan dy="1.2em" x="20">Route</tspan></text></g><line x1="78.5" x2="78.5" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="167.1" y="20" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="178.1" y="54.6" ><tspan x="177.1">Shopping</tspan><tspan dy="1.2em" x="177.1">Cart</tspan></text></g><g class="actor"><rect x="167.1" y="390.4" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="178.1" y="425.0" ><tspan x="177.1">Shopping</tspan><tspan dy="1.2em" x="177.1">Cart</tspan></text></g><line x1="216.5" x2="216.5" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="286" y="20" width="127.5" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="297" y="45" ><tspan x="296">Your</tspan><tspan dy="1.2em" x="296">Persistence</tspan><tspan dy="1.2em" x="296">Tech</tspan></text></g><g class="actor"><rect x="286" y="390.4" width="127.5" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="297" y="415.4" ><tspan x="296">Your</tspan><tspan dy="1.2em" x="296">Persistence</tspan><tspan dy="1.2em" x="296">Tech</tspan></text></g><line x1="349.7" x2="349.7" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="437.5" y="20" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="448.5" y="54.6" ><tspan x="447.5">Shopping</tspan><tspan dy="1.2em" x="447.5">Cart DAO</tspan></text></g><g class="actor"><rect x="437.5" y="390.4" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="448.5" y="425.0" ><tspan x="447.5">Shopping</tspan><tspan dy="1.2em" x="447.5">Cart DAO</tspan></text></g><line x1="486.9" x2="486.9" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="signal"><text x="114" y="127.9" ><tspan x="113">addItem</tspan></text><line x1="78.5" x2="216.5" y1="136.4" y2="136.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="254.3" y="166.9" ><tspan x="253.3">getDao</tspan></text><line x1="216.5" x2="349.7" y1="175.4" y2="175.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="360.7" y="205.9" ><tspan x="359.7">findOrCreate</tspan></text><line x1="349.7" x2="486.9" y1="214.4" y2="214.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="303.7" y="244.9" ><tspan x="302.7">here it is</tspan></text><line x1="486.9" x2="216.5" y1="253.4" y2="253.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="308.5" y="283.9" ><tspan x="307.5">save this</tspan></text><line x1="216.5" x2="486.9" y1="292.4" y2="292.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="303.7" y="322.9" ><tspan x="302.7">yup, saved</tspan></text><line x1="486.9" x2="216.5" y1="331.4" y2="331.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="123.5" y="361.9" ><tspan x="122.5">added</tspan></text><line x1="216.5" x2="78.5" y1="370.4" y2="370.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g></svg>
 
     <h3>2. Introduce an abstraction</h3>
+
+    <p>
+        Somewhere primordial you'd introduce a new component. A single place that allowed the caller to not know whether
+        they were using the old or the new ShoppingCart persistence capability. At boot time the choice of old or new for
+        ShoppingCart persistence would be determined. Some development teams might make that a compile time fixed choice.
+        Those wouldn't be relying on compiler directives (#IFDEF), but one something closet to the build grammar and also
+        an abstraction concept that is correct for the language in question. For example Java's interfaces and implementations
+        are a smarter choices than making a base class for old and new to extend. C# would be the same. Ruby and Python
+        have mixins to consider, and a number of duck-typing possibilities. Rust has traits which the team could consider.
+    </p>
+    
+    <p>What us unlikely, though is run-time toggles. Those are toggles/flags that can be flipped from old to new (or back
+        again), while the software is in use. Unlikely but not impossible.</p>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="714" height="565" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[Add To\nShoppingCart\nRoute -> Shopping\nCart: addItem
         Shopping\nCart->Temporary\nAbstraction: addItem
