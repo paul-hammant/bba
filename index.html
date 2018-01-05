@@ -210,6 +210,15 @@
 
     });
 
+    $('tspan:contains("Your New")').filter(function () {
+        return $(this).text() == "Your New";
+    }).parent().parent().attr('stroke', 'lime');
+
+    $('tspan:contains("Your New")').filter(function () {
+        return $(this).text() == "Your New";
+    }).parent().parent().next().attr('stroke', 'lime');
+
+
 </script>
 
 </body>
