@@ -114,7 +114,7 @@
 </head>
 <body style="background-color: aliceblue">
 
-<div class="container" style="background-color: white; padding-left: 10px; padding-right: 10px; padding-top: 5px; margin-top: 15px; margin-bottom: 15px">
+<div class="container" style="background-color: white; padding-left: 10px; padding-right: 10px; padding-top: 5px; margin-top: 15px; margin-bottom: 15px; padding-bottom: 15px">
 
     <div class="wrapper">
         <div class="picture">
@@ -295,12 +295,13 @@
     <h1>7. Lastly remove the abstraction (and the old implementation)</h1>
 
     <p>You will go properly live with a toggle flip, after testing and a signoff in UAT. You'll have practiced flipping
-    the toggle back to "old" in UAT, so that you can assure execs that you can do the same in production if needs be.</p>
+    that toggle back to "old" in UAT after an initial deployment to "new". You will confirm both work so that you can assure
+        execs that you can do the same in production if needs be.</p>
 
-    <p>After being live for a couple of weeks, you'll remove the old implementation</p>
+    <p>After being live for a couple of weeks, you will remove the old implementation </p>
 
-    <p>Maybe immediately after that, but it could also be after a another couple of weeks, you'll remove the old
-        abstraction itself too:</p>
+    <p>Maybe immediately after that, but it could also be after a <i>another</i> couple of weeks, you'll remove the old
+        abstraction itself too(commit/push/go-live), ending up with:</p>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="566" height="487" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[Add To\nShoppingCart\nRoute -> Shopping\nCart: addItem
         Shopping\nCart->Your ~New~\nPersistence\nTech: getDao
@@ -319,10 +320,10 @@
 <footer class="page-footer">
     <div class="container">
         <p>This site was put together by <a href="https://hammant.org/">Paul Hammant*</a> who did the pioneering work at a client (Bank of America's GFX
-            group in Chicago: 2005/6) and wrote the first article on Branch by Abstraction in 2007 based on that work,
+            group in Chicago in '05/'06) and wrote the first article on Branch by Abstraction in 2007 based on that work,
             the artwork and message from which was included in Jez Humble and Dave Farley's <a
                     href="https://www.amazon.com/dp/0321601912?tag=contindelive-20">best-selling Continuous Delivery
-                book</a> in 2010, and wants to come in to your enterprise and chart the course for you to migrate from a
+                book</a> in 2010. Paul wants to come in to your enterprise and help chart the course for you to migrate from a
             crazy branching model to <a href="https://trunkbaseddevelopment.com/">Trunk-Based Development</a> that would
             leverage flags/toggle and of course Branch by Abstraction. Paul's consulting services are detailed at <a
                     href="https://devops.paulhammant.com">http://devops.paulhammant.com</a>.  * And friends</p>
