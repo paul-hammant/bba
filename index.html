@@ -25,6 +25,14 @@
             font-size: 120%;
         }
 
+        nav ul a {
+            color: #96a5b2;
+        }
+
+        nav ul li.active a {
+            color: white;
+        }
+
         /* From a picture frame codepen - https://codepen.io/PaFF/pen/khydI ... */
 
         .picture {
@@ -34,9 +42,9 @@
         }
 
         .hook {
-            width: 4px;
-            height: 4px;
-            background-color: #5c5c5d;
+            width: 5px;
+            height: 5px;
+            background-color: #2F4F4F;
             margin: 0 auto 32px auto;
             border-radius: 50%;
             box-shadow: 0 1px 0 1px #a49c7c;
@@ -75,8 +83,8 @@
 
         .hook:before {
             content: '';
-            width: 40px;
-            height: 40px;
+            width: 43px;
+            height: 43px;
             /*border: 2px #a49c7c;*/
             border-style: solid hidden hidden solid;
             position: absolute;
@@ -142,6 +150,17 @@
     change that you're needing to complete. While not jeopardizing anyone else's throughput you complete your work, switch
     over in production and then <b>take out the abstraction</b>. That's the characterizing difference between the branch by
     abstraction procedure and and regular the many regular abstractions that you've put into your codebase. Oh, and the removal of the abstraction (and old implementation) is the analog of the merge back from the branch you've now avoided.</p>
+
+    <nav style="background-color: #e3e3ff">
+        <div class="nav-wrapper">
+            <img class="brand-logo right" style="padding-top: 8px" src="lil_abstract_branch.png">
+            <ul class="left hide-on-med-and-down">
+                <li class="active"><a href="#SequenceDiagrams">As Sequence Diagrams</a></li>
+                <li><a href="#Java">As Java</a></li>
+            </ul>
+        </div>
+    </nav>
+
 
     <p>Here's the procedure:</p>
 
@@ -222,22 +241,31 @@
 
     <p>That could literally be code: </p>
 
-    <div style="background-color: gainsboro; margin-left: 15px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; width: 500px">
+    <div style="background-color: gainsboro; margin-left: 15px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; width: 700px">
     <code>
         if (aToggle==true) {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;persistence = new OldPersistenceFactory();<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;persistenceFactory = new OldPersistenceFactory();<br>
         } else {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;persistence = new OldPersistenceFactory();<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;persistenceFactory = new OldPersistenceFactory();<br>
         }
     </code>
     </div>
 
     <p>But it is more likely to be outside code in a YAML, XML, JSON or properties file (local or remote), like this (or better):</p>
 
-    <div style="background-color: gainsboro; margin-left: 15px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; width: 500px">
+    <div style="background-color: gainsboro; margin-left: 15px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; width: 700px">
         <code>
-            # persistenceFactory=com.yourcompany.yourapp.OldPersistenceFactory
-            persistenceFactory=com.yourcompany.yourapp.NewPersistenceFactory
+            #&nbsp;persistenceFactoryClassName=com.yourcompany.yourapp.OldPersistenceFactory<br>
+            persistenceFactoryClassName=com.yourcompany.yourapp.NewPersistenceFactory
+        </code>
+    </div>
+
+    <p>And code that used that at boot time:</p>
+
+    <div style="background-color: gainsboro; margin-left: 15px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; width: 700px">
+        <code>
+            pfClassName props.getProperty("persistenceFactoryClassName");
+            persistenceFactory = instantiateFrom(pfClassName);<br>
         </code>
     </div>
 
@@ -319,7 +347,8 @@
 
 <footer class="page-footer">
     <div class="container">
-        <p>This site was put together by <a href="https://hammant.org/">Paul Hammant*</a> who did the pioneering work at a client (Bank of America's GFX
+        <p>This site was put together by New York based <a href="https://hammant.org/">Paul Hammant*</a> who did the
+            pioneering work at a client (Bank of America's GFX
             group in Chicago in '05/'06) and wrote the first article on Branch by Abstraction in 2007 based on that work,
             the artwork and message from which was included in Jez Humble and Dave Farley's <a
                     href="https://www.amazon.com/dp/0321601912?tag=contindelive-20">best-selling Continuous Delivery
