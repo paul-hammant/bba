@@ -143,16 +143,16 @@
     <p class="flow-text">Yes, <b>by abstraction instead of by branches in source control</b>. And no, that doesn't mean sprinkle
         conditionals into your source code, it means to use an abstraction concept that's idiomatic for the language in question.</p>
 
-    <p class="flow-text"><u>Context:</u> Some non-functional changes are so quick to code that the migration barely register in the
-        dev team. Some are so long that they're
+    <p class="flow-text"><u>Context:</u> Some non-functional changes are so quick to code that the migration barely registers in the
+        development team. Some are so long that they're
         going to be inconvenient for the concurrent development of normal functional deliverables. Specifically, the non-functional changes
         that impact many parts of the codebase that might risk breaking the build repeatedly over the weeks/months needed to complete them.</p>
 
     <p class="flow-text">Branch by Abstraction is a methodical procedure. You would introduce an abstraction to methodically
         chomp away at the non-functional
     change that you're needing to complete. While not jeopardizing anyone else's throughput you complete your work, switch
-    over in production and then <b>take out the abstraction</b>. That's the characterizing difference between the methodical branch by
-    abstraction procedure and and regular the many regular abstractions that you've put into your codebase. Oh, and the removal of the abstraction (and old implementation) is the analog of the merge back from the branch you've now avoided.</p>
+    over in production and then <b>take out the abstraction</b>. That is the characterizing difference between the methodical branch by
+    abstraction procedure and the many regular usages of abstractions that you have in your codebase. Oh, and the removal of the abstraction (and old implementation) is the analog of the merge back from the branch you've now avoided.</p>
 
     <p class="flow-text">Here are the steps of the methodical procedure illustrated using <span>UML sequence diagrams</span>:</p>
 
@@ -200,9 +200,9 @@
         they were using the old or the new ShoppingCart persistence capability. At boot time the choice of old or new for
         ShoppingCart persistence would be determined. Some development teams might make that a compile-time fixed choice.
         Those wouldn't be relying on compiler directives (#IFDEF), but one something closer to the build grammar and also
-        a mechnism of abstraction that is idiomatically correct for the language in question. For example Java's interfaces
+        a mechanism of abstraction that is idiomatically correct for the language in question. For example, Java's interfaces
         and implementations
-        are a smarter choices than making a base class for 'old' and 'new' to extend. C# would be the same. Ruby and Python
+        are smarter choices than making a base class for 'old' and 'new' to extend. C# would be the same. Ruby and Python
         have mixins and method_missing to consider, and a number of duck-typing possibilities. Rust has traits which the
         team could consider.
     </p>
@@ -293,17 +293,19 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
     <h4>6. Repeat tens or hundreds of times until there are two of everything</h4>
 
-    <p class="flow-text">The point was that the "change that was going to take a while" was going to span a few releases, and happen
+    <p class="flow-text">The point was that the "change that was going to take a while" was going to span a few releases and happen
     concurrently with the development other business functionality. Getting the first example done using branch by
         abstraction was a prerogative. That included the writing of unit and integration tests for it. Best of all
     would be forking of the unit/integration tests from the old implementation, but I'm never surprised to find
     that there were next to none. </p>
 
-    <p class="flow-text">It is also worth reminding here that this is methodical. As developer, you're going to complete one and
-        commit/push. Everything you code will be with the assumption that it is going to go live but turned off
-        in production (or compiled out).  You can't even expect that other developers working on functional deliverables
-        won't concurrently create new classes in the old technology. You may insist that they writ tests though if
-        they are adding to your backlog.</p>
+    <p class="flow-text">It is also worth reminding readers here that this is a methodical process. As the developer of this, you are
+        going to complete one old to new piece and
+        commit/push. You should code everything with the expectation that it will go live but toggled off
+        in production (or compiled out).  You can expect that other developers working on functional deliverables
+        will concurrently create new classes in the old technology, too. You may insist that they write tests though if
+        they are adding to your backlog, but otherwise just relax. As long as they are not even close to adding to your
+        backlog faster than you're migrating components to the new system you're going to be OK.</p>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="1047" height="644" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[Some\nRoute -> Other\nBiz—logic\nComponents: some biz op
         Other\nBiz—logic\nComponents->Temporary\nAbstraction\n(ormToggle=new): some biz op
@@ -319,17 +321,17 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
     <p class="flow-text">As you're coding/committing/pushing small parts of this work towards completion, at some point you're going to
     try to bring up the app itself and click through it in an exploratory way. You'll also be wanting to see that the
-    UI functional tests (Selenium, etc) are still passing too. If you're not yet complete on the migration, then these
+    UI functional tests (Selenium, etc) are still passing too. If far from completion of the migration, then these
     experiments can help you to work out which class/component to work on next. The exercise can also help with
         the calculation of percentage complete for the whole piece of work, which non-developers will be pushing you
-        for.  Make sure you've already got agreement that it is safe to change estimates as you go. Maybe even more than
+        for.  Make sure you've already got stakeholder agreement that it is safe to change estimates as you go. Maybe even more than
         once. Reminding managers that this methodical procedure can be paused and resumed helps too.
 
-    <h4>7. Lastly remove the abstraction (and the old implementation)</h4>
+    <h4>7. Remove the abstraction (and the old implementation)</h4>
 
     <p class="flow-text">You will go properly live with a toggle flip, after testing and a signoff in UAT. You'll have practiced flipping
-    that toggle back to "old" in UAT after an initial deployment to "new". You will confirm both work so that you can assure
-        execs that you can do the same in production if needs be.</p>
+    that toggle back to "old" in UAT after an initial deployment to "new". You will confirm that both work so that you can assure
+        execs that you can do the same in production if needed.</p>
 
     <p class="flow-text">After being live for a couple of weeks, you will remove the old implementation </p>
 
@@ -344,9 +346,9 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
         ~New~\nShopping\nCart DAO->Shopping\nCart: yup, saved
         Shopping\nCart->Add To\nShoppingCart\nRoute: added]]></source><desc></desc><defs><marker viewBox="0 0 5 5" markerWidth="5" markerHeight="5" orient="auto" refX="5" refY="2.5" id="markerArrowBlock"><path d="M 0 0 L 5 2.5 L 0 5 z"></path></marker><marker viewBox="0 0 9.6 16" markerWidth="4" markerHeight="16" orient="auto" refX="9.6" refY="8" id="markerArrowOpen"><path d="M 9.6,8 1.9,16 0,13.7 5.7,8 0,2.2 1.9,0 9.6,8 z"></path></marker></defs><g class="title"></g><g class="actor"><rect x="10" y="20" width="137.1" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="21" y="45" ><tspan x="20">Add To</tspan><tspan dy="1.2em" x="20">ShoppingCart</tspan><tspan dy="1.2em" x="20">Route</tspan></text></g><g class="actor"><rect x="10" y="390.4" width="137.1" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="21" y="415.4" ><tspan x="20">Add To</tspan><tspan dy="1.2em" x="20">ShoppingCart</tspan><tspan dy="1.2em" x="20">Route</tspan></text></g><line x1="78.5" x2="78.5" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="167.1" y="20" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="178.1" y="54.6" ><tspan x="177.1">Shopping</tspan><tspan dy="1.2em" x="177.1">Cart</tspan></text></g><g class="actor"><rect x="167.1" y="390.4" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="178.1" y="425.0" ><tspan x="177.1">Shopping</tspan><tspan dy="1.2em" x="177.1">Cart</tspan></text></g><line x1="216.5" x2="216.5" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="286" y="20" width="127.5" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="297" y="45" ><tspan x="296">Your ~New~</tspan><tspan dy="1.2em" x="296">Persistence</tspan><tspan dy="1.2em" x="296">Tech</tspan></text></g><g class="actor"><rect x="286" y="390.4" width="127.5" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="297" y="415.4" ><tspan x="296">Your ~New~</tspan><tspan dy="1.2em" x="296">Persistence</tspan><tspan dy="1.2em" x="296">Tech</tspan></text></g><line x1="349.7" x2="349.7" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="437.5" y="20" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="448.5" y="45" ><tspan x="447.5">~New~</tspan><tspan dy="1.2em" x="447.5">Shopping</tspan><tspan dy="1.2em" x="447.5">Cart DAO</tspan></text></g><g class="actor"><rect x="437.5" y="390.4" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="448.5" y="415.4" ><tspan x="447.5">~New~</tspan><tspan dy="1.2em" x="447.5">Shopping</tspan><tspan dy="1.2em" x="447.5">Cart DAO</tspan></text></g><line x1="486.9" x2="486.9" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="signal"><text x="114" y="127.9" ><tspan x="113">addItem</tspan></text><line x1="78.5" x2="216.5" y1="136.4" y2="136.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="254.3" y="166.9" ><tspan x="253.3">getDao</tspan></text><line x1="216.5" x2="349.7" y1="175.4" y2="175.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="360.7" y="205.9" ><tspan x="359.7">findOrCreate</tspan></text><line x1="349.7" x2="486.9" y1="214.4" y2="214.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="303.7" y="244.9" ><tspan x="302.7">here it is</tspan></text><line x1="486.9" x2="216.5" y1="253.4" y2="253.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="308.5" y="283.9" ><tspan x="307.5">save this</tspan></text><line x1="216.5" x2="486.9" y1="292.4" y2="292.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="303.7" y="322.9" ><tspan x="302.7">yup, saved</tspan></text><line x1="486.9" x2="216.5" y1="331.4" y2="331.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="123.5" y="361.9" ><tspan x="122.5">added</tspan></text><line x1="216.5" x2="78.5" y1="370.4" y2="370.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g></svg>
 
-    <p class="flow-text">As previously mentioned, this last is the characterizing difference to any other use of an abstraction in the codebase,
-        and symbolic of the merge back had the terrible decision to been made to do the lengthy non-functional change on a
-        branch and bring it back to trunk/master when complete.</p>
+    <p class="flow-text">As previously mentioned, this last is the characterizing difference to any other use of abstractions in the codebase.
+        Well, versus the terrible decision to do the lengthy non-functional change on a branch and merge back to trunk/master when complete.
+        Those are often late, and risk being canceled part complete. Ot they are super stressful at the time of merge.</p>
 
 </div>
 
@@ -355,11 +357,11 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
         <p class="flow-text">I'm Paul Hammant<a href="https://hammant.org/"><span style="padding-left: 0.1em; font-weight: 900; vertical-align: super; font-size: smaller; line-height: normal;">&#11008</span></a> and I put this site together to try to really
             distill what Branch by Abstraction is.
             I led the pioneering work for Branch by Abstraction at a former client (Bank of America's GFX
-            group in Chicago in '05/'06) and wrote the first article on in in 2007 based on that work,
+            group in Chicago in '05/'06) and wrote the first article on it in 2007 based on that work,
             the artwork and message from which was included in Jez Humble and Dave Farley's
             best-selling Continuous Delivery book<a href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><span style="padding-left: 0.1em; font-weight: 900; vertical-align: super; font-size: smaller; line-height: normal;">&#11008</span></a>
             in 2010.</p>
-        <p class="flow-text">I'm New York based, and visit enterprises in the US to help them plan their migrations from slower
+        <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from slower
             branching models (and release cadence) to Trunk-Based Development<a href="https://trunkbaseddevelopment.com/"><span style="padding-left: 0.1em; font-weight: 900; vertical-align: super; font-size: smaller; line-height: normal;">&#11008</span></a>
             with feature flags/toggles <i>and of course Branch by Abstraction</i>. See <a
                     href="https://devops.paulhammant.com">http://devops.paulhammant.com</a> for more details.</p>
