@@ -2,6 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <meta name="theme-color" content="#EE6E73">
     <title>Branch By Abstraction</title>
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -122,6 +123,7 @@
 </head>
 <body style="background-color: aliceblue">
 
+<main>
 <div class="container" style="background-color: white; padding-left: 10px; padding-right: 10px; padding-top: 5px; margin-top: 15px; margin-bottom: 15px; padding-bottom: 15px">
 
     <div class="wrapper">
@@ -137,34 +139,43 @@
     </div>
 
 
-    <h1 align="center">Branch By Abstraction?</h1>
+    <h2 align="center">Branch By Abstraction?</h2>
 
-    <p class="flow-text">Yes, by abstraction instead of by source control. And no, that doesn't mean sprinkle <b>conditionals</b> into
-        your source code, it means to use an abstraction concept that's idiomatic for the language in question.</p>
+    <p class="flow-text">Yes, <b>by abstraction instead of by branches in source control</b>. And no, that doesn't mean sprinkle
+        conditionals into your source code, it means to use an abstraction concept that's idiomatic for the language in question.</p>
 
-    <p class="flow-text"><u>Context:</u> Some non-functional changes are so quick to code that the migration barely registers in the team. Some are so long that they're
-        going to be inconvenient for the development of normal functional deliverables. Specifically, the non-functional changes
-        would slow down everyone else's development throughput, if not outright risk breaking the build often.</p>
+    <p class="flow-text"><u>Context:</u> Some non-functional changes are so quick to code that the migration barely register in the
+        dev team. Some are so long that they're
+        going to be inconvenient for the concurrent development of normal functional deliverables. Specifically, the non-functional changes
+        that impact many parts of the codebase that might risk breaking the build repeatedly over the weeks/months needed to complete them.</p>
 
-    <p class="flow-text">Branch by Abstraction is a procedure. You would introduce an abstraction to methodically chomp away at the non-functional
+    <p class="flow-text">Branch by Abstraction is a methodical procedure. You would introduce an abstraction to methodically
+        chomp away at the non-functional
     change that you're needing to complete. While not jeopardizing anyone else's throughput you complete your work, switch
-    over in production and then <b>take out the abstraction</b>. That's the characterizing difference between the branch by
+    over in production and then <b>take out the abstraction</b>. That's the characterizing difference between the methodical branch by
     abstraction procedure and and regular the many regular abstractions that you've put into your codebase. Oh, and the removal of the abstraction (and old implementation) is the analog of the merge back from the branch you've now avoided.</p>
 
-    <nav style="background-color: #e3e3ff">
-        <div class="nav-wrapper">
-            <img class="brand-logo right" style="padding-top: 8px" src="lil_abstract_branch.png">
-            <ul class="left">
-                <li class="active"><a href="#SequenceDiagrams">As Sequence Diagrams</a></li>
-                <li><a href="#Java">As Java</a></li>
-            </ul>
-        </div>
-    </nav>
+    <p class="flow-text">Here are the steps of the methodical procedure illustrated using <span>UML sequence diagrams</span>:</p>
 
+    <div class="row">
+        <form class="col s12">
+            <div class="input-field col s12 m6">
+                <select>
+                    <optgroup label="non-language centric">
+                        <option value="seqdiag">UML sequence diagram</option>
+                    </optgroup>
+                    <optgroup label="Language centric">
+                        <option value="java">Java</option>
+                        <option value="ruby">Ruby</option>
+                    </optgroup>
+                </select>
+                <label>Illustrate concepts using:</label>
+            </div>
 
-    <p class="flow-text">Here's the procedure:</p>
+        </form>
+    </div>
 
-    <h1>1. Identify the change that will take a while</h1>
+    <h2>1. Identify the change that will take a while</h2>
 
     <p class="flow-text">The classic case discussed for branch by abstraction is the changing of one persistence technology for another. In the original
         article, it was swapping out Java's 'Hibernate' technology for 'iBatis' (now MyBatis). That was hypothetical for the blog entry. In real
@@ -183,7 +194,7 @@
         Shopping\nCart DAO->Shopping\nCart: yup, saved
         Shopping\nCart->Add To\nShoppingCart\nRoute: added]]></source><desc></desc><defs><marker viewBox="0 0 5 5" markerWidth="5" markerHeight="5" orient="auto" refX="5" refY="2.5" id="markerArrowBlock"><path d="M 0 0 L 5 2.5 L 0 5 z"></path></marker><marker viewBox="0 0 9.6 16" markerWidth="4" markerHeight="16" orient="auto" refX="9.6" refY="8" id="markerArrowOpen"><path d="M 9.6,8 1.9,16 0,13.7 5.7,8 0,2.2 1.9,0 9.6,8 z"></path></marker></defs><g class="title"></g><g class="actor"><rect x="10" y="20" width="137.1" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="21" y="45" ><tspan x="20">Add To</tspan><tspan dy="1.2em" x="20">ShoppingCart</tspan><tspan dy="1.2em" x="20">Route</tspan></text></g><g class="actor"><rect x="10" y="390.4" width="137.1" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="21" y="415.4" ><tspan x="20">Add To</tspan><tspan dy="1.2em" x="20">ShoppingCart</tspan><tspan dy="1.2em" x="20">Route</tspan></text></g><line x1="78.5" x2="78.5" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="167.1" y="20" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="178.1" y="54.6" ><tspan x="177.1">Shopping</tspan><tspan dy="1.2em" x="177.1">Cart</tspan></text></g><g class="actor"><rect x="167.1" y="390.4" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="178.1" y="425.0" ><tspan x="177.1">Shopping</tspan><tspan dy="1.2em" x="177.1">Cart</tspan></text></g><line x1="216.5" x2="216.5" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="286" y="20" width="127.5" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="297" y="45" ><tspan x="296">Your</tspan><tspan dy="1.2em" x="296">Persistence</tspan><tspan dy="1.2em" x="296">Tech</tspan></text></g><g class="actor"><rect x="286" y="390.4" width="127.5" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="297" y="415.4" ><tspan x="296">Your</tspan><tspan dy="1.2em" x="296">Persistence</tspan><tspan dy="1.2em" x="296">Tech</tspan></text></g><line x1="349.7" x2="349.7" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="437.5" y="20" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="448.5" y="54.6" ><tspan x="447.5">Shopping</tspan><tspan dy="1.2em" x="447.5">Cart DAO</tspan></text></g><g class="actor"><rect x="437.5" y="390.4" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="448.5" y="425.0" ><tspan x="447.5">Shopping</tspan><tspan dy="1.2em" x="447.5">Cart DAO</tspan></text></g><line x1="486.9" x2="486.9" y1="97.4" y2="390.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="signal"><text x="114" y="127.9" ><tspan x="113">addItem</tspan></text><line x1="78.5" x2="216.5" y1="136.4" y2="136.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="254.3" y="166.9" ><tspan x="253.3">getDao</tspan></text><line x1="216.5" x2="349.7" y1="175.4" y2="175.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="360.7" y="205.9" ><tspan x="359.7">findOrCreate</tspan></text><line x1="349.7" x2="486.9" y1="214.4" y2="214.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="303.7" y="244.9" ><tspan x="302.7">here it is</tspan></text><line x1="486.9" x2="216.5" y1="253.4" y2="253.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="308.5" y="283.9" ><tspan x="307.5">save this</tspan></text><line x1="216.5" x2="486.9" y1="292.4" y2="292.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="303.7" y="322.9" ><tspan x="302.7">yup, saved</tspan></text><line x1="486.9" x2="216.5" y1="331.4" y2="331.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="123.5" y="361.9" ><tspan x="122.5">added</tspan></text><line x1="216.5" x2="78.5" y1="370.4" y2="370.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g></svg>
 
-    <h1>2. Introduce an abstraction</h1>
+    <h2>2. Introduce an abstraction</h2>
 
     <p class="flow-text">
         Somewhere primordial you'd introduce a new component. A single place that allowed the caller to not know whether
@@ -210,7 +221,7 @@
         Temporary\nAbstraction.\n(ormToggle=?)->Shopping\nCart: added
         Shopping\nCart->Add To\nShoppingCart\nRoute: added]]></source><desc></desc><defs><marker viewBox="0 0 5 5" markerWidth="5" markerHeight="5" orient="auto" refX="5" refY="2.5" id="markerArrowBlock"><path d="M 0 0 L 5 2.5 L 0 5 z"></path></marker><marker viewBox="0 0 9.6 16" markerWidth="4" markerHeight="16" orient="auto" refX="9.6" refY="8" id="markerArrowOpen"><path d="M 9.6,8 1.9,16 0,13.7 5.7,8 0,2.2 1.9,0 9.6,8 z"></path></marker></defs><g class="title"></g><g class="actor"><rect x="10" y="20" width="137.1" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="21" y="45" ><tspan x="20">Add To</tspan><tspan dy="1.2em" x="20">ShoppingCart</tspan><tspan dy="1.2em" x="20">Route</tspan></text></g><g class="actor"><rect x="10" y="468.4" width="137.1" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="21" y="493.4" ><tspan x="20">Add To</tspan><tspan dy="1.2em" x="20">ShoppingCart</tspan><tspan dy="1.2em" x="20">Route</tspan></text></g><line x1="78.5" x2="78.5" y1="97.4" y2="468.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="167.1" y="20" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="178.1" y="54.6" ><tspan x="177.1">Shopping</tspan><tspan dy="1.2em" x="177.1">Cart</tspan></text></g><g class="actor"><rect x="167.1" y="468.4" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="178.1" y="503.0" ><tspan x="177.1">Shopping</tspan><tspan dy="1.2em" x="177.1">Cart</tspan></text></g><line x1="216.5" x2="216.5" y1="97.4" y2="468.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="286" y="20" width="146.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="297" y="45" ><tspan x="296">Temporary</tspan><tspan dy="1.2em" x="296">Abstraction.</tspan><tspan dy="1.2em" x="296">(ormToggle=?)</tspan></text></g><g class="actor"><rect x="286" y="468.4" width="146.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="297" y="493.4" ><tspan x="296">Temporary</tspan><tspan dy="1.2em" x="296">Abstraction.</tspan><tspan dy="1.2em" x="296">(ormToggle=?)</tspan></text></g><line x1="359.4" x2="359.4" y1="97.4" y2="468.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="452.8" y="20" width="127.5" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="463.8" y="45" ><tspan x="462.8">Your</tspan><tspan dy="1.2em" x="462.8">Persistence</tspan><tspan dy="1.2em" x="462.8">Tech</tspan></text></g><g class="actor"><rect x="452.8" y="468.4" width="127.5" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="463.8" y="493.4" ><tspan x="462.8">Your</tspan><tspan dy="1.2em" x="462.8">Persistence</tspan><tspan dy="1.2em" x="462.8">Tech</tspan></text></g><line x1="516.6" x2="516.6" y1="97.4" y2="468.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="604.3" y="20" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="615.3" y="54.6" ><tspan x="614.3">Shopping</tspan><tspan dy="1.2em" x="614.3">Cart DAO</tspan></text></g><g class="actor"><rect x="604.3" y="468.4" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="615.3" y="503.0" ><tspan x="614.3">Shopping</tspan><tspan dy="1.2em" x="614.3">Cart DAO</tspan></text></g><line x1="653.7" x2="653.7" y1="97.4" y2="468.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="signal"><text x="114" y="127.9" ><tspan x="113">addItem</tspan></text><line x1="78.5" x2="216.5" y1="136.4" y2="136.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="254.4" y="166.9" ><tspan x="253.4">addItem</tspan></text><line x1="216.5" x2="359.4" y1="175.4" y2="175.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="409.2" y="205.9" ><tspan x="408.2">getDao</tspan></text><line x1="359.4" x2="516.6" y1="214.4" y2="214.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="527.6" y="244.9" ><tspan x="526.6">findOrCreate</tspan></text><line x1="516.6" x2="653.7" y1="253.4" y2="253.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="458.6" y="283.9" ><tspan x="457.6">here it is</tspan></text><line x1="653.7" x2="359.4" y1="292.4" y2="292.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="463.3" y="322.9" ><tspan x="462.3">save this</tspan></text><line x1="359.4" x2="653.7" y1="331.4" y2="331.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="458.6" y="361.9" ><tspan x="457.6">yup, saved</tspan></text><line x1="653.7" x2="359.4" y1="370.4" y2="370.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="264" y="400.9" ><tspan x="263">added</tspan></text><line x1="359.4" x2="216.5" y1="409.4" y2="409.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="123.5" y="439.9" ><tspan x="122.5">added</tspan></text><line x1="216.5" x2="78.5" y1="448.4" y2="448.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g></svg>
 
-    <h1>3. Sensible renames</h1>
+    <h2>3. Sensible renames</h2>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="733" height="565" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[Add To\nShoppingCart\nRoute -> Shopping\nCart: addItem
         Shopping\nCart->Temporary\nAbstraction\n(ormToggle=?): addItem
@@ -222,7 +233,7 @@
         Temporary\nAbstraction\n(ormToggle=?)->Shopping\nCart: added
         Shopping\nCart->Add To\nShoppingCart\nRoute: added]]></source><desc></desc><defs><marker viewBox="0 0 5 5" markerWidth="5" markerHeight="5" orient="auto" refX="5" refY="2.5" id="markerArrowBlock"><path d="M 0 0 L 5 2.5 L 0 5 z"></path></marker><marker viewBox="0 0 9.6 16" markerWidth="4" markerHeight="16" orient="auto" refX="9.6" refY="8" id="markerArrowOpen"><path d="M 9.6,8 1.9,16 0,13.7 5.7,8 0,2.2 1.9,0 9.6,8 z"></path></marker></defs><g class="title"></g><g class="actor"><rect x="10" y="20" width="137.1" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="21" y="45" ><tspan x="20">Add To</tspan><tspan dy="1.2em" x="20">ShoppingCart</tspan><tspan dy="1.2em" x="20">Route</tspan></text></g><g class="actor"><rect x="10" y="468.4" width="137.1" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="21" y="493.4" ><tspan x="20">Add To</tspan><tspan dy="1.2em" x="20">ShoppingCart</tspan><tspan dy="1.2em" x="20">Route</tspan></text></g><line x1="78.5" x2="78.5" y1="97.4" y2="468.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="167.1" y="20" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="178.1" y="54.6" ><tspan x="177.1">Shopping</tspan><tspan dy="1.2em" x="177.1">Cart</tspan></text></g><g class="actor"><rect x="167.1" y="468.4" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="178.1" y="503.0" ><tspan x="177.1">Shopping</tspan><tspan dy="1.2em" x="177.1">Cart</tspan></text></g><line x1="216.5" x2="216.5" y1="97.4" y2="468.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="286" y="20" width="146.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="297" y="45" ><tspan x="296">Temporary</tspan><tspan dy="1.2em" x="296">Abstraction</tspan><tspan dy="1.2em" x="296">(ormToggle=?)</tspan></text></g><g class="actor"><rect x="286" y="468.4" width="146.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="297" y="493.4" ><tspan x="296">Temporary</tspan><tspan dy="1.2em" x="296">Abstraction</tspan><tspan dy="1.2em" x="296">(ormToggle=?)</tspan></text></g><line x1="359.4" x2="359.4" y1="97.4" y2="468.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="452.8" y="20" width="127.5" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="463.8" y="45" ><tspan x="462.8">Legacy.</tspan><tspan dy="1.2em" x="462.8">Persistence</tspan><tspan dy="1.2em" x="462.8">Tech</tspan></text></g><g class="actor"><rect x="452.8" y="468.4" width="127.5" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="463.8" y="493.4" ><tspan x="462.8">Legacy.</tspan><tspan dy="1.2em" x="462.8">Persistence</tspan><tspan dy="1.2em" x="462.8">Tech</tspan></text></g><line x1="516.6" x2="516.6" y1="97.4" y2="468.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="actor"><rect x="604.3" y="20" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="615.3" y="45" ><tspan x="614.3">Legacy.</tspan><tspan dy="1.2em" x="614.3">Shopping</tspan><tspan dy="1.2em" x="614.3">Cart DAO</tspan></text></g><g class="actor"><rect x="604.3" y="468.4" width="98.8" height="77.4" style="stroke-width: 2;" stroke="#000000" fill="#ffffff"></rect><text x="615.3" y="493.4" ><tspan x="614.3">Legacy.</tspan><tspan dy="1.2em" x="614.3">Shopping</tspan><tspan dy="1.2em" x="614.3">Cart DAO</tspan></text></g><line x1="653.7" x2="653.7" y1="97.4" y2="468.4" style="stroke-width: 2;" stroke="#000000" fill="none"></line><g class="signal"><text x="114" y="127.9" ><tspan x="113">addItem</tspan></text><line x1="78.5" x2="216.5" y1="136.4" y2="136.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="254.4" y="166.9" ><tspan x="253.4">addItem</tspan></text><line x1="216.5" x2="359.4" y1="175.4" y2="175.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="409.2" y="205.9" ><tspan x="408.2">getDao</tspan></text><line x1="359.4" x2="516.6" y1="214.4" y2="214.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="527.6" y="244.9" ><tspan x="526.6">findOrCreate</tspan></text><line x1="516.6" x2="653.7" y1="253.4" y2="253.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="458.6" y="283.9" ><tspan x="457.6">here it is</tspan></text><line x1="653.7" x2="359.4" y1="292.4" y2="292.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="463.3" y="322.9" ><tspan x="462.3">save this</tspan></text><line x1="359.4" x2="653.7" y1="331.4" y2="331.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="458.6" y="361.9" ><tspan x="457.6">yup, saved</tspan></text><line x1="653.7" x2="359.4" y1="370.4" y2="370.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="264" y="400.9" ><tspan x="263">added</tspan></text><line x1="359.4" x2="216.5" y1="409.4" y2="409.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g><g class="signal"><text x="123.5" y="439.9" ><tspan x="122.5">added</tspan></text><line x1="216.5" x2="78.5" y1="448.4" y2="448.4" style="stroke-width: 2; marker-end: url(#markerArrowBlock);" stroke="#000000" fill="none"></line></g></svg>
 
-    <h1>4. Only the devs working on the migration are exposed to the new technology, in a crucial primordial section of code.</h1>
+    <h2>4. Only the devs working on the migration are exposed to the new technology, in a crucial primordial section of code.</h2>
 
     <p class="flow-text">This is because there's a single toggle/flag flipped for those developers.</p>
 
@@ -241,53 +252,23 @@
 
     <p class="flow-text">That could literally be code: </p>
 
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="-2735 -2237 392 80" width="392pt" height="80pt" xmlns:dc="http://purl.org/dc/elements/1.1/">
-        <metadata> Produced by OmniGraffle 7.5
-            <dc:date>2018-01-08 13:26:18 +0000</dc:date>
-        </metadata>
-        <defs>
-            <font-face font-family="Courier New" font-size="12" panose-1="2 7 3 9 2 2 5 2 4 4" units-per-em="1000" underline-position="-232.91016" underline-thickness="41.015625" slope="0" x-height="422.85156" cap-height="571.28906" ascent="832.5195" descent="-300.29297" font-weight="500">
-                <font-face-src>
-                    <font-face-name name="CourierNewPSMT"/>
-                </font-face-src>
-            </font-face>
-        </defs>
-        <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
-            <title>Canvas 1</title>
-            <g>
-                <title>Layer 1</title>
-                <rect x="-2735" y="-2237" width="392" height="80" fill="#ebebeb"/>
-                <text transform="translate(-2730 -2232)" fill="black">
-                    <tspan font-family="Courier New" font-size="12" font-weight="500" x="0" y="10" textLength="201.63281">if (useNewPersistenceTech) {</tspan>
-                    <tspan font-family="Courier New" font-size="12" font-weight="500" x="0" y="24" textLength="381.6621">    persistenceFactory = new NewPersistenceFactory();</tspan>
-                    <tspan font-family="Courier New" font-size="12" font-weight="500" x="0" y="38" textLength="57.609375">} else {</tspan>
-                    <tspan font-family="Courier New" font-size="12" font-weight="500" x="0" y="52" textLength="381.6621">    persistenceFactory = new OldPersistenceFactory();</tspan>
-                    <tspan font-family="Courier New" font-size="12" font-weight="500" x="0" y="66" textLength="7.201172">}</tspan>
-                </text>
-            </g>
-        </g>
-    </svg>
-
+<pre style="background-color: gainsboro; padding: 0.75%"><code>if (useNewPersistenceTech) {
+    persistenceFactory = new NewPersistenceFactory();
+} else {
+    persistenceFactory = new OldPersistenceFactory();
+}</code></pre>
 
     <p class="flow-text">But it is more likely to be outside code in a YAML, XML, JSON or properties file (local or remote), like this (or better):</p>
 
-    <div style="background-color: gainsboro; margin-left: 15px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; width: 700px">
-        <code>
-            #&nbsp;persistenceFactoryClassName=com.yourcompany.yourapp.OldPersistenceFactory<br>
-            persistenceFactoryClassName=com.yourcompany.yourapp.NewPersistenceFactory
-        </code>
-    </div>
+    <pre style="background-color: gainsboro; padding: 0.75%"><code># persistenceFactoryClassName=com.yourcompany.yourapp.OldPersistenceFactory
+persistenceFactoryClassName=com.yourcompany.yourapp.NewPersistenceFactory</code></pre>
 
     <p class="flow-text">And code that used that at boot time:</p>
 
-    <div style="background-color: gainsboro; margin-left: 15px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; width: 700px">
-        <code>
-            pfClassName props.getProperty("persistenceFactoryClassName");
-            persistenceFactory = instantiateFrom(pfClassName);<br>
-        </code>
-    </div>
+    <pre style="background-color: gainsboro; padding: 0.75%"><code>pfClassName props.getProperty("persistenceFactoryClassName");
+persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
-    <h1>5. Everyone else sees the old persistence tech</h1>
+    <h2>5. Everyone else sees the old persistence tech</h2>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="1014" height="605" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[Add To\nShoppingCart\nRoute -> Shopping\nCart: addItem
         Shopping\nCart->Temporary\nAbstraction\n(ormToggle=old): addItem
@@ -304,7 +285,7 @@
 
     <p class="flow-text">And indeed "everyone else" also means QA/UAT/live deployments too.</p>
 
-    <h1>6. Repeat tens or hundreds of times until there are two of everything</h1>
+    <h2>6. Repeat tens or hundreds of times until there are two of everything</h2>
 
     <p class="flow-text">The point was that the "change that was going to take a while" was going to span a few releases, and happen
     concurrently with the development other business functionality. Getting the first example done using branch by
@@ -336,9 +317,9 @@
     experiments can help you to work out which class/component to work on next. The exercise can also help with
         the calculation of percentage complete for the whole piece of work, which non-developers will be pushing you
         for.  Make sure you've already got agreement that it is safe to change estimates as you go. Maybe even more than
-        once. Reminding managers that this exercise can be paused and resumed helps too.
+        once. Reminding managers that this methodical procedure can be paused and resumed helps too.
 
-    <h1>7. Lastly remove the abstraction (and the old implementation)</h1>
+    <h2>7. Lastly remove the abstraction (and the old implementation)</h2>
 
     <p class="flow-text">You will go properly live with a toggle flip, after testing and a signoff in UAT. You'll have practiced flipping
     that toggle back to "old" in UAT after an initial deployment to "new". You will confirm both work so that you can assure
@@ -386,37 +367,40 @@
 
 <script type="text/javascript">
 
-    $("svg").find("*").removeAttr("stroke");
-    $("g").attr("stroke", "black");
-    $("line").attr("stroke", "#000000");
+    var t0 = performance.now();
 
+    var svgs = $("svg");
 
-    var colorize =  function(elem, yesColor, noColor) {
+    svgs.find("*").removeAttr("stroke");
+    svgs.find("g").attr("stroke", "black");
+    svgs.find("line").attr("stroke", "#000000");
 
-        $(elem).find('tspan:contains("New")').filter(function () {
-            return $(this).text() == "New";
-        }).parent().parent().attr('stroke', yesColor)
-            .next().attr('stroke', yesColor);
+    function textExactlyEquals(txt) {
+        // predicate style
+        return function(node) {
+            return $(this).text() === txt;
+        }
+    }
 
-        $(elem).find('tspan:contains("Legacy")').filter(function () {
-            return $(this).text() == "Legacy";
-        }).parent().parent().attr('stroke', noColor)
-            .next().attr('stroke', noColor);
+    var colorizeNewAndLegacyBoxesAndAssociatedLine =  function(elem, yesColor, noColor) {
 
-        $(elem).find('tspan:contains("Legacy")').filter(function () {
-            return $(this).text() == "Legacy";
-        }).parent().parent().next().filter('line').attr('stroke', noColor).attr('stroke-dasharray', '5, 5');
+        $(elem).find('tspan:contains("New")').filter(textExactlyEquals("New"))
+            .parent().parent().attr('stroke', yesColor).next().attr('stroke', yesColor);
+
+        $(elem).find('tspan:contains("Legacy")').filter(textExactlyEquals("Legacy"))
+            .parent().parent().attr('stroke', noColor).next().attr('stroke', noColor);
+
+        $(elem).find('tspan:contains("Legacy")').filter(textExactlyEquals("Legacy"))
+            .parent().parent().next().filter('line').attr('stroke', noColor).attr('stroke-dasharray', '5, 5');
     };
 
-    colorize($( "body svg")[3], 'lime', 'lightgrey');
-    colorize($( "body svg")[4], 'lightgrey', 'lime');
-    colorize($( "body svg")[5], 'lime', 'lightgrey');
-
+    colorizeNewAndLegacyBoxesAndAssociatedLine(svgs[3], 'lime', 'lightgrey');
+    colorizeNewAndLegacyBoxesAndAssociatedLine(svgs[4], 'lightgrey', 'lime');
+    colorizeNewAndLegacyBoxesAndAssociatedLine(svgs[5], 'lime', 'lightgrey');
 
     $( "line[style*='stroke-dasharray']" ).attr('stroke', 'lightgrey');
 
-
-    $('svg').each(function(i, item) {
+    svgs.each(function(i, item) {
         var img_width = $(item).width();
         var img_height = $(item).height();
         var div_width = $(item).parent().width();
@@ -436,48 +420,52 @@
 
     });
 
-    $('tspan:contains("Your New")').filter(function () {
-        return $(this).text() == "Your New";
-    }).parent().parent().attr('stroke', 'blue')
+    // $('tspan:contains("Your New")').filter(textExactlyEquals("Your New")).parent().parent().attr('stroke', 'blue')
+    //     .next().attr('stroke', 'blue');
+
+    $(svgs[1]).find('tspan:contains("Abstraction.")').filter(textExactlyEquals("Abstraction."))
+        .each(function (i, item) {
+            $(this).text("Abstraction");
+        }).parent().parent().attr('stroke', 'blue')
         .next().attr('stroke', 'blue');
 
-    $('tspan:contains("Abstraction.")').filter(function () {
-        return $(this).text() == "Abstraction.";
-    }).each(function(i, item) {
-        $(this).text("Abstraction");
-    }).parent().parent().attr('stroke', 'blue')
+    $(svgs[2]).find('tspan:contains("Legacy.")').filter(textExactlyEquals("Legacy."))
+        .each(function (i, item) {
+            $(this).text("Legacy");
+        }).parent().parent().attr('stroke', 'blue')
         .next().attr('stroke', 'blue');
 
-    $('tspan:contains("Legacy.")').filter(function () {
-        return $(this).text() == "Legacy.";
-    }).each(function(i, item) {
-        $(this).text("Legacy");
-    }).parent().parent().attr('stroke', 'blue')
-        .next().attr('stroke', 'blue');
+    $(svgs[3]).find('tspan:contains("(ormToggle=new)")').filter(textExactlyEquals("(ormToggle=new)")).attr('stroke', 'lime');
+    $(svgs[5]).find('tspan:contains("(ormToggle=new)")').filter(textExactlyEquals("(ormToggle=new)")).attr('stroke', 'lime');
 
-    $('tspan:contains("(ormToggle=new)")').filter(function () {
-        return $(this).text() == "(ormToggle=new)";
-    }).attr('stroke', 'lime');
+    $(svgs[4]).find('tspan:contains("(ormToggle=old)")').filter(textExactlyEquals("(ormToggle=old)")).attr('stroke', 'lime');
 
-    $('tspan:contains("(ormToggle=old)")').filter(function () {
-        return $(this).text() == "(ormToggle=old)";
-    }).attr('stroke', 'lime');
 
-    $('tspan:contains("~New~")').filter(function () {
-        return $(this).text() == "~New~";
-    }).attr('stroke', 'blue').text("New").attr("style", "text-decoration: line-through");
+    const LINE_THROUGH = "text-decoration: line-through";
 
-    $('tspan:contains("Your ~New~")').filter(function () {
-        return $(this).text() == "Your ~New~";
-    }).each(function () {
-        // JQuery, today, doesn't play well with adding SVG elements - tricks required
-        $(this).parent().prepend($(this).clone().text("Your"));
-        $(this).text("New").attr("x", "340").text("New")
-            .attr('stroke', 'blue').attr("style", "text-decoration: line-through");
-    });
+    $(svgs[6]).find('tspan:contains("~New~")').filter(textExactlyEquals("~New~"))
+        .attr('stroke', 'blue').text("New").attr("style", LINE_THROUGH);
+    $(svgs[6]).find('tspan:contains("Your ~New~")').filter(textExactlyEquals("Your ~New~"))
+        .each(function () {
+            // JQuery, today, doesn't play well with adding SVG elements - tricks required
+            $(this).parent().prepend($(this).clone().text("Your"));
+            $(this).text("New").attr("x", "340").text("New").attr('stroke', 'blue').attr("style", LINE_THROUGH);
+        });
+
+    var t1 = performance.now();
+    document.write("<p>JQuery bits took: " + (t1 - t0) + " milliseconds.</p>")
 
 </script>
 
+</main>
+
+<script>
+    (function($){
+        $(function(){
+            $('select').not('.disabled').material_select();
+        });
+    })(jQuery);
+</script>
 </body>
 
 </html>
