@@ -39,48 +39,12 @@
             box-shadow: 0 1px 0 1px #a49c7c;
         }
 
-        @media all and (max-width: 420px) {
-            .hook:before {
-                left: 44%;
-                border: 2px #a49c7c;
-            }
-        }
-        @media all and (max-width: 421px) and (max-width: 620px) {
-            .hook:before {
-                left: 46.3%;
-                border: 2px #a49c7c;
-            }
-        }
-        @media all and (min-width: 621px) and (max-width: 800px) {
-            .hook:before {
-                left: 46.8%;
-                border: 2px #a49c7c;
-            }
-        }
-        @media all and (min-width: 801px) and (max-width: 900px) {
-            .hook:before {
-                left: 47.2%;
-                border: 2px #a49c7c;
-            }
-        }
-        @media all and (min-width: 901px) and (max-width: 1200px) {
-            .hook:before {
-                left: 47.3%;
-                border: 2px #a49c7c;
-            }
-        }
-        @media all and (min-width: 1201px) {
-            .hook:before {
-                left: 47.7%;
-                border: 2px #a49c7c;
-            }
-        }
-
         .hook:before {
             content: '';
             width: 43px;
             height: 43px;
-            /*border: 2px #a49c7c;*/
+            left: calc(50% - 22px);
+            border: 2px #a49c7c;
             border-style: solid hidden hidden solid;
             position: absolute;
 
