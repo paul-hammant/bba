@@ -88,6 +88,14 @@
             color: black;
             background-color:aliceblue
         }
+
+        .github-embed-main {
+            background-color: #fcfcfc;
+        }
+
+        .github-embed-frames pre{
+            background-color: #fefefe;
+        }
     </style>
 
 </head>
@@ -258,13 +266,13 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
         for.  Make sure you've already got stakeholder agreement that it is safe to change estimates as you go. Maybe even more than
         once. Reminding managers that this methodical procedure can be paused and resumed helps too.
 
-    <h4>7. Remove the abstraction (and the old implementation)</h4>
+    <h4>7. Remove the abstraction</h4>
 
     <p class="flow-text">You will go properly live with a toggle flip, after testing and a signoff in UAT. You'll have practiced flipping
     that toggle back to "old" in UAT after an initial deployment to "new". You will confirm that both work so that you can assure
         execs that you can do the same in production if needed.</p>
 
-    <p class="flow-text">After being live for a couple of weeks, you will remove the old implementation </p>
+    <p class="flow-text">After being live for a couple of weeks, you will remove the old implementation too, and do renames.</p>
 
     <p class="flow-text">Maybe immediately after that, but it could also be after a <i>another</i> couple of weeks, you'll remove the old
         abstraction itself too(commit/push/go-live), ending up with:</p>
@@ -282,12 +290,12 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
         <p class="flow-text">I'm Paul Hammant<a target="_blank" href="https://hammant.org/"><span style="padding-left: 0.1em; font-weight: 900">&#8679;</span></a> and I put this site together to try to really
             distill what Branch by Abstraction is.
             I led the pioneering work on Branch by Abstraction at a former client (Bank of America's GFX
-            group in Chicago in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><span style="padding-left: 0.1em; font-weight: 900">&#8679;</span></a> based on that work,
-            the artwork and message from which was included in Jez Humble and Dave Farley's
+            group in Chicago in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><span style="padding-left: 0.1em; font-weight: 900">&#8679;</span></a> based on that work.
+            The artwork and message from that article was then included in Jez Humble and Dave Farley's
             best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><span style="padding-left: 0.1em; font-weight: 900">&#8679;</span></a>
             in 2010.</p>
         <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from slower
-            branching models (and release cadence) to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><span style="padding-left: 0.1em; font-weight: 900">&#8679;</span></a>
+            branching models (and release cadences) to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><span style="padding-left: 0.1em; font-weight: 900">&#8679;</span></a>
             with feature flags/toggles <i>and of course Branch by Abstraction</i>. See <a
                     href="https://devops.paulhammant.com">http://devops.paulhammant.com</a> for more details.</p>
     </div>
