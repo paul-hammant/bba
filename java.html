@@ -24,7 +24,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/github-embed.css">
+    <!--<link rel="stylesheet" type="text/css" href="/github-embed.css">-->
+
+    <link href="themes/prism.css" rel="stylesheet" />
 
     <style>
         nav ul a {
@@ -199,6 +201,9 @@
 
     <div style="height: 300px; padding: 2%" id="TwoIntroC">HERE</div>
 
+
+    <pre data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
+
     <h4>3. Sensible renames</h4>
 
     <p class="flow-text">Well generally feel free to tactically rename/re-package (or namespace) as you go. Hopefully your refactoring
@@ -309,7 +314,8 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
-<script src="/github-embed.min.js"></script>
+<!--<script src="/github-embed.min.js"></script>-->
+<script src="prism.js"></script>
 
 <script type="text/javascript">
 
@@ -318,47 +324,47 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
             var t0 = performance.now();
 
-            githubEmbed('#OneIdentify', {
-                "owner": "paul-hammant",
-                "repo": "little_branch_by_abstraction_demo",
-                "ref": "f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src",
-                "embed": [{
-                    "path": "main/java/com/mycompany/App.java"
-                }, {
-                    "path": "test/java/com/mycompany/AppTest.java"
-                }]
-            });
-
-            githubEmbed('#TwoIntro', {
-                "owner": "paul-hammant",
-                "repo": "little_branch_by_abstraction_demo",
-                "ref": "c4ec429f15ef14bc5312173709c276df3d1995f2/src/main/java/com/mycompany/",
-                "embed": [{
-                    "path": "App.java"
-                }, {
-                    "path": "HairColorFactory.java"
-                }, {
-                    "path": "HairColorFactoryImpl.java"
-                }]
-            });
-
-            githubEmbed('#TwoIntroB', {
-                "owner": "paul-hammant",
-                "repo": "little_branch_by_abstraction_demo",
-                "ref": "c4ec429f15ef14bc5312173709c276df3d1995f2/",
-                "embed": [{
-                    "path": "conf/application.conf"
-                }]
-            });
-
-            githubEmbed('#TwoIntroC', {
-                "owner": "paul-hammant",
-                "repo": "little_branch_by_abstraction_demo",
-                "ref": "c4ec429f15ef14bc5312173709c276df3d1995f2/",
-                "embed": [{
-                    "path": "src/test/java/com/mycompany/AppTest.java"
-                }]
-            });
+            // githubEmbed('#OneIdentify', {
+            //     "owner": "paul-hammant",
+            //     "repo": "little_branch_by_abstraction_demo",
+            //     "ref": "f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src",
+            //     "embed": [{
+            //         "path": "main/java/com/mycompany/App.java"
+            //     }, {
+            //         "path": "test/java/com/mycompany/AppTest.java"
+            //     }]
+            // });
+            //
+            // githubEmbed('#TwoIntro', {
+            //     "owner": "paul-hammant",
+            //     "repo": "little_branch_by_abstraction_demo",
+            //     "ref": "c4ec429f15ef14bc5312173709c276df3d1995f2/src/main/java/com/mycompany/",
+            //     "embed": [{
+            //         "path": "App.java"
+            //     }, {
+            //         "path": "HairColorFactory.java"
+            //     }, {
+            //         "path": "HairColorFactoryImpl.java"
+            //     }]
+            // });
+            //
+            // githubEmbed('#TwoIntroB', {
+            //     "owner": "paul-hammant",
+            //     "repo": "little_branch_by_abstraction_demo",
+            //     "ref": "c4ec429f15ef14bc5312173709c276df3d1995f2/",
+            //     "embed": [{
+            //         "path": "conf/application.conf"
+            //     }]
+            // });
+            //
+            // githubEmbed('#TwoIntroC', {
+            //     "owner": "paul-hammant",
+            //     "repo": "little_branch_by_abstraction_demo",
+            //     "ref": "c4ec429f15ef14bc5312173709c276df3d1995f2/",
+            //     "embed": [{
+            //         "path": "src/test/java/com/mycompany/AppTest.java"
+            //     }]
+            // });
 
             var t1 = performance.now();
 
