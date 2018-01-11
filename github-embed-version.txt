@@ -1,0 +1,7 @@
+v1.0.1
+Latest commit 39f92f7 on Apr 9, 2017
+
+wget http://finom.github.io/github-embed/github-embed.min.js
+wget https://github.com/finom/github-embed/blob/gh-pages/github-embed.css
+wget https://github.com/finom/github-embed/blob/gh-pages/github-embed.css.map
+wget https://github.com/finom/github-embed/blob/gh-pages/github-embed.min.js.map
