@@ -157,7 +157,7 @@
 
     <!-- https://bramp.github.io/js-sequence-diagrams/ -->
 
-    <span>HERE</span>
+    <div id="2Intro">HERE</div>
 
     <h4>2. Introduce an abstraction</h4>
 
@@ -288,7 +288,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
-<script src="https://github.com/finom/github-embed/blob/gh-pages/github-embed.min.js"></script>
+<script src="http://finom.github.io/github-embed/github-embed.min.js"></script>
 
 <script type="text/javascript">
 
@@ -296,10 +296,8 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
         $(function () {
 
             var t0 = performance.now();
-
-            // https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/main/java/com/mycompany/App.java
-
-            githubEmbed('#settings-object', {
+            
+            githubEmbed('#2Intro', {
                 "owner": "paul-hammant",
                 "repo": "little_branch_by_abstraction_demo",
                 "ref": "blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41",
@@ -311,7 +309,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
             });
 
             var t1 = performance.now();
-            
+
         });
     })(jQuery);
 </script>
