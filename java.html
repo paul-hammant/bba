@@ -168,7 +168,9 @@
 
     <!-- https://bramp.github.io/js-sequence-diagrams/ -->
 
-    <div style="height: 600px; padding: 2%" id="OneIdentify">HERE</div>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
+
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
     <h4>2. Introduce an abstraction</h4>
 
@@ -189,20 +191,21 @@
 
     <h5>Three prod sources (two new) in src/main/java/com/mycompany/</h5>
 
-    <div style="height: 500px; padding: 2%" id="TwoIntro">HERE</div>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/test/java/com/mycompany/AppTest.java" class="language-java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/App.java"></pre>
+
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/main/java/com/mycompany/HairColorFactory.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/HairColorFactory.java"></pre>
+
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/main/java/com/mycompany/HairColorFactoryImpl.java" class="language-java"  data-src="src/java/3/trunk/src/main/java/com/mycompany/HairColorFactoryImpl.java"></pre>
 
     <h5>Some configuration for the toggle choice outside of Java</h5>
 
-    <div style="height: 250px; padding: 2%" id="TwoIntroB">HERE</div>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
 
     <h5>The test only differs from before in the unit test setup</h5>
 
-    <p>(ten lines from the bottom)</p>
+    <pre data-line="45-48" ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
-    <div style="height: 300px; padding: 2%" id="TwoIntroC">HERE</div>
-
-
-    <pre data-line="45-48" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <p> ^ the four highlighted lines are the only ones that changed</p>
 
     <h4>3. Sensible renames</h4>
 
@@ -324,47 +327,16 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
             var t0 = performance.now();
 
-            // githubEmbed('#OneIdentify', {
-            //     "owner": "paul-hammant",
-            //     "repo": "little_branch_by_abstraction_demo",
-            //     "ref": "f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src",
-            //     "embed": [{
-            //         "path": "main/java/com/mycompany/App.java"
-            //     }, {
-            //         "path": "test/java/com/mycompany/AppTest.java"
-            //     }]
-            // });
-            //
-            // githubEmbed('#TwoIntro', {
-            //     "owner": "paul-hammant",
-            //     "repo": "little_branch_by_abstraction_demo",
-            //     "ref": "c4ec429f15ef14bc5312173709c276df3d1995f2/src/main/java/com/mycompany/",
-            //     "embed": [{
-            //         "path": "App.java"
-            //     }, {
-            //         "path": "HairColorFactory.java"
-            //     }, {
-            //         "path": "HairColorFactoryImpl.java"
-            //     }]
-            // });
-            //
-            // githubEmbed('#TwoIntroB', {
-            //     "owner": "paul-hammant",
-            //     "repo": "little_branch_by_abstraction_demo",
-            //     "ref": "c4ec429f15ef14bc5312173709c276df3d1995f2/",
-            //     "embed": [{
-            //         "path": "conf/application.conf"
-            //     }]
-            // });
-            //
-            // githubEmbed('#TwoIntroC', {
-            //     "owner": "paul-hammant",
-            //     "repo": "little_branch_by_abstraction_demo",
-            //     "ref": "c4ec429f15ef14bc5312173709c276df3d1995f2/",
-            //     "embed": [{
-            //         "path": "src/test/java/com/mycompany/AppTest.java"
-            //     }]
-            // });
+            Prism.plugins.toolbar.registerButton('link-to-file-on-gh', function() {
+                var button = document.createElement('button');
+                button.innerHTML = 'Same on GitHub';
+
+                button.addEventListener('click', function (evt) {
+                    window.open(evt.target.parentElement.parentElement.parentElement.attributes.ghLink.value, '_blank');
+                    // alert(env.element);
+                });
+                return button;
+            });
 
             var t1 = performance.now();
 
