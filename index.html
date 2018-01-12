@@ -374,7 +374,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
     (function ($) {
         $(function () {
 
-            var t0 = performance.now();
+           // var t0 = performance.now();
             var svgs = $("svg");
 
             svgs.find("*").removeAttr("stroke");
@@ -435,15 +435,14 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
                     $(this).text("New").attr("x", "340").text("New").attr('stroke', 'blue').attr("style", LINE_THROUGH);
                 });
 
-            var t1 = performance.now();
+//            var t1 = performance.now();
 
-            // document.write("<p>JQuery bits took: " + (t1 - t0) + " milliseconds.</p>")
+            $('select')
+                .on('change', function() {
+                    location.href = this.value + ".html#choice";
+                })
+                .not('.disabled').material_select();
 
-            $('select').on('change', function() {
-                location.href = this.value + ".html#choice";
-            });
-
-            $('select').not('.disabled').material_select();
         });
     })(jQuery);
 </script>

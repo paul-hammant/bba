@@ -318,19 +318,13 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
-<!--<script src="/github-embed.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inview/1.0.0/jquery.inview.min.js"></script>
 <script src="prism.js"></script>
 
 <script type="text/javascript">
 
     (function ($) {
         $(function () {
-
-            $('select').on('change', function() {
-                location.href = this.value + ".html#choice";
-            });
-
-            var t0 = performance.now();
 
             Prism.plugins.toolbar.registerButton('link-to-file-on-gh', function() {
                 var button = document.createElement('button');
@@ -343,9 +337,13 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
                 return button;
             });
 
-            $('select').not('.disabled').material_select();
+            $('select')
+                .on('change', function() {
+                    location.href = this.value + ".html#choice";
+                })
+                .not('.disabled').material_select();
 
-            var t1 = performance.now();
+            // var t1 = performance.now();
 
         });
     })(jQuery);
