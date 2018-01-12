@@ -207,14 +207,14 @@
 
     <p> ^ the four highlighted lines are the only ones that changed</p>
 
-    <h4>3. Sensible renames</h4>
+    <h4>2b. Sensible renames</h4>
 
     <p class="flow-text">Well generally feel free to tactically rename/re-package (or namespace) as you go. Hopefully your refactoring
         IDE has your back.</p>
 
     <span>HERE</span>
 
-    <h4>4. Only the developers working on the migration are exposed to the new technology, in a crucial primordial section of code.</h4>
+    <h4>3. Only the developers working on the migration are exposed to the new technology, in a crucial primordial section of code.</h4>
 
     <p class="flow-text">This is because there's a single toggle/flag flipped for those developers.</p>
 
@@ -238,7 +238,7 @@ persistenceFactoryClassName=com.yourcompany.yourapp.NewPersistenceFactory</code>
     <pre style="background-color: gainsboro; padding: 0.75%"><code>pfClassName props.getProperty("persistenceFactoryClassName");
 persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
-    <h4>5. Everyone else sees/uses the old tech choice</h4>
+    <h4>4. Everyone else sees/uses the old tech choice</h4>
 
     <p class="flow-text">They need to develop functional deliverables without encountering anything that is transitional, so they
         continue with the old/legacy implementation. They don't have to do anything to set that up, as it is a default with
@@ -248,7 +248,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
     <p class="flow-text">And indeed "everyone else" also means QA/UAT/live deployments too.</p>
 
-    <h4>6. Repeat tens or hundreds of times until there are two of everything</h4>
+    <h4>5. Repeat tens or hundreds of times until there are two of everything</h4>
 
     <p class="flow-text">The point was that the "change that was going to take a while" was going to span a few releases and happen
     concurrently with the development other business functionality. Getting the first example done using branch by
@@ -274,7 +274,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
         for.  Make sure you've already got stakeholder agreement that it is safe to change estimates as you go. Maybe even more than
         once. Reminding managers that this methodical procedure can be paused and resumed helps too.
 
-    <h4>7. Remove the abstraction</h4>
+    <h4>6. Remove the abstraction</h4>
 
     <p class="flow-text">You will go properly live with a toggle flip, after testing and a signoff in UAT. You'll have practiced flipping
     that toggle back to "old" in UAT after an initial deployment to "new". You will confirm that both work so that you can assure
