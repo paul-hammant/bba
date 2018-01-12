@@ -12,17 +12,20 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
- * @author jooby generator
+ * @author Paul Hammant
  */
 public class AppTest {
 
   /**
-   * One app/server for all the test of this class. If you want to start/stop a new server per test,
+   * One app/server for all the tests in this class. If you want to start/stop a new server per test,
    * remove the static modifier and replace the {@link ClassRule} annotation with {@link Rule}.
    */
   @ClassRule
   public static JoobyRule app = new JoobyRule(new App());
 
+  /**
+   * An Integration test that uses RestAssured to check a contract over HTTP
+   */
   @Test
   public void integrationTest() {
     get("/")
@@ -40,6 +43,9 @@ public class AppTest {
             containsString("Black"), containsString("Red"));
   }
 
+  /**
+   * A unit test that checks Jooby contract without HTTP or TCP/IP
+   */
   @Test
   public void newHairColorTest() throws Throwable {
     App app = new App();

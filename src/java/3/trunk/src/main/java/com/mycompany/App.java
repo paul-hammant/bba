@@ -4,6 +4,9 @@ import com.typesafe.config.Config;
 import javaslang.control.Try;
 import org.jooby.Jooby;
 
+/**
+ * @author Paul Hammant
+ */
 public class App extends Jooby {
 
   HairColorFactory hcf;
