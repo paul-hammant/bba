@@ -169,9 +169,9 @@
 
     <!-- https://bramp.github.io/js-sequence-diagrams/ -->
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
     <h4 id="2">2. Introduce an abstraction</h4>
 
@@ -192,42 +192,27 @@
 
     <h5>Three prod sources (two new) in src/main/java/com/mycompany/</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/test/java/com/mycompany/AppTest.java" class="language-java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/App.java"></pre>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/main/java/com/mycompany/HairColorFactory.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/HairColorFactory.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/main/java/com/mycompany/HairColorFactory.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/HairColorFactory.java"></pre>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/main/java/com/mycompany/HairColorFactoryImpl.java" class="language-java"  data-src="src/java/3/trunk/src/main/java/com/mycompany/HairColorFactoryImpl.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/main/java/com/mycompany/HairColorFactoryImpl.java" class="language-java"  data-src="src/java/3/trunk/src/main/java/com/mycompany/HairColorFactoryImpl.java"></pre>
 
     <h5>Some configuration for the toggle choice outside of Java</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
 
-    <h5>The test only differs from before in the unit test setup</h5>
+    <h5>The test only differs from the previous version in the unit test setup</h5>
 
-    <pre data-line="45-48" ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/f2b5275d8ae0c2c1a02bd3d9c3e335e783642b41/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <pre data-line="45-48" ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
     <p> ^ the four highlighted lines are the only ones that changed</p>
-
-    <h4 id="2b">2b. Sensible renames</h4>
-
-    <p class="flow-text">Well generally feel free to tactically rename/re-package (or namespace) as you go. Hopefully your refactoring
-        IDE has your back.</p>
-
-    <span>HERE</span>
 
     <h4 id="3">3. Only the developers working on the migration are exposed to the new technology, in a crucial primordial section of code.</h4>
 
     <p class="flow-text">This is because there's a single toggle/flag flipped for those developers.</p>
 
     <span>HERE</span>
-
-    <p class="flow-text">That could literally be code: </p>
-
-<pre style="background-color: gainsboro; padding: 0.75%"><code>if (useNewPersistenceTech) {
-    persistenceFactory = new NewPersistenceFactory();
-} else {
-    persistenceFactory = new OldPersistenceFactory();
-}</code></pre>
 
     <p class="flow-text">But it is more likely to be outside code in a YAML, XML, JSON or properties file (local or remote), like this (or better):</p>
 

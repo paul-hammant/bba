@@ -25,9 +25,7 @@ public class AppTest {
 
   /**
    * An integration test that uses RestAssured to check
-   * hair-color functionality over HTTP (whichever is
-   * configured in conf/application.conf (unless
-   * overridden at launch)
+   * hair-color functionality over HTTP
    */
   @Test
   public void integrationTest() {

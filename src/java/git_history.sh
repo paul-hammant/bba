@@ -33,8 +33,8 @@ cd ..
 cp -r 4/trunk/* repo/
 cd repo
 git add .
-git commit -m "3. New second integer-based impl of 'hair color' without deleting the old impl (and go live)"
-git tag 3 -m "New second integer-based impl of 'hair color' without deleting the old impl (and go live)"
+git commit -m "3. New second integer-based impl of 'hair color' (with tests) without deleting the old impl (and go live)"
+git tag 3 -m "New second integer-based impl of 'hair color' (with tests) without deleting the old impl (and go live)"
 cd ..
 cp -r 5/trunk/* repo/
 cd repo
