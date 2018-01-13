@@ -8,7 +8,7 @@ import java.util.Random;
 import static java.util.Arrays.asList;
 
 /**
- * @author Paul Hammant
+ * @author Paul Hammant DevOps, (c) 2018
  */
 public class App extends Jooby {
 

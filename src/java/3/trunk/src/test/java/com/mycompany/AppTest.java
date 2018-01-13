@@ -12,7 +12,7 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
- * @author Paul Hammant
+ * @author Paul Hammant DevOps, (c) 2018
  */
 public class AppTest {
 

@@ -1,7 +1,7 @@
 package com.mycompany;
 
 /**
- * @author Paul Hammant
+ * @author Paul Hammant DevOps, (c) 2018
  */
 public class Release4 extends BranchByAbstractionFactory {
 

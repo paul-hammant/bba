@@ -5,7 +5,7 @@ import javaslang.control.Try;
 import org.jooby.Jooby;
 
 /**
- * @author Paul Hammant
+ * @author Paul Hammant DevOps, (c) 2018
  */
 public class App extends Jooby {
 
