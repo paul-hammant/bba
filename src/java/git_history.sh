@@ -47,6 +47,12 @@ cd ..
 cp -r 7/trunk/* repo/
 cd repo
 git add .
-git commit -m "6. Remove Abstraction"
+git commit -m "6. Remove hair color abstraction"
 git tag 6
+cd ..
+cp -r 8/trunk/* repo/
+cd repo
+git add .
+git commit -m "6b rework test to be a little more exhaustive than before"
+git tag 6b
 cd ..
