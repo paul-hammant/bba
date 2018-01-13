@@ -31,14 +31,19 @@ public class AppTest {
    */
   @Test
   public void integrationTest() {
-    get("/")
-        .then()
-        .assertThat()
-        .body(startsWith("Hello "))
-        .body(endsWith(" World!"))
-        .body(specifiesAnyOfTheAllowedColors())
-        .statusCode(200)
-        .contentType("text/html;charset=UTF-8");
+    int x = 0;
+    do {
+      // 20 iterations as hair color impl is random
+      x++;
+      get("/")
+              .then()
+              .assertThat()
+              .body(startsWith("Hello "))
+              .body(endsWith(" World!"))
+              .body(specifiesAnyOfTheAllowedColors())
+              .statusCode(200)
+              .contentType("text/html;charset=UTF-8");
+    } while (x < 20);
   }
 
   private AnyOf<String> specifiesAnyOfTheAllowedColors() {
@@ -60,11 +65,12 @@ public class AppTest {
 
     int x = 0;
     do {
+      // 40 iterations as hair color impl is random
       x++;
       assertThat(result, startsWith("Hello "));
       assertThat(result, endsWith(" World!"));
       assertThat(result, specifiesAnyOfTheAllowedColors());
-    } while (x<100);
+    } while (x<40);
   }
 
   /**
@@ -76,11 +82,11 @@ public class AppTest {
     App app = new App();
     app.hcf = new NewHairColorFactoryImpl();
 
-    String result = new MockRouter(app)
-        .get("/");
     int x = 0;
     do {
+      // 40 iterations as hair color impl is random
       x++;
+      String result = new MockRouter(app).get("/");
       assertThat(result, startsWith("Hello "));
       assertThat(result, endsWith(" World!"));
       assertThat(result, specifiesAnyOfTheAllowedColors());

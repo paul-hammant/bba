@@ -33,6 +33,7 @@ public class AppTest {
   public void integrationTest() {
     int x = 0;
     do {
+      // 20 iterations as hair color impl is random
       x++;
       get("/")
               .then()
@@ -62,6 +63,7 @@ public class AppTest {
 
     int x = 0;
     do {
+      // 40 iterations as hair color impl is random
       x++;
       String result = new MockRouter(app).get("/");
       assertThat(result, startsWith("Hello "));
