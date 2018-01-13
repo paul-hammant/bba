@@ -51,16 +51,6 @@ git add .
 git rm conf/application_release4.conf
 git rm src/main/java/com/mycompany/Release3.java
 git commit -m "5. Remove the hair color abstraction a while after release as we're passed roll back now (and go live)"
-# cd ..
-# cp -r 7/trunk/* repo/
-# cd repo
-# git add .
-# git commit -m "5. Remove the hair color abstraction a while after release as we're passed roll back now (and go live)" --amend
-# cd ..
-# cp -r 8/trunk/* repo/
-# cd repo
-# git add .
-# git commit -m "5. Remove the hair color abstraction a while after release as we're passed roll back now (and go live)" --amend
 git tag 5 -m "Remove the hair color abstraction a while after release as we're passed roll back now (and go live)"
 git push -f
 git push --tags -f
