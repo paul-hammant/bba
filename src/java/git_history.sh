@@ -6,11 +6,12 @@ mkdir repo
 
 cp -r 1/trunk/* repo/
 cd repo
-echo "target\nlog/\n" > .gitignore
-git init
-git remote add origin git@github.com:paul-hammant/little_java_branch_by_abstraction_demo.git
-git add .
-git commit -m "As Jooby's 'quickstart project generator' made it"
+# echo "target\nlog/\n" > .gitignore
+# git init
+# git remote add origin git@github.com:paul-hammant/little_java_branch_by_abstraction_demo.git
+git reset --hard 06889352960adc5fd73bb16c9fc5a324223f0632
+# git add .
+# git commit -m "As Jooby's 'quickstart project generator' made it"
 cd ..
 cp -r 2/trunk/* repo/
 cd repo
@@ -54,3 +55,4 @@ git add .
 git commit -m "5. Remove the hair color abstraction a while after release" --amend
 git tag 5
 cd ..
+git push -f
