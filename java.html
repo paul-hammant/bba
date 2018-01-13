@@ -155,6 +155,12 @@
         </form>
     </div>
 
+    <h5>Starting point</h5>
+
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/1/trunk/src/main/java/com/mycompany/App.java"></pre>
+
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/1/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+
     <h4 id="1">1. Identify the change that will take a while</h4>
 
     <p class="flow-text">The classic case discussed for branch by abstraction is the changing of one persistence technology for another. In the original
@@ -271,7 +277,15 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
     <p class="flow-text">Maybe immediately after that, but it could also be after a <i>another</i> couple of weeks, you'll remove the old
         abstraction itself too(commit/push/go-live), ending up with:</p>
 
-    <span>HERE</span>
+    <h5>Three prod sources (one new) in src/main/java/com/mycompany/</h5>
+
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/5/src/test/java/com/mycompany/AppTest.java" class="language-java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/App.java"></pre>
+
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/BranchByAbstractionFactory.java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/BranchByAbstractionFactory.java"></pre>
+
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/8/trunk/src/main/java/com/mycompany/Release4.java"></pre>
+
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/Colors.java" class="language-java"  data-src="src/java/8/trunk/src/main/java/com/mycompany/Colors.java"></pre>
 
     <p class="flow-text">As previously mentioned, this last is the characterizing difference to any other use of abstractions in the codebase.
         Well, versus the terrible decision to do the lengthy non-functional change on a branch and merge back to trunk/master when complete.
