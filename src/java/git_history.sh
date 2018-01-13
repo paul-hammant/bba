@@ -41,16 +41,16 @@ cd repo
 git add .
 git rm conf/application_release4.conf
 git rm src/main/java/com/mycompany/Release3.java
-git commit -m "5. A while after release three has gone live with the new integer hair color implementation, remove the hair color abstraction"
+git commit -m "5. Remove the hair color abstraction a while after release"
 cd ..
 cp -r 7/trunk/* repo/
 cd repo
 git add .
-git commit --amend
+git commit -m "5. Remove the hair color abstraction a while after release" --amend
 cd ..
 cp -r 8/trunk/* repo/
 cd repo
 git add .
-git commit -- amend
+git commit -m "5. Remove the hair color abstraction a while after release" --amend
 git tag 5
 cd ..
