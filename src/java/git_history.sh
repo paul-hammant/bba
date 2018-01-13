@@ -33,13 +33,13 @@ cd ..
 cp -r 5/trunk/* repo/
 cd repo
 git add .
-git commit -m "4. Make this about Release3 versus Release4 (of which hair color is a potential aspect amongst others)"
+git commit -m "4. Release3 is out and Release4 is the new focus (of which hair color is a potential aspect amongst others)"
 git tag 4
 cd ..
 cp -r 6/trunk/* repo/
 cd repo
 git add .
-git rm conf/application_release4.conf
+git rm conf/application_release3.conf
 git rm src/main/java/com/mycompany/Release3.java
 git commit -m "5. Release three has gone live with the new hair color implementation, remove its abstraction"
 git tag 5
