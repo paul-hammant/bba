@@ -39,12 +39,14 @@ cd ..
 cp -r 6/trunk/* repo/
 cd repo
 git add .
-git commit -m "5. dfsuigyiudfg"
+git rm conf/application_release4.conf
+git rm src/main/java/com/mycompany/Release3.java
+git commit -m "5. Release three has gone live with the new hair color implementation, remove its abstraction"
 git tag 5
 cd ..
 cp -r 7/trunk/* repo/
 cd repo
 git add .
-git commit -m "6. zgzifug"
+git commit -m "6. Remove Abstraction"
 git tag 6
 cd ..
