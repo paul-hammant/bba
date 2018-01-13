@@ -44,7 +44,6 @@ public class AppTest {
               .statusCode(200)
               .contentType("text/html;charset=UTF-8");
     } while (x < 20);
-
   }
 
   private AnyOf<String> specifiesAnyOfTheAllowedColors() {
