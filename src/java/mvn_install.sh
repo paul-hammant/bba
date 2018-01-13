@@ -13,3 +13,7 @@ mvn clean install
 cd ../../6/trunk/
 mvn clean install
 cd ../../7/trunk/
+mvn clean install
+cd ../../8/trunk/
+mvn clean install
+cd ../..
