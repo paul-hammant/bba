@@ -24,7 +24,10 @@ public class AppTest {
   public static JoobyRule app = new JoobyRule(new App());
 
   /**
-   * An Integration test that uses RestAssured to check a contract over HTTP
+   * An integration test that uses RestAssured to check
+   * hair-color functionality over HTTP (whichever is
+   * configured in conf/application.conf (unless
+   * overridden at launch)
    */
   @Test
   public void integrationTest() {
@@ -44,7 +47,8 @@ public class AppTest {
   }
 
   /**
-   * A unit test that checks Jooby contract without HTTP or TCP/IP
+   * A unit test that checks 'old' stringified
+   * implementation directly (without HTTP or TCP/IP)
    */
   @Test
   public void originalHairColorTest() throws Throwable {
@@ -64,7 +68,8 @@ public class AppTest {
   }
 
   /**
-   * A unit test that checks Jooby contract without HTTP or TCP/IP
+   * A unit test that checks 'new' integer-based
+   * implementation directly (without HTTP or TCP/IP)
    */
   @Test
   public void newHairColorTest() throws Throwable {
