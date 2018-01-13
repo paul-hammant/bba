@@ -23,6 +23,9 @@ public class AppTest {
   @ClassRule
   public static JoobyRule app = new JoobyRule(new App());
 
+  /**
+   * An Integration test that uses RestAssured to check a contract over HTTP
+   */
   @Test
   public void integrationTest() {
     int x = 0;
@@ -45,6 +48,9 @@ public class AppTest {
             containsString("Black"), containsString("Red"));
   }
 
+  /**
+   * A unit test that checks Jooby contract without HTTP or TCP/IP
+   */
   @Test
   public void newHairColorTest() throws Throwable {
     App app = new App();
