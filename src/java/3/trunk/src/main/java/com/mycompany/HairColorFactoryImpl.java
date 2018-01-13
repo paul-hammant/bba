@@ -5,6 +5,9 @@ import java.util.Random;
 
 import static java.util.Arrays.asList;
 
+/**
+ * @author Paul Hammant
+ */
 public class HairColorFactoryImpl extends HairColorFactory {
     @Override
     public String getHairColor() {

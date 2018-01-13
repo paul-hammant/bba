@@ -5,6 +5,9 @@ import java.util.Random;
 
 import static java.util.Arrays.asList;
 
+/**
+ * @author Paul Hammant
+ */
 public class Release3 extends BranchByAbstractionFactory {
     @Override
     public String getHairColor() {

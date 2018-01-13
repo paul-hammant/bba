@@ -1,5 +1,8 @@
 package com.mycompany;
 
+/**
+ * @author Paul Hammant
+ */
 public abstract class BranchByAbstractionFactory {
 
     abstract String getHairColor();

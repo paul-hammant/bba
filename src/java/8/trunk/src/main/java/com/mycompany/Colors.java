@@ -1,5 +1,8 @@
 package com.mycompany;
 
+/**
+ * @author Paul Hammant
+ */
 enum Colors {
 
   BLONDE("Blonde"),

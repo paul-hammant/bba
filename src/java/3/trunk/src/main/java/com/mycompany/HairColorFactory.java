@@ -1,5 +1,8 @@
 package com.mycompany;
 
+/**
+ * @author Paul Hammant
+ */
 public abstract class  HairColorFactory {
 
     abstract String getHairColor();

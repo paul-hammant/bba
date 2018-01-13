@@ -1,5 +1,8 @@
 package com.mycompany;
 
+/**
+ * @author Paul Hammant
+ */
 public class Release4 extends BranchByAbstractionFactory {
 
     int ctr = 0;
