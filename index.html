@@ -123,7 +123,7 @@
     over in production and then <b>take out the abstraction</b>. That is the characterizing difference between the methodical branch by
     abstraction procedure and the many regular usages of abstractions that you have in your codebase. Oh, and the removal of the abstraction (and old implementation) is the analog of the merge back from the branch you've now avoided.</p>
 
-    <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using <span>UML sequence diagrams</span>:</p>
+    <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using <b>UML sequence diagrams</b>:</p>
 
     <div class="row">
         <form class="col s12">
@@ -139,7 +139,7 @@
                         <option disabled value="csharp">C#</option>
                     </optgroup>
                 </select>
-                <label>Illustrate concepts using:</label>
+                <label>Illustrate procedure using:</label>
             </div>
         </form>
     </div>
@@ -149,12 +149,11 @@
     <p class="flow-text">The classic case discussed for branch by abstraction is the changing of one persistence technology for another. In the original
         article<a href="#footer"><span style="padding-left: 0.1em; font-weight: 900">&#8681;</span></a> for this, it was swapping out
         Java's 'Hibernate' technology for 'iBatis' (now MyBatis). That was hypothetical for the blog entry. In real
-        life, a few years later ThoughtWorks' Go team replaced iBatis with Hibernate (life indeed imitates art <i>Oscar Wilde</i>). </p>
+        life, a few years later ThoughtWorks' Go team replaced iBatis with Hibernate (<i>life indeed does imitate art, Oscar Wilde</i>). </p>
 
-    <p class="flow-text">For this telling of the branch by abstraction story, let's revisit the non-functional and time-consuming swap persistence
-        technology A for B. A being the old undesired tech, and B being the new hotness.  For the hypothetical app, there are
+    <p class="flow-text">For the telling of the branch by abstraction story here, let's revisit the time-consuming non-functional chore of swapping persistence technologies. From 'old' undesired choice, to a new choice.  For the hypothetical app, there are
         hundreds of components that use the same lib/framework and follow its applicable patterns. Only the business name for those
-        persistable things would last.  Let's start with "ShoppingCart" because it is tangible to most readers.</p>
+        persistable things would last.  Let's start with "ShoppingCart" because it is tangible to most readers (but remember that there are hundreds of these to slog through).</p>
 
     <!-- https://bramp.github.io/js-sequence-diagrams/ -->
 

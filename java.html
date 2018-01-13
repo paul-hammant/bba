@@ -140,7 +140,7 @@
     over in production and then <b>take out the abstraction</b>. That is the characterizing difference between the methodical branch by
     abstraction procedure and the many regular usages of abstractions that you have in your codebase. Oh, and the removal of the abstraction (and old implementation) is the analog of the merge back from the branch you've now avoided.</p>
 
-    <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using <span>UML sequence diagrams</span>:</p>
+    <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using a <b>Java example project</b>:</p>
 
     <div class="row">
         <form class="col s12">
@@ -156,20 +156,50 @@
                         <option disabled value="csharp">C#</option>
                     </optgroup>
                 </select>
-                <label>Illustrate concepts using:</label>
+                <label>Illustrate procedure using:</label>
             </div>
         </form>
     </div>
 
     <h5>Starting point</h5>
 
-    <p>I used the excellent Jooby<a target="_blank" href="https://jooby.org/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> web framework for this demo. See Jooby's generated app<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/06889352960adc5fd73bb16c9fc5a324223f0632/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> and the test for the same<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/06889352960adc5fd73bb16c9fc5a324223f0632/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.</p>
+    <p class="flow-text">The classic case discussed for branch by abstraction is the changing of one persistence technology for another. In the original
+        article<a href="#footer"><span style="padding-left: 0.1em; font-weight: 900">#</span></a> for this, it was swapping out
+        Java's 'Hibernate' technology for 'iBatis' (now MyBatis). That was hypothetical for the blog entry. In real
+        life, a few years later ThoughtWorks' Go team replaced iBatis with Hibernate (<i>life indeed does imitate art, Oscar Wilde</i>). </p>
 
-        <p>The initial <b>two-line</b> generated app was quickly morphed into
-        one that had a 'hair color' inserted into a HTTP response that was determined programmatically (random as it
-        turns out).</p>
+    <p class="flow-text">But, for the telling of the branch by abstraction story here, let's focus on a very contrived "Hello &lt;hair color&gt; world web app.</p>
 
-    <h5>After implementing the naive hair color logic:</h5>
+    <p>I used the two-line Jooby web application for this demo. See Jooby's generated app<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/06889352960adc5fd73bb16c9fc5a324223f0632/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> and the test for the same<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/06889352960adc5fd73bb16c9fc5a324223f0632/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> or whole commit<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/06889352960adc5fd73bb16c9fc5a324223f0632"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.</p>
+
+    <div class="row">
+    <div style="margin-left: 5%" class="col s12 m7">
+        <div class="card horizontal">
+            <div class="card-image" style="background-color: #000080">
+                <img style= "margin: 8%" src="/logo_jooby-2x.png">
+            </div>
+            <div class="card-stacked">
+                <div class="card-content">
+                    <p>Jooby is an excellent Java-8 web framework more than ready for productive
+                        development and production deployments.</p>
+                </div>
+                <div class="card-action">
+                    <a target="_blank" href="https://jooby.org/">Read more about Jooby</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+        <p>That initial <b>two-line</b> generated app was quickly morphed into
+        one that had a 'hair color' inserted into a silly HTTP response that was determined programmatically (random choice of hair color as it
+        turns out). Here's what that looks like in the browser: </p>
+
+    <div class="row">
+        <img style="margin-left: 5%" class="z-depth-2" width="378" height="160" src="/hello_world.png">
+    </div>
+
+    <h5>After implementing the naive hair color logic which adds the word 'blonde' (etc) between Hello and World:</h5>
 
     <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
 
@@ -177,25 +207,15 @@
 
     <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
-    <p>See also the diff between the two<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/5f6dd64d9210a1c4d8722802e48b14afa54c38b8"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> if you are interested</p>
+    <p>See also the diff between generated and hair color enhanced "Hello World" app<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/5f6dd64d9210a1c4d8722802e48b14afa54c38b8"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> if you are interested.</p>
 
     <h4 id="1">1. Identify the change that will take a while</h4>
 
-    <p class="flow-text">The classic case discussed for branch by abstraction is the changing of one persistence technology for another. In the original
-        article<a href="#footer"><span style="padding-left: 0.1em; font-weight: 900">&#8681;</span></a> for this, it was swapping out
-        Java's 'Hibernate' technology for 'iBatis' (now MyBatis). That was hypothetical for the blog entry. In real
-        life, a few years later ThoughtWorks' Go team replaced iBatis with Hibernate (life indeed imitates art <i>Oscar Wilde</i>). </p>
+    <h6>The app and the tests for it with a random hair color inserted between 'hello' and 'world'</h6>
 
-    <p class="flow-text">For this telling of the branch by abstraction story, let's revisit the non-functional and time-consuming swap persistence
-        technology A for B. A being the old undesired tech, and B being the new hotness.  For the hypothetical app, there are
-        hundreds of components that use the same lib/framework and follow its applicable patterns. Only the business name for those
-        persistable things would last.  Let's start with "ShoppingCart" because it is tangible to most readers.</p>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/App.java"></pre>
 
-    <!-- https://bramp.github.io/js-sequence-diagrams/ -->
-
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
-
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
     <h4 id="2">2. Introduce an abstraction</h4>
 
