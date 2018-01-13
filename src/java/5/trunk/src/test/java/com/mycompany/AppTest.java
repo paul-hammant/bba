@@ -84,7 +84,7 @@ public class AppTest {
       assertThat(result, startsWith("Hello "));
       assertThat(result, endsWith(" World!"));
       assertThat(result, specifiesAnyOfTheAllowedColors());
-    } while (x < 100);
+    } while (x < 40);
   }
 
 }

@@ -45,22 +45,22 @@ git rm src/main/java/com/mycompany/NewHairColorFactoryImpl.java
 git commit -m "4. Rename 'hair color factory' to more general purpose 'branch by abstraction factory' (and go live)"
 git tag 4
 cd ..
-cp -r 6/trunk/* repo/
+cp -r 8/trunk/* repo/
 cd repo
 git add .
 git rm conf/application_release4.conf
 git rm src/main/java/com/mycompany/Release3.java
 git commit -m "5. Remove the hair color abstraction a while after release as we're passed roll back now (and go live)"
-cd ..
-cp -r 7/trunk/* repo/
-cd repo
-git add .
-git commit -m "5. Remove the hair color abstraction a while after release as we're passed roll back now (and go live)" --amend
-cd ..
-cp -r 8/trunk/* repo/
-cd repo
-git add .
-git commit -m "5. Remove the hair color abstraction a while after release as we're passed roll back now (and go live)" --amend
+# cd ..
+# cp -r 7/trunk/* repo/
+# cd repo
+# git add .
+# git commit -m "5. Remove the hair color abstraction a while after release as we're passed roll back now (and go live)" --amend
+# cd ..
+# cp -r 8/trunk/* repo/
+# cd repo
+# git add .
+# git commit -m "5. Remove the hair color abstraction a while after release as we're passed roll back now (and go live)" --amend
 git tag 5
 git push -f
 cd ..
