@@ -1,10 +1,5 @@
 package com.mycompany;
 
-import java.util.List;
-import java.util.Random;
-
-import static java.util.Arrays.asList;
-
 /**
  * @author Paul Hammant DevOps, (c) 2018
  */

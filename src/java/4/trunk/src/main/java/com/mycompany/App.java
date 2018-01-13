@@ -1,7 +1,6 @@
 package com.mycompany;
 
 import com.typesafe.config.Config;
-import javaslang.control.Try;
 import org.jooby.Jooby;
 
 /**

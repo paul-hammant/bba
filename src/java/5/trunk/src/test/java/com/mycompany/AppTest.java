@@ -24,21 +24,26 @@ public class AppTest {
   public static JoobyRule app = new JoobyRule(new App());
 
   /**
-   * An integration test that uses RestAssured to check
-   * hair-color functionality over HTTP (whichever is
+   * An integration test that uses RestAssured to
+   * check hair color functionality over HTTP (whichever is
    * configured in conf/application.conf (unless
    * overridden at launch)
    */
   @Test
   public void integrationTest() {
-    get("/")
-        .then()
-        .assertThat()
-        .body(startsWith("Hello "))
-        .body(endsWith(" World!"))
-        .body(specifiesAnyOfTheAllowedColors())
-        .statusCode(200)
-        .contentType("text/html;charset=UTF-8");
+    int x = 0;
+    do {
+      // 20 iterations as hair color impl is random
+      x++;
+      get("/")
+              .then()
+              .assertThat()
+              .body(startsWith("Hello "))
+              .body(endsWith(" World!"))
+              .body(specifiesAnyOfTheAllowedColors())
+              .statusCode(200)
+              .contentType("text/html;charset=UTF-8");
+    } while (x < 20);
   }
 
   private AnyOf<String> specifiesAnyOfTheAllowedColors() {
@@ -76,11 +81,11 @@ public class AppTest {
     App app = new App();
     app.bbaf = new Release4();
 
-    String result = new MockRouter(app)
-        .get("/");
     int x = 0;
     do {
+      // 40 iterations as hair color impl is random
       x++;
+      String result = new MockRouter(app).get("/");
       assertThat(result, startsWith("Hello "));
       assertThat(result, endsWith(" World!"));
       assertThat(result, specifiesAnyOfTheAllowedColors());

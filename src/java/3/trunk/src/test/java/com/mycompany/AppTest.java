@@ -24,7 +24,7 @@ public class AppTest {
   public static JoobyRule app = new JoobyRule(new App());
 
   /**
-   * An Integration test that uses RestAssured to
+   * An integration test that uses RestAssured to
    * check hair color functionality over HTTP
    */
   @Test

@@ -3,7 +3,7 @@ package com.mycompany;
 /**
  * @author Paul Hammant DevOps, (c) 2018
  */
-public abstract class  HairColorFactory {
+public abstract class HairColorFactory {
 
     abstract String getHairColor();
 
