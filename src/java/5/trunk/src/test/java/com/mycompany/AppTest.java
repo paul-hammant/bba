@@ -59,9 +59,7 @@ public class AppTest {
   public void originalHairColorTest() throws Throwable {
     App app = new App();
     app.bbaf = new Release3();
-
-    String result = new MockRouter(app)
-        .get("/");
+    String result = new MockRouter(app).get("/");
 
     int x = 0;
     do {

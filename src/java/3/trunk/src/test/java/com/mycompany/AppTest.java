@@ -52,9 +52,7 @@ public class AppTest {
   public void unitTest() throws Throwable {
     App app = new App();
     app.hcf = new HairColorFactoryImpl();
-
-    String result = new MockRouter(app)
-        .get("/");
+    String result = new MockRouter(app).get("/");
 
     assertThat(result, startsWith("Hello "));
     assertThat(result, endsWith(" World!"));

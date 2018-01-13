@@ -98,6 +98,12 @@
         .github-embed-frames pre{
             background-color: #fefefe;
         }
+
+        a svg {
+            margin-left: 3px;
+            margin-bottom: 2px;
+        }
+
     </style>
 
 </head>
@@ -215,15 +221,17 @@
 
     <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/main/java/com/mycompany/HairColorFactoryImpl.java" class="language-java"  data-src="src/java/3/trunk/src/main/java/com/mycompany/HairColorFactoryImpl.java"></pre>
 
-    <h5>Some configuration for the toggle choice outside of Java</h5>
+    <h5>Some configuration for the toggle choice outside of Java:</h5>
 
     <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
 
-    <h5>The test only differs from the previous version in the unit test setup</h5>
+    <h5>The test only differs from the previous version in the unit test setup:</h5>
 
-    <pre data-line="45-48" ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <pre data-line="53-55" ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
     <p> ^ the four highlighted lines are the only ones that changed</p>
+
+    <p>See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
     <h4 id="3">3. Only the developers working on the migration are exposed to the new technology, in a crucial primordial section of code.</h4>
 
@@ -288,15 +296,30 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
     <p class="flow-text">Maybe immediately after that, but it could also be after a <i>another</i> couple of weeks, you'll remove the old
         abstraction itself too(commit/push/go-live), ending up with:</p>
 
-    <h5>Three prod sources (one new) in src/main/java/com/mycompany/</h5>
+    <h5>The `App` class:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/5/src/test/java/com/mycompany/AppTest.java" class="language-java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/App.java"></pre>
+
+    <h5>The `BranchByAbstractionFactory` class:</h5>
 
     <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/BranchByAbstractionFactory.java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/BranchByAbstractionFactory.java"></pre>
 
+    <h5>The new `Colors` class (extracted):</h5>
+
     <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/8/trunk/src/main/java/com/mycompany/Release4.java"></pre>
 
+    <h5>The `Release4` class:</h5>
+
     <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/Colors.java" class="language-java"  data-src="src/java/8/trunk/src/main/java/com/mycompany/Colors.java"></pre>
+
+    <h5>And the tests:</h5>
+
+    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/5/src/test/java/com/mycompany/AppTest.java" class="language-java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/App.java"></pre>
+
+    <p> ^ The 'old' unit test deleted</p>
+
+    <p>See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/5"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
+
 
     <p class="flow-text">As previously mentioned, this last is the characterizing difference to any other use of abstractions in the codebase.
         Well, versus the terrible decision to do the lengthy non-functional change on a branch and merge back to trunk/master when complete.
@@ -306,15 +329,16 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
 <footer id="footer" class="page-footer">
     <div class="container">
-        <p class="flow-text">I'm Paul Hammant<a target="_blank" href="https://hammant.org/"><span style="padding-left: 0.1em; font-weight: 900">&#8679;</span></a> and I put this site together to try to really
+        <p class="flow-text">I'm Paul Hammant<a target="_blank" href="https://hammant.org/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> and I put this site together to try to really
             distill what Branch by Abstraction is.
             I led the pioneering work on Branch by Abstraction at a former client (Bank of America's GFX
-            group in Chicago in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><span style="padding-left: 0.1em; font-weight: 900">&#8679;</span></a> based on that work.
+            group in Chicago in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            based on that work.
             The artwork and message from that article was then included in Jez Humble and Dave Farley's
-            best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><span style="padding-left: 0.1em; font-weight: 900">&#8679;</span></a>
+            best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             in 2010.</p>
         <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from slower
-            branching models (and release cadences) to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><span style="padding-left: 0.1em; font-weight: 900">&#8679;</span></a>
+            branching models (and release cadences) to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             with feature flags/toggles <i>and of course Branch by Abstraction</i>. See <a
                     href="https://devops.paulhammant.com">http://devops.paulhammant.com</a> for more details.</p>
     </div>
