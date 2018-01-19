@@ -75,7 +75,7 @@ public class AppTest {
   }
 
   /**
-   * A unit test that checks 'new' integer-based
+   * A unit test that checks 'new' enum-based
    * implementation directly (without HTTP or TCP/IP)
    */
   @Test
