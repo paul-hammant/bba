@@ -39,8 +39,8 @@ public class AppTest {
     get("/color/hair.json")
         .then()
         .assertThat()
-        .body(startsWith("{ \"color\": \""))
-        .body(endsWith("\" }"))
+        .body(startsWith("{\"color\":\""))
+        .body(endsWith("\"}"))
         .body(specifiesAnyOfTheAllowedColors())
         .statusCode(200)
         .contentType("application/json;charset=UTF-8");
@@ -64,8 +64,8 @@ public class AppTest {
     String result = new MockRouter(new App(), mock(Request.class), rsp)
         .get("/color/hair.json");
 
-    assertThat(result, startsWith("{ \"color\": \""));
-    assertThat(result, endsWith("\" }"));
+    assertThat(result, startsWith("{\"color\":\""));
+    assertThat(result, endsWith("\"}"));
     assertThat(result, specifiesAnyOfTheAllowedColors());
 
     verify(rsp).type("application/json");

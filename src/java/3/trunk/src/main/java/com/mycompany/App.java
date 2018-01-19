@@ -14,7 +14,7 @@ public class App extends Jooby {
     get("/color/hair.json", (req, rsp) -> {
       rsp.status(200)
               .type("application/json")
-              .send("{ \"color\": \"" + releaseToggles.getChangingHairColor() + "\" }");
+              .send("{\"color\":\"" + releaseToggles.getChangingHairColor() + "\"}");
     });
 
     onStart(registry -> {
