@@ -1,9 +1,15 @@
 package com.mycompany;
 
+import static com.mycompany.Color.Black;
+import static com.mycompany.Color.Blonde;
+import static com.mycompany.Color.Brown;
+import static com.mycompany.Color.Red;
 import static io.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import org.hamcrest.core.AnyOf;
 import org.jooby.test.JoobyRule;
@@ -31,44 +37,34 @@ public class AppTest {
    */
   @Test
   public void integrationTest() {
-    int x = 0;
-    do {
-      // 20 iterations as hair color impl is random
-      x++;
-      get("/")
-              .then()
-              .assertThat()
-              .body(startsWith("Hello "))
-              .body(endsWith(" World!"))
-              .body(specifiesAnyOfTheAllowedColors())
-              .statusCode(200)
-              .contentType("text/html;charset=UTF-8");
-    } while (x < 20);
+    get("/color/hair.json")
+            .then()
+            .assertThat()
+            .body(startsWith("{\"color\":\""))
+            .body(endsWith("\"}"))
+            .body(specifiesAnyOfTheAllowedColors())
+            .statusCode(200)
+            .contentType("application/json;charset=UTF-8");
   }
 
   private AnyOf<String> specifiesAnyOfTheAllowedColors() {
-    return anyOf(containsString("Blonde"), containsString("Brown"),
-            containsString("Black"), containsString("Red"));
+    return anyOf(containsString(Blonde.toString()), containsString(Brown.toString()),
+            containsString(Black.toString()), containsString(Red.toString()));
   }
 
   /**
-   * A unit test that checks 'new' integer-based
+   * A unit test that checks 'new' enum-based
    * implementation directly (without HTTP or TCP/IP)
    */
   @Test
   public void newHairColorTest() throws Throwable {
     App app = new App();
-    app.bbaf = new Release4();
+    app.releaseToggles = new Release4();
 
-    int x = 0;
-    do {
-      // 40 iterations as hair color impl is random
-      x++;
-      String result = new MockRouter(app).get("/");
-      assertThat(result, startsWith("Hello "));
-      assertThat(result, endsWith(" World!"));
-      assertThat(result, specifiesAnyOfTheAllowedColors());
-    } while (x < 40);
+    Color color = new MockRouter(app)
+            .get("/color/hair.json");
+
+    assertThat(color, isIn(Color.values()));
   }
 
 }

@@ -4,8 +4,13 @@ import static io.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.hamcrest.core.AnyOf;
+import org.jooby.Request;
+import org.jooby.Response;
 import org.jooby.test.JoobyRule;
 import org.jooby.test.MockRouter;
 import org.junit.ClassRule;
@@ -29,14 +34,14 @@ public class AppTest {
    */
   @Test
   public void integrationTest() {
-    get("/")
-        .then()
-        .assertThat()
-        .body(startsWith("Hello "))
-        .body(endsWith(" World!"))
-        .body(specifiesAnyOfTheAllowedColors())
-        .statusCode(200)
-        .contentType("text/html;charset=UTF-8");
+    get("/color/hair.json")
+            .then()
+            .assertThat()
+            .body(startsWith("{ \"color\": \""))
+            .body(endsWith("\" }"))
+            .body(specifiesAnyOfTheAllowedColors())
+            .statusCode(200)
+            .contentType("application/json;charset=UTF-8");
   }
 
   private AnyOf<String> specifiesAnyOfTheAllowedColors() {
@@ -51,12 +56,20 @@ public class AppTest {
   @Test
   public void unitTest() throws Throwable {
     App app = new App();
-    app.hcf = new HairColorFactoryImpl();
-    String result = new MockRouter(app).get("/");
+    app.releaseToggles = new Release3();
+    Response rsp = mock(Response.class);
+    when(rsp.status(200)).thenReturn(rsp);
+    when(rsp.type("application/json")).thenReturn(rsp);
 
-    assertThat(result, startsWith("Hello "));
-    assertThat(result, endsWith(" World!"));
+    String result = new MockRouter(app, mock(Request.class), rsp)
+            .get("/color/hair.json");
+
+    assertThat(result, startsWith("{ \"color\": \""));
+    assertThat(result, endsWith("\" }"));
     assertThat(result, specifiesAnyOfTheAllowedColors());
+
+    verify(rsp).type("application/json");
+    verify(rsp).status(200);
   }
 
 }

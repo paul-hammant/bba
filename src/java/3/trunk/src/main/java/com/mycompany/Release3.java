@@ -8,9 +8,9 @@ import static java.util.Arrays.asList;
 /**
  * @author Paul Hammant DevOps, (c) 2018
  */
-public class Release3 extends BranchByAbstractionFactory {
+public class Release3 extends ReleaseToggles {
     @Override
-    public String getHairColor() {
+    public String getChangingHairColor() {
         List<String> colors = asList("Blonde", "Brown", "Black", "Red");
         return colors.get(new Random().nextInt(colors.size()));
     }

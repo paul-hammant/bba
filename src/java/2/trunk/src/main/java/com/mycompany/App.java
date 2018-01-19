@@ -13,10 +13,14 @@ import static java.util.Arrays.asList;
 public class App extends Jooby {
 
   {
-    get("/", () -> "Hello " + getRandomHairColor() + " World!");
+    get("/color/hair.json", (req, rsp) -> {
+      rsp.status(200)
+              .type("application/json")
+              .send("{ \"color\": \"" + getChangingHairColor() + "\" }");
+    });
   }
 
-  private String getRandomHairColor() {
+  private String getChangingHairColor() {
     List<String> colors = asList("Blonde", "Brown", "Black", "Red");
     return colors.get(new Random().nextInt(colors.size()));
   }

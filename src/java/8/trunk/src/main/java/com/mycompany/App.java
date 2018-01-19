@@ -2,23 +2,21 @@ package com.mycompany;
 
 import com.typesafe.config.Config;
 import org.jooby.Jooby;
+import org.jooby.json.Jackson;
 
 /**
  * @author Paul Hammant DevOps, (c) 2018
  */
 public class App extends Jooby {
 
-  BranchByAbstractionFactory bbaf;
-
-  int colorCtr = 0;
+  ReleaseToggles releaseToggles;
 
   {
-    get("/", () -> {
-      return "Hello " + Colors.values()[colorCtr++ % Colors.values().length].getColorName() + " World!";
-    });
+    use(new Jackson());
+    get("/color/hair.json", () -> Color.rotatingChoice());
 
     onStart(registry -> {
-      bbaf = BranchByAbstractionFactory.make(registry.require(Config.class).getString("BranchByAbstractionFactory"));
+      releaseToggles = ReleaseToggles.make(registry.require(Config.class).getString("ReleaseToggles"));
     });
   }
 

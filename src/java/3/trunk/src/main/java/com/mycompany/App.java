@@ -8,15 +8,17 @@ import org.jooby.Jooby;
  */
 public class App extends Jooby {
 
-  HairColorFactory hcf;
+  ReleaseToggles releaseToggles;
 
   {
-    get("/", () -> {
-      return "Hello " + hcf.getHairColor() + " World!";
+    get("/color/hair.json", (req, rsp) -> {
+      rsp.status(200)
+              .type("application/json")
+              .send("{ \"color\": \"" + releaseToggles.getChangingHairColor() + "\" }");
     });
 
     onStart(registry -> {
-      hcf = HairColorFactory.make(registry.require(Config.class).getString("HairColorClass"));
+      releaseToggles = ReleaseToggles.make(registry.require(Config.class).getString("ReleaseToggles"));
     });
   }
 
