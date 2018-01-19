@@ -1,13 +1,5 @@
 package com.mycompany;
 
-import static io.restassured.RestAssured.get;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.hamcrest.Matcher;
 import org.hamcrest.core.AnyOf;
 import org.jooby.Request;
@@ -18,6 +10,16 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 import java.util.Arrays;
+
+import static io.restassured.RestAssured.get;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.startsWith;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Paul Hammant DevOps, (c) 2018
@@ -48,7 +50,8 @@ public class AppTest {
   }
 
   private AnyOf<String> specifiesAnyOfTheAllowedColors() {
-    return anyOf(Arrays.stream(Release4.Color.values()).map(c -> containsString(c.toString())).toArray(Matcher[]::new));
+    return anyOf(Arrays.stream(Release4.Color.values())
+            .map(c -> containsString(c.name())).toArray(Matcher[]::new));
   }
 
   /**
