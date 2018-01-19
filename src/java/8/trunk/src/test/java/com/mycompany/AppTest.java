@@ -38,13 +38,13 @@ public class AppTest {
   @Test
   public void integrationTest() {
     get("/color/hair.json")
-            .then()
-            .assertThat()
-            .body(startsWith("{\"color\":\""))
-            .body(endsWith("\"}"))
-            .body(specifiesAnyOfTheAllowedColors())
-            .statusCode(200)
-            .contentType("application/json;charset=UTF-8");
+        .then()
+        .assertThat()
+        .body(startsWith("{\"color\":\""))
+        .body(endsWith("\"}"))
+        .body(specifiesAnyOfTheAllowedColors())
+        .statusCode(200)
+        .contentType("application/json;charset=UTF-8");
   }
 
   private AnyOf<String> specifiesAnyOfTheAllowedColors() {
