@@ -260,7 +260,7 @@
 
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/3"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
-    <h4 id="3">Make the new implementation of the abstracted thing</h4>
+    <h4 id="2">2. Make the new implementation of the abstracted thing</h4>
 
     <h5>One new prod Java source, and all others unchanged:</h5>
 
@@ -270,9 +270,20 @@
 
     <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/4/trunk/conf/application_release4.conf"></pre>
 
-    <p class="flow-text">Something about CI</p>
+    <p class="flow-text">All good teams have a Continuous Integration server setup to guard quality or the trunk (or master).
+        The simple modification to the design of that to accomodate branch by abstraction efforts, is to have one more whole
+        CI pipeline for each anticipated permutation of toggles for forthcoming releases. Plus one pipeline that represents
+        the previous release bt only for as long as a roll-back of at least the part of the release pertinent to the toggle
+        that was just activated in production is a possibility</p>
 
-    <h5>The unit test method cloned for the new hair color implementation</h5>
+    <p class="flow-text">A more sophisticated (less brute force) solution is to have one pipeline process all the
+        common steps in a linear way (ccompile, compile of tests, execution of pure unit tests) then fan out to N
+        parallel pipelines where integration or functional (WebDriver) tests are going to test larger parts
+        of the application or service with toggle set on (or off) explicitly. Again permutations that are meaningful
+        for forthcoming releases (and that prior release that is still warm)
+    </p>
+
+    <h5>The unit test method cloned for the new hair color implementation:</h5>
 
     <pre data-line="60,81-84,86-88,90-94" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/4/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
@@ -281,23 +292,18 @@
 
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
-    <p class="flow-text">TODO This is because there's a single toggle/flag flipped for those developers.</p>
+    <p class="flow-text">Only the developers working on the migration are exposed to the new technology. Everyone else uses
+        the old (established) implementation of the abstraction. That last is by default of course, so the developers
+        using the new technology have to override the boot cycle for the app/service themselves but make sure to not check that
+        in accidentally.</p>
 
-    <span>TODO</span>
-
-    <p class="flow-text">3. Only the developers working on the migration are exposed to the new technology, in a crucial primordial section of code.</p>
-
-    <h4 id="4">4. Everyone else sees/uses the old tech choice</h4>
-
-    <p class="flow-text">They need to develop functional deliverables without encountering anything that is transitional, so they
+    <p class="flow-text">TODO They need to develop functional deliverables without encountering anything that is transitional, so they
         continue with the old/legacy implementation. They don't have to do anything to set that up, as it is a default with
         mere clone/checkout and build from root.</p>
 
-    <span>TODO</span>
+    <p class="flow-text">TODO And indeed "everyone else" also means QA/UAT/live deployments too.</p>
 
-    <p class="flow-text">And indeed "everyone else" also means QA/UAT/live deployments too.</p>
-
-    <h4 id="5">5. Repeat tens or hundreds of times until there are two of everything</h4>
+    <h4 id="3">3. Repeat tens or hundreds of times until there are two of everything</h4>
 
     <p class="flow-text">The point was that the "change that was going to take a while" was going to span a few releases and happen
     concurrently with the development other business functionality. Getting the first example done using branch by
@@ -312,9 +318,7 @@
         will concurrently create new classes in the old technology, too. You may insist that they write tests though if
         they are adding to your backlog, but otherwise just relax. As long as they are not even close to adding to your
         backlog faster than you're migrating components to the new system you're going to be OK.</p>
-
-    <span>TODO</span>
-
+    
     <p class="flow-text">As you're coding/committing/pushing small parts of this work towards completion, at some point you're going to
     try to bring up the app itself and click through it in an exploratory way. You'll also be wanting to see that the
     UI functional tests (Selenium, etc) are still passing too. If far from completion of the migration, then these
@@ -323,7 +327,7 @@
         for.  Make sure you've already got stakeholder agreement that it is safe to change estimates as you go. Maybe even more than
         once. Reminding managers that this methodical procedure can be paused and resumed helps too.
 
-    <h4 id="6">6. Remove the abstraction</h4>
+    <h4 id="4">4. Remove the abstraction</h4>
 
     <p class="flow-text">You will go properly live with a toggle flip, after testing and a signoff in UAT. You'll have practiced flipping
     that toggle back to "old" in UAT after an initial deployment to "new". You will confirm that both work so that you can assure
