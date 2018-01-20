@@ -8,7 +8,7 @@ import org.jooby.Jooby;
  */
 public class App extends Jooby {
 
-  ReleaseToggles releaseToggles;
+  private ReleaseToggles releaseToggles;
 
   {
     get("/color/hair.json", (req, rsp) -> {
@@ -20,6 +20,11 @@ public class App extends Jooby {
     onStart(registry -> {
       releaseToggles = ReleaseToggles.make(registry.require(Config.class).getString("ReleaseToggles"));
     });
+  }
+
+  public App withTogglesFor(ReleaseToggles releaseToggles) {
+    this.releaseToggles = releaseToggles;
+    return this;
   }
 
   public static void main(final String[] args) {

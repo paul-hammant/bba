@@ -58,13 +58,12 @@ public class AppTest {
    */
   @Test
   public void originalHairColorTest() throws Throwable {
-    App app = new App();
-    app.releaseToggles = new Release3();
     Response rsp = mock(Response.class);
     when(rsp.status(200)).thenReturn(rsp);
     when(rsp.type("application/json")).thenReturn(rsp);
 
-    String result = new MockRouter(app, mock(Request.class), rsp)
+    String result = new MockRouter(new App().withTogglesFor(new Release3()),
+            mock(Request.class), rsp)
             .get("/color/hair.json");
 
     assertThat(result, startsWith("{\"color\":\""));
@@ -80,13 +79,12 @@ public class AppTest {
    */
   @Test
   public void newHairColorTest() throws Throwable {
-    App app = new App();
-    app.releaseToggles = new Release4();
     Response rsp = mock(Response.class);
     when(rsp.status(200)).thenReturn(rsp);
     when(rsp.type("application/json")).thenReturn(rsp);
 
-    String result = new MockRouter(app, mock(Request.class), rsp)
+    String result = new MockRouter(new App().withTogglesFor(new Release4()),
+            mock(Request.class), rsp)
             .get("/color/hair.json");
 
     assertThat(result, startsWith("{\"color\":\""));

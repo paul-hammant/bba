@@ -56,12 +56,11 @@ public class AppTest {
    */
   @Test
   public void newHairColorTest() throws Throwable {
-    App app = new App();
-    app.releaseToggles = new Release4();
-
-    Color color = new MockRouter(app)
+    Color color = new MockRouter(new App().withTogglesFor(new Release4()))
             .get("/color/hair.json");
 
+    // Is an object here, not a JSON string.
+    // an instance of that enum to be specific
     assertThat(color, isIn(Color.values()));
   }
 }
