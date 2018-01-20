@@ -18,13 +18,17 @@ public class App extends Jooby {
     });
 
     onStart(registry -> {
-      releaseToggles = ReleaseToggles.make(registry.require(Config.class).getString("ReleaseToggles"));
+      withTogglesFor(registry.require(Config.class).getString("ReleaseToggles"));
     });
   }
 
-  public App withTogglesFor(ReleaseToggles releaseToggles) {
-    this.releaseToggles = releaseToggles;
-    return this;
+  App withTogglesFor(String releaseTogglesClassName) {
+    try {
+      releaseToggles = (ReleaseToggles) Class.forName(releaseTogglesClassName).newInstance();
+      return this;
+    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+      throw new UnsupportedOperationException(e);
+    }
   }
 
   public static void main(final String[] args) {

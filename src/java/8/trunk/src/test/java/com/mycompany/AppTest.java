@@ -56,7 +56,7 @@ public class AppTest {
    */
   @Test
   public void newHairColorTest() throws Throwable {
-    Color color = new MockRouter(new App().withTogglesFor(new Release4()))
+    Color color = new MockRouter(new App().withTogglesFor(Release4.class.getName()))
             .get("/color/hair.json");
 
     // Is an object here, not a JSON string.

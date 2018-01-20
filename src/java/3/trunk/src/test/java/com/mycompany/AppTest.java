@@ -60,7 +60,7 @@ public class AppTest {
     when(rsp.status(200)).thenReturn(rsp);
     when(rsp.type("application/json")).thenReturn(rsp);
 
-    String result = new MockRouter(new App().withTogglesFor(new Release3()),
+    String result = new MockRouter(new App().withTogglesFor(Release3.class.getName()),
             mock(Request.class), rsp)
             .get("/color/hair.json");
 
