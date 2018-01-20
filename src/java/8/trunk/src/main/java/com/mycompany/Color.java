@@ -14,10 +14,10 @@ enum Color {
   Black(),
   Red();
 
-  static int colorCtr = 0;
-
   Color() {
   }
+
+  private static int colorCtr = 0;
 
   @JsonProperty()
   String getColor(){

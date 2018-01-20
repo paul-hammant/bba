@@ -5,15 +5,17 @@ package com.mycompany;
  */
 public class Release4 implements ReleaseToggles {
 
-    static int colorCtr = 0;
-
     enum Color {
+
         Blonde(),
         Brown(),
         Black(),
         Red();
+
         Color() {
         }
+
+        private static int colorCtr = 0;
 
         static Color rotatingChoice() {
             return Color.values()[colorCtr++ % Color.values().length];

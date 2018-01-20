@@ -234,13 +234,13 @@
 
     <pre data-line="11,17,20-21,25-30" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/App.java" class="language-java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/App.java"></pre>
 
-    <pre data-line="6" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
+    <pre data-line="6,8" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
 
     <pre data-line="11-15" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/Release3.java" class="language-java"  data-src="src/java/3/trunk/src/main/java/com/mycompany/Release3.java"></pre>
 
     <h5>Some configuration for the boot-time toggle choice outside of Java:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
+    <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
 
     <p class="flow-text">What is unlikely, though, is <b>run-time</b> toggles. Those are toggles/flags that can be
         flipped from old to new (or back again), while the software is in use. Unlikely to be needed but not
@@ -258,11 +258,11 @@
 
     <h5>One new prod Java source, and all others unchanged:</h5>
 
-    <pre data-line="6-20,24-25" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Release4.java"></pre>
+    <pre data-line="6,8,10-15,18-19,24-25" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Release4.java"></pre>
 
     <h5>A second configuration file to use at boot-time to set toggle choice for the new hair color implementation:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/4/trunk/conf/application_release4.conf"></pre>
+    <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/4/trunk/conf/application_release4.conf"></pre>
 
     <p class="flow-text">Something about CI</p>
 
