@@ -44,6 +44,7 @@ git rm conf/application_release4.conf
 git rm src/main/java/com/mycompany/Release3.java
 git commit -m "Remove the hair color abstraction (some time after the release as we're passed roll back now, and go live)"
 git tag 5 -m "Remove the hair color abstraction (some time after the release as we're passed roll back now, and go live)"
+git gc
 git push -f
 git push --tags -f
 cd ..
