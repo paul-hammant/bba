@@ -250,15 +250,41 @@
 
     <pre data-line="63" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
-    <p class="flow-text"> ^ the highlighted lines are the only ones that changed</p>
+    <p class="flow-text"> ^ the highlighted line are the only ones that changed</p>
 
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/3"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
-    <h4 id="3">3. Only the developers working on the migration are exposed to the new technology, in a crucial primordial section of code.</h4>
+    <h4 id="3">Make the second (new) implementation of the thing abstracted</h4>
 
-    <p class="flow-text">This is because there's a single toggle/flag flipped for those developers.</p>
+    <h5>A second configuration file to use at boot-time to set toggle choice for the new hair color implementation:</h5>
+
+    <pre data-line="11,17,20-21,25-30" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/App.java" class="language-java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/App.java"></pre>
+
+    <pre data-line="6" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
+
+    <pre data-line="11" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Release4.java"></pre>
+
+    <h5>A second configuration file to use at boot-time to set toggle choice for the new hair color implementation:</h5>
+
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application_release4.conf"></pre>
+
+    <p class="flow-text">What is unlikely, though, is <b>run-time</b> toggles. Those are toggles/flags that can be
+        flipped from old to new (or back again), while the software is in use. Unlikely to be needed but not
+        impossible to code.</p>
+
+    <h5>The test only differs from the previous version in the way 'App' is instantiated for the unit test:</h5>
+
+    <pre data-line="63" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/4/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+
+    <p class="flow-text"> ^ the highlighted line are the only ones that changed</p>
+
+    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
+
+    <p class="flow-text">HERE This is because there's a single toggle/flag flipped for those developers.</p>
 
     <span>HERE</span>
+
+    <p>3. Only the developers working on the migration are exposed to the new technology, in a crucial primordial section of code.</p>
 
     <p class="flow-text">But it is more likely to be outside code in a YAML, XML, JSON or properties file (local or remote), like this (or better):</p>
 
