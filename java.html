@@ -254,29 +254,24 @@
 
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/3"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
-    <h4 id="3">Make the second (new) implementation of the thing abstracted</h4>
+    <h4 id="3">Make the new implementation of the abstracted thing</h4>
+
+    <h5>One new prod Java source, and all others unchanged:</h5>
+
+    <pre data-line="6-20,24-25" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Release4.java"></pre>
 
     <h5>A second configuration file to use at boot-time to set toggle choice for the new hair color implementation:</h5>
 
-    <pre data-line="11,17,20-21,25-30" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/App.java" class="language-java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/4/trunk/conf/application_release4.conf"></pre>
 
-    <pre data-line="6,8" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
+    <p class="flow-text">Something about CI</p>
 
-    <pre data-line="11-15" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Release4.java"></pre>
+    <h5>The unit test method cloned for the new hair color implementation</h5>
 
-    <h5>A second configuration file to use at boot-time to set toggle choice for the new hair color implementation:</h5>
+    <pre data-line="60,80-94" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/4/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application_release4.conf"></pre>
-
-    <p class="flow-text">What is unlikely, though, is <b>run-time</b> toggles. Those are toggles/flags that can be
-        flipped from old to new (or back again), while the software is in use. Unlikely to be needed but not
-        impossible to code.</p>
-
-    <h5>The test only differs from the previous version in the way 'App' is instantiated for the unit test:</h5>
-
-    <pre data-line="63" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/4/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
-
-    <p class="flow-text"> ^ the highlighted line are the only ones that changed</p>
+    <p class="flow-text"> ^ in addition to the cloned method, there's a tactical rename of the old unit test too.
+        Duplicated code here is not the sin you would otherwise think it is.</p>
 
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
@@ -339,27 +334,27 @@
 
     <h5>The `App` class:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/App.java"></pre>
 
     <h5>The `BranchByAbstractionFactory` class:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
 
     <h5>The new `Colors` class (extracted):</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Colors.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Colors.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/Colors.java" class="language-java"  data-src="src/java/8/trunk/src/main/java/com/mycompany/Colors.java"></pre>
 
     <h5>The `Release4` class:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Colors.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Colors.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/Colors.java" class="language-java"  data-src="src/java/8/trunk/src/main/java/com/mycompany/Colors.java"></pre>
 
     <h5>And the tests:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/AppTest.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/test/java/com/mycompany/AppTest.java" class="language-java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/AppTest.java"></pre>
 
     <p class="flow-text"> ^ The 'old' unit test deleted</p>
 
-    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
+    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
 
     <p class="flow-text">As previously mentioned, this last is the characterizing difference to any other use of abstractions in the codebase.
