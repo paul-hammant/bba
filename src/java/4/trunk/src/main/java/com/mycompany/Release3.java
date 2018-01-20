@@ -8,7 +8,7 @@ import static java.util.Arrays.asList;
 /**
  * @author Paul Hammant DevOps, (c) 2018
  */
-public class Release3 extends ReleaseToggles {
+public class Release3 implements ReleaseToggles {
     @Override
     public Object getChangingHairColor() {
         List<String> colors = asList("Blonde", "Brown", "Black", "Red");

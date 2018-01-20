@@ -6,9 +6,7 @@ import org.jooby.test.JoobyRule;
 import org.jooby.test.MockRouter;
 import org.junit.ClassRule;
 import org.junit.Test;
-
 import java.util.Arrays;
-
 import static io.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;
@@ -66,5 +64,4 @@ public class AppTest {
 
     assertThat(color, isIn(Color.values()));
   }
-
 }

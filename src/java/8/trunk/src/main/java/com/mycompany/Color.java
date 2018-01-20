@@ -3,8 +3,6 @@ package com.mycompany;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Random;
-
 /**
  * @author Paul Hammant DevOps, (c) 2018
  */

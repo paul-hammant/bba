@@ -3,9 +3,9 @@ package com.mycompany;
 /**
  * @author Paul Hammant DevOps, (c) 2018
  */
-public abstract class ReleaseToggles {
+public interface ReleaseToggles {
 
-    abstract Object getChangingHairColor();
+    Object getChangingHairColor();
 
     static ReleaseToggles make(String name){
         try {
