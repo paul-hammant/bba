@@ -200,11 +200,11 @@
 
     <h5>After implementing the hair color JSON end point:</h5>
 
-    <pre data-line="16,19-22" ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <pre data-line="16,19-22" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
 
     <h5>And unit + integration/service tests for that:</h5>
 
-    <pre data-line="37,42-45, 58" ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <pre data-line="37,42-45, 58" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
     <p class="flow-text">See also the diff between generated "Hello World" app and hair color JSON end point that replaced if<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> if you are interested.</p>
 
@@ -229,22 +229,22 @@
 
     <h5>Three prod sources (two new) in src/main/java/com/mycompany/</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/3/src/test/java/com/mycompany/App.java" class="language-java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/test/java/com/mycompany/App.java" class="language-java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/App.java"></pre>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/Release3.java" class="language-java"  data-src="src/java/3/trunk/src/main/java/com/mycompany/Release3.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/Release3.java" class="language-java"  data-src="src/java/3/trunk/src/main/java/com/mycompany/Release3.java"></pre>
 
     <p class="flow-text">What is unlikely, though, is <b>run-time</b> toggles. Those are toggles/flags that can be flipped from old to new (or back
         again), while the software is in use. Unlikely to be needed but not impossible to code.</p>
 
     <h5>Some configuration for the toggle choice outside of Java:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/3/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
 
     <h5>The test only differs from the previous version in the unit test setup:</h5>
 
-    <pre data-line="53-55" ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/3/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <pre data-line="53-55" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
     <p class="flow-text"> ^ the three highlighted lines are the only ones that changed</p>
 
@@ -315,23 +315,23 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
     <h5>The `App` class:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/App.java"></pre>
 
     <h5>The `BranchByAbstractionFactory` class:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
 
     <h5>The new `Colors` class (extracted):</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Colors.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Colors.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Colors.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Colors.java"></pre>
 
     <h5>The `Release4` class:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Colors.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Colors.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Colors.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Colors.java"></pre>
 
     <h5>And the tests:</h5>
 
-    <pre ghLink="https://github.com/paul-hammant/little_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/AppTest.java"></pre>
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" class="language-java" data-src="src/java/4/trunk/src/main/java/com/mycompany/AppTest.java"></pre>
 
     <p class="flow-text"> ^ The 'old' unit test deleted</p>
 
