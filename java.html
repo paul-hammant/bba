@@ -181,13 +181,23 @@
     <h5>Starting point</h5>
 
     <p class="flow-text">The classic case discussed for branch by abstraction is the changing of one persistence technology for another. In the original
-        article<a href="#footer"><span style="padding-left: 0.1em; font-weight: 900">#</span></a> for this, it was swapping out
+        article<a href="#footer"><svg version="1.1" id="Layer_1" width="0.9em" height="0.9em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" stroke="#06D" style="margin-left: -3px; margin-bottom: 0" enable-background="new 0 0 24 24" xml:space="preserve">
+<path d="M12.1,15.9L11,17c-0.5,0.5-1.3,0.8-2,0.8S7.6,17.5,7,17c-1.1-1.1-1.1-2.9,0-4l2.6-2.6c0.5-0.5,1.3-0.8,2-0.8
+	c0.7,0,1.4,0.3,2,0.8c0.3,0.3,0.5,0.7,0.7,1.1l0.9-0.9c-0.2-0.4-0.4-0.7-0.7-1.1c-0.8-0.8-1.8-1.2-2.8-1.2c-1.1,0-2.1,0.4-2.8,1.2
+	l-2.6,2.6c-1.6,1.6-1.6,4.1,0,5.7C6.9,18.6,7.9,19,9,19c1.1,0,2.1-0.4,2.8-1.2l1.8-1.8c-0.2,0-0.3,0-0.5,0
+	C12.8,16,12.5,16,12.1,15.9z"/>
+<path d="M18.8,5.2C18.1,4.4,17.1,4,16,4c-1.1,0-2.1,0.4-2.8,1.2L11.3,7c0.2,0,0.3,0,0.5,0c0.4,0,0.8,0,1.1,0.1l1-1
+	c0.5-0.5,1.3-0.8,2-0.8s1.4,0.3,2,0.8c1.1,1.1,1.1,2.9,0,4l-2.6,2.6c-0.5,0.5-1.3,0.8-2,0.8c-0.7,0-1.4-0.3-2-0.8
+	c-0.3-0.3-0.5-0.7-0.7-1.1l-0.9,0.9c0.2,0.4,0.4,0.7,0.7,1.1c0.8,0.8,1.8,1.2,2.8,1.2c1.1,0,2.1-0.4,2.8-1.2l2.6-2.6
+	C20.4,9.3,20.4,6.7,18.8,5.2z"/>
+</svg></a> for this, it was swapping out
         Java's 'Hibernate' technology for 'iBatis' (now MyBatis). That was hypothetical for the blog entry. In real
         life, a few years later ThoughtWorks' Go team replaced iBatis with Hibernate (<i>life indeed does imitate art, Oscar Wilde</i>). </p>
 
     <p class="flow-text">But, for the telling of the branch by abstraction story here, let's focus on a very simple contrived web app presenting a single JSON endpoint for a pseudo-random hai color.</p>
 
-    <p class="flow-text">Running a code generator for the 'Jooby' web framework gives us a neat four-line web application that can serve as a starting point for this step by step guide.<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test for the same is fairly simple<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (have both a unit and integration test). The whole commit<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
+    <p class="flow-text">Running a code generator for the 'Jooby' web framework gives us a neat four-line web application that can serve as a starting point for this step by step guide<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test for the same is fairly simple<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (have both a unit and integration test). The whole commit<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
 
     <div class="row">
     <div style="margin-left: 30px" class="col s12 m7">
@@ -482,7 +492,7 @@
                 })
                 .not('.disabled').material_select();
 
-            $( "pre" ).remove();
+            // $( "pre" ).remove();
 
             // var t1 = performance.now();
 
