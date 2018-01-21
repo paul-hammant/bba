@@ -127,7 +127,7 @@
     <h3 align="center">Branch By Abstraction?</h3>
 
     <p class="flow-text">Yes, <b>by abstraction instead of by branches in source control</b>. And no, that doesn't mean sprinkle
-        conditionals into your source code, it means to use an abstraction concept that's idiomatic for the language in question.</p>
+        conditionals into your source code. It means to use an abstraction concept that's idiomatic for the language in question.</p>
 
     <p class="flow-text"><u>Context:</u> Some non-functional changes are so quick to code that the migration barely registers in the
         development team. Some are so long that they're
@@ -206,7 +206,7 @@
 
     <pre data-line="38,41-43,45,48-50,59-61,63-64,66-70" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
-    <p class="flow-text">See also the diff between generated "Hello World" app and hair color JSON end point that replaced if<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> if you are interested.</p>
+    <p class="flow-text">See also the diff between generated "Hello World" app and hair color JSON end point that replaced <a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> if you are interested.</p>
 
     <h4 id="1">1. Introduce an abstraction</h4>
 
@@ -226,8 +226,8 @@
     <p class="flow-text">
         A mechanism of abstraction that is idiomatically correct for the language in question is also essential.
         For example, Java's interfaces (and implementations of those) is a smarter choice than making a abstract base class
-        for 'old' and 'new' to extend. C# would be the same. Ruby and Python have mixins and method_missing to consider,
-        and a number of duck-typing possibilities. If using Rust, the dev team would consider 'traits'.
+        for 'old' and 'new' to extend. C# would be the same. Ruby and Python have mixins, method_missing, and duck-typing to consider.
+        If using Rust, the dev team may consider 'traits'.
     </p>
 
     <h5>Three prod sources (two new) in src/main/java/com/mycompany/</h5>
@@ -249,8 +249,8 @@
     <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
 
     <p class="flow-text"><b>Boot-time</b> toggles are different to <b>run-time</b> ones. The latter are toggles/flags that can be
-        flipped from old to new (or back again) while the software is in use. Unlikely to be ever needed as a feature (in
-        conjunction with branch by abstraction, but not impossible to code.</p>
+        flipped from old to new (or back again) while the software is in use. This is unlikely to be ever needed as a feature (in
+        conjunction with branch by abstraction), but not impossible to code.</p>
 
     <h5>The test only differs from the previous version in the way that App is instantiated for the unit test:</h5>
 
@@ -270,17 +270,20 @@
 
     <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/4/trunk/conf/application_release4.conf"></pre>
 
-    <p class="flow-text">All good teams have a Continuous Integration server setup to guard quality or the trunk (or master).
-        The simple modification to the design of that to accomodate branch by abstraction efforts, is to have one more whole
+    <p class="flow-text">All good teams have a Continuous Integration server setup to guard the quality the code in the trunk
+        (master branch for Git and Mercurial).
+        The simple modification to the design of that to accommodate branch by abstraction efforts, is to have one more whole
         CI pipeline for each anticipated permutation of toggles for forthcoming releases. Plus one pipeline that represents
         the previous release bt only for as long as a roll-back of at least the part of the release pertinent to the toggle
         that was just activated in production is a possibility</p>
 
     <p class="flow-text">A more sophisticated (less brute force) solution is to have one pipeline process all the
-        common steps in a linear way (ccompile, compile of tests, execution of pure unit tests) then fan out to N
+        common steps in a linear way (compile of prod source, compile of tests, execution of pure unit tests). Then that
+        same CI job fans out to N
         parallel pipelines where integration or functional (WebDriver) tests are going to test larger parts
-        of the application or service with toggle set on (or off) explicitly. Again permutations that are meaningful
-        for forthcoming releases (and that prior release that is still warm)
+        of the application or service with toggle set on (or off) explicitly. Larger means multi-process and definate
+        socket use (HTTP in the case of our example). Again, only permutations of pipeline that are meaningful
+        for forthcoming releases (and that prior release that is still warm) should be setup.
     </p>
 
     <h5>The unit test method cloned for the new hair color implementation:</h5>
