@@ -140,15 +140,15 @@
         many weeks or months and there will be releases to production before the completion of the work in question.</p>
 
     <p class="flow-text">The branch idea
-        would be OK if the resulting merge back could be instantaneous and guaranteed to be a pain free merge.
+        would be OK if the resulting merge back could be instantaneous and guaranteed to be a pain-free merge.
         Note too that executives often express their displeasure with nonfunctional work taking longer than promised by
-        canceling it</p>
+        canceling it.</p>
 
     <p class="flow-text">Branch by Abstraction is a methodical procedure which has some clear steps:</p>
 
     <ol style="font-size: 120%" class="collection">
         <li class="collection-item">Introduce an abstraction to methodically chomp away at that time consuming non-functional change</li>
-        <li class="collection-item">In order to not jeopardize anyone else's throughput, you work in a place in the codebase that is separate to the existing code</li>
+        <li class="collection-item">To not jeopardize anyone else's throughput, you work in a place in the codebase that is separate to the existing code</li>
         <li class="collection-item">When ready switch over in production (a toggle)</li>
         <li class="collection-item">Lastly, you take out the abstraction itself </li>
     </ol>
@@ -306,7 +306,7 @@
 
     <p class="flow-text">A more sophisticated solution is to have one CI pipeline process for all the
         common steps: compile of prod source, compile of tests, execution of pure unit tests. Then that
-        same CI job fans out to multiple
+        same CI job fans out to many
         parallel jobs where service tests are going to test larger parts
         of the web-service with toggle explicitly set on (or off). Larger means multi-process and definite
         socket use (HTTP in the case of our example). Again, only permutations of pipeline that are meaningful
@@ -315,7 +315,7 @@
 
     <p class="flow-text">
         As well as more sophisticated, that design is less 'brute force' too. Additionally, though our application is a
-        web service, but it could as easily had a thin UI too, and that would require CI-job initiated execution
+        web service, but it could as easily had a thin UI too, and that would need CI-job initiated execution
         of Selenium-WebDriver tests following the service tests. Each team would work out the economics of brute force
         versus the 'parallelized after a certain point' alternate. One thing is clear though: a build failing during CI
         of <b>any</b> of the pipelines means a failure for <b>all</b>, and a rollback of the commit.
@@ -325,7 +325,7 @@
 
     <pre data-line="60,81-84,86-88,90-94" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/4/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
-    <p class="flow-text"> ^ in addition to the cloned method, there's a tactical rename of the old unit test too.
+    <p class="flow-text"> ^ besides the cloned method, there's a tactical rename of the old unit test too.
         Duplicated code here is not the sin you would otherwise think it is.</p>
 
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
@@ -341,13 +341,13 @@
         be the default after a mere clone/checkout (and build) from root or the project.</p>
 
     <p class="flow-text">Note: "everyone else" also means QA/UAT deployments and testing too. That toggle doesn't get flipped
-        to new for everyone until the test automation say it is ready, and the work is complete, and the plan says it is the
-        correct responsible moment to activate it.</p>
+        to 'new' for everyone until the work is complete and test automation say it is ready. The plan should also change
+        to push it live sooner rather than later.</p>
 
     <h4 id="3">3. Repeat tens or hundreds of times until there are two of everything</h4>
 
     <p class="flow-text">The point was that the "change that was going to take a while" was going to span a few releases and happen
-    concurrently with the development other business functionality. Getting the first example done using branch by
+    concurrently with the development other business functionality. Getting the first example done using a branch by
         abstraction was a prerogative. That included the writing of unit and integration tests for it. Best of all
     would be forking of the unit/integration tests from the old implementation, but I'm never surprised to find
     that there were next to none. </p>
@@ -357,15 +357,15 @@
         commit/push. You should code everything with the expectation that it will go live but toggled off
         in production (or compiled out).  You can expect that other developers working on functional deliverables
         will concurrently create new classes in the old technology, too. You may insist that they write tests though if
-        they are adding to your backlog, but otherwise just relax. As long as they are not even close to adding to your
+        they are adding to your backlog, but otherwise relax about that. As long as they are not even close to adding to your
         backlog faster than you're migrating components to the new system you're going to be OK.</p>
 
-    <p class="flow-text">As you're coding/committing/pushing small parts of this work towards completion, at some point you're going to
+    <p class="flow-text">As you are coding/committing/pushing small parts of this work towards completion, at some point you're going to
     try to bring up the app itself and click through it in an exploratory way. You'll also be wanting to see that the
     UI functional tests (Selenium, etc) are still passing too. If far from completion of the migration, then these
     experiments can help you to work out which class/component to work on next. The exercise can also help with
-        the calculation of percentage complete for the whole piece of work, which non-developers will be pushing you
-        for.  Make sure you've already got stakeholder agreement that it is safe to change estimates as you go. Maybe even more than
+        the calculation of percentage complete for the whole piece of work. Executives will be pushing you
+        for for that. Make sure you've already got stakeholder agreement that it is safe to change estimates as you go. Maybe even more than
         once. Reminding managers that this methodical procedure can be paused and resumed helps too.
 
     <h4 id="4">4. Remove the abstraction</h4>
@@ -376,7 +376,7 @@
         executives that you can do the same in production if needed.</p>
 
     <p class="flow-text">After being live for a couple of weeks without incident, you will begin the process of removing
-        the old implementation too in development. The same moment is a good one for renames in particular but refactorings
+        the old implementation from the codebase. The same moment is a good one for renames in particular, and refactorings
         in general.</p>
 
     <p class="flow-text">Maybe immediately after that you will remove the
@@ -430,28 +430,26 @@
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
 
-    <p class="flow-text">As mentioned before, this last is the characterizing difference to any other use of abstractions in the codebase.
-        Well, versus the terrible decision to do the lengthy non-functional change on a branch and merge back to trunk/master when complete.
-        Those are often late, and risk being canceled part complete. Ot they are super stressful at the time of merge.</p>
+    <p class="flow-text">As mentioned before, this last is the characterizing difference to any other use of abstractions in the codebase.</p>
 
     <h4 id="5">5. Caveats</h4>
 
     <p class="flow-text">The case we describe here is only representative. In real life an accomplished developer (with a decent refactoring
-        IDE) would be able to complete the entire migration in a single morning, meaning you would not require branch by abstraction. In reality
+        IDE) would be able to complete the entire migration in a single morning, meaning you would not need branch by abstraction. In reality
         many large object models with a rework/refactoring agenda, cannot be done so quickly. Here's a depiction:</p>
 
     <img style="display: block; margin: 0 auto;" class="z-depth-2" src="/complicated.png">
 
     <p class="flow-text" style="text-align: center;">(source for graphic<a target="_blank" href="https://bl.ocks.org/mbostock/4600693"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>)</p>
 
-    <p class="flow-text">The best way to approach such a component model using branch by abstraction procedure, is to focus on the <b>most depended-on and
+    <p class="flow-text">The best way to migrate such a component model using branch by abstraction procedure, is to focus on the <b>most depended-on and
         least depending component</b> first. And when that one is complete, do the next one by the same definition.</p>
 
-    <p class="flow-text">There are other complications, too. One is the pre-existing use of the singleton pattern (as outlined in the Design
-        Patterns book, not the Spring/Guice idiom of the same name). If so, completely migrate to 'Service Locator' first, before starting a
-        following migration to Dependency Injection.</p>
+    <p class="flow-text">There are other complications, too. One is any pre-existing use of the singleton pattern (as outlined in the Design
+        Patterns book, not the Spring/Guice idiom of the same name). If so, you should migrate to 'Service Locator' first. When that is complete
+        you can start a similar methodical migration to Dependency Injection, and take out the service locator</p>
 
-    <p class="flow-text">There is a "Google Singleton Detector"<a target="_blank" href="https://code.google.com/archive/p/google-singleton-detector/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> technology that was made in 2007, but languishes now. I was the designer and made the first commit. It made pretty diagrams illustrating where the entanglement was in a larger Java classbase, helping you find the most depended-on and least depending components (as mentioned above).</p>
+    <p class="flow-text">There is a "Google Singleton Detector"<a target="_blank" href="https://code.google.com/archive/p/google-singleton-detector/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> technology that was made in 2007, but languishes now. I was the designer and made the first commit. It made pretty diagrams illustrating where the entanglement was in a Java classbase. That helped you find the most depended-on and least depending components (as mentioned above).</p>
 
 </div>
 
@@ -505,7 +503,7 @@
                 })
                 .not('.disabled').material_select();
 
-            $( "pre" ).remove();
+            //$( "pre" ).remove();
 
             // var t1 = performance.now();
 
