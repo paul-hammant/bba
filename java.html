@@ -220,7 +220,7 @@
     </div>
 
         <p class="flow-text">That initial <b>four-line</b> generated web service then morphed into
-        one that had made a JSON document response for an end point that passes back one of four hair colors back to the caller. Here's what that looks like in the browser: </p>
+        one that has a JSON document response that passes back one of four hair colors back to the caller. Here's what that looks like in the browser: </p>
 
     <div class="row" style="margin-left: 30px">
         <img style="padding-left: 0.75em" class="z-depth-2" width="437" height="173" src="/hair_color.png">
@@ -246,12 +246,13 @@
         Somewhere primordial you'd introduce a new component. A single place that allowed the caller to remain ignorant of whether
         they were using the old or the new 'hair color' technology. The choice of old or new hair color technology would
         only be determined at <b>boot time</b>. Some development teams might make that a <b>compile-time</b> fixed choice instead of boot
-        time. Those wouldn't be relying on compiler directives (#IFDEF), but one something closer to the build grammar and
-        like 'Maven Profiles' (Maven being Java's standard build technology). Build-time and boot-time <b>toggles</b>, by another name.
+        time. Those would not be relying on compiler directives like #IFDEF for C & C++. Instead they would rely on something closer to the
+        build grammar and like 'Maven Profiles' (Maven being Java's standard build technology).
+        Build-time and boot-time <b>toggles</b>, by another name.
     </p>
 
     <p class="flow-text">
-        A abstraction mechanism that is idiomatically-correct for the language in question is also essential.
+        An abstraction mechanism that is idiomatically-correct for the language in question is also essential.
         For example, Java's interfaces (and implementations of those) is a smarter choice than making a abstract base class
         for 'old' and 'new' to extend. C# would be the same. Ruby and Python have mixins, method_missing, and duck-typing to consider.
         If using Rust, the dev team may consider 'traits'.
@@ -276,8 +277,7 @@
     <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
 
     <p class="flow-text"><b>Boot-time</b> toggles are different to <b>run-time</b> ones. The latter are toggles/flags that can be
-        flipped from old to new (or back again) while the software is in use. This is unlikely to be ever needed as a feature (in
-        conjunction with branch by abstraction at least), but not impossible to code.</p>
+        flipped from old to new (or back again) while the software is in use. This is unlikely to be ever needed as a feature, but not impossible to code. Unlikely in conjunction with branch by abstraction, at least</p>
 
     <h5>The test only differs from the previous version in the way that the App is instantiated for the unit test:</h5>
 
@@ -299,26 +299,26 @@
 
     <p class="flow-text">All great development teams have a Continuous Integration server setup to guard the quality the code
         in the trunk (master branch for Git and Mercurial).
-        To accommodate branch by abstraction efforts, the simple modification of CI setup is to have one more whole
+        To accommodate branch by abstraction efforts, the simple modification of CI setup is needed: have one whole
         CI pipeline for each anticipated permutation of toggles going forwards. One more pipeline, too, that represents
         the previous release. But that one only for as long as a roll-back is a possibility - for the part of the release
-        pertinent to the toggle that was just activated in production. We are racing ahead, though.</p>
+        pertinent to the toggle that was activated in production during (or after) a release. We are racing ahead, though.</p>
 
     <p class="flow-text">A more sophisticated solution is to have one CI pipeline process for all the
-        common steps (compile of prod source, compile of tests, execution of pure unit tests). Then that
-        same CI job fans out to N
+        common steps: compile of prod source, compile of tests, execution of pure unit tests. Then that
+        same CI job fans out to multiple
         parallel jobs where service tests are going to test larger parts
-        of the web-service with toggle set on (or off) explicitly. Larger means multi-process and definite
+        of the web-service with toggle explicitly set on (or off). Larger means multi-process and definite
         socket use (HTTP in the case of our example). Again, only permutations of pipeline that are meaningful
-        for forthcoming releases (and that prior release that is still warm) should be setup.
+        for forthcoming releases (and that prior release that is still warm) should be setup in the CI infrastructure.
     </p>
 
     <p class="flow-text">
-        As well as more sophisticated, that design is less 'brute force' too. Additionally, our application is a
-        web service, but it could have had a user interface too, and that would require CI-job initiated execution
-        of Selenium-WebDriver following the service tests. Each team would work out the economics of brute force
+        As well as more sophisticated, that design is less 'brute force' too. Additionally, though our application is a
+        web service, but it could as easily had a thin UI too, and that would require CI-job initiated execution
+        of Selenium-WebDriver tests following the service tests. Each team would work out the economics of brute force
         versus the 'parallelized after a certain point' alternate. One thing is clear though: a build failing during CI
-        of any of the pipelines means a failure for all, and a rollback of the commit.
+        of <b>any</b> of the pipelines means a failure for <b>all</b>, and a rollback of the commit.
     </p>
 
     <h5>The unit test method cloned for the new hair color implementation:</h5>
@@ -330,16 +330,19 @@
 
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
-    <p class="flow-text">Only the developers working on the migration are exposed to the new technology. Everyone else uses
+    <p class="flow-text">Only the developers working on the migration use to the new technology. Everyone else uses
         the old (established) implementation of the abstraction. That last is by default of course, so the developers
-        using the new technology have to override the boot cycle for the app/service themselves but make sure to not check that
-        in accidentally.</p>
+        working on the new technology should override the boot cycle for the app/service locally but make sure to not check that
+        in accidentally somehow.</p>
 
-    <p class="flow-text">TODO They need to develop functional deliverables without encountering anything that is transitional, so they
-        continue with the old/legacy implementation. They don't have to do anything to set that up, as it is a default with
-        mere clone/checkout and build from root.</p>
+    <p class="flow-text">The bulk of the developers assign to regular functional deliverables, need to develop without
+        encountering anything that is transitional. They
+        continue with the old/legacy implementation should not have to do anything to set that up. As mentioned before that should
+        be the default after a mere clone/checkout (and build) from root or the project.</p>
 
-    <p class="flow-text">TODO And indeed "everyone else" also means QA/UAT/live deployments too.</p>
+    <p class="flow-text">Note: "everyone else" also means QA/UAT deployments and testing too. That toggle doesn't get flipped
+        to new for everyone until the test automation say it is ready, and the work is complete, and the plan says it is the
+        correct responsible moment to activate it.</p>
 
     <h4 id="3">3. Repeat tens or hundreds of times until there are two of everything</h4>
 
@@ -500,7 +503,7 @@
                 })
                 .not('.disabled').material_select();
 
-            // $( "pre" ).remove();
+            $( "pre" ).remove();
 
             // var t1 = performance.now();
 
