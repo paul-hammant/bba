@@ -126,7 +126,7 @@
 
     <h3 align="center">Branch By Abstraction?</h3>
 
-    <p class="flow-text">Yes, <b>by abstraction instead of by branches in source control</b>. And no, that doesn't mean sprinkle
+    <p class="flow-text">Yes, <b>by abstraction instead of by branching in source control</b>. And no, that doesn't mean sprinkle
         conditionals into your source code. It means to use an abstraction concept that's idiomatic for the language in question.</p>
 
     <p class="flow-text"><u>Context:</u> Some types of non-functional change take so long to code that someone suggests doing
@@ -135,16 +135,17 @@
         there is a risk of repeatedly breaking the build. Where there is a risk of breaking the build, there is a "do it on a
         branch" suggestion.</p>
 
-    <p class="flow-text">The same suggestion is also made where
+    <p class="flow-text">Another factor driving that suggestion is when
         there is a mismatch between the release cadence and the time needed to complete the work. In other words change can take
         many weeks or months and there will be releases to production before the completion of the work in question.</p>
 
     <p class="flow-text">The branch idea
-        would be OK if the resulting merge back could be instantaneous and guaranteed to be a pain-free merge.
+        would be OK if the resulting merge back could be instantaneous and guaranteed to be a pain-free merge. That is
+        impossible though for any higher throughput development team that is also doing regular refactorings as they go.
         Note too that executives often express their displeasure with nonfunctional work taking longer than promised by
         canceling it.</p>
 
-    <p class="flow-text">Branch by Abstraction is a methodical procedure which has some clear steps:</p>
+    <p class="flow-text">Branch by abstraction is a methodical procedure which has some clear steps:</p>
 
     <ol style="font-size: 120%" class="collection">
         <li class="collection-item">Introduce an abstraction to methodically chomp away at that time consuming non-functional change</li>
@@ -155,7 +156,7 @@
 
     <p class="flow-text">That last is the characterizing difference between the methodical branch by abstraction procedure and the
         ordinary abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to the merge back from
-        the branch that you've now avoided</p>
+        the branch that you've now avoided.</p>
 
     <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using a series of changes in a <b>Java example project</b>:</p>
 
@@ -198,7 +199,7 @@
     <p class="flow-text">For the telling of the 'branch by  abstraction' story here, we will focus on a contrived but simple web app.
         One that presents a single JSON endpoint for a pseudo-random 'hair color' over HTTP.</p>
 
-    <p class="flow-text">The starting point for this step by step guide is made by running a code generator for the 'Jooby' web  framework. The result of that gives us a neat four-line web application<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. TThe generated test for the same is fairly simple too<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (having both a unit and service test). The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
+    <p class="flow-text">The starting point for this step by step guide is made by running a code generator for the 'Jooby' web  framework. The result of that gives us a neat four-line web application<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test for the same is fairly simple too<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (having both a unit and service test). The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
 
     <div class="row">
     <div style="margin-left: 30px" class="col s12 m7">
@@ -456,8 +457,8 @@
 <footer id="footer" class="page-footer">
     <div class="container">
         <p class="flow-text">I'm Paul Hammant<a target="_blank" href="https://hammant.org/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> and I put this site together to try to really
-            distill what Branch by Abstraction is.
-            I led the pioneering work on Branch by Abstraction at a former client (Bank of America's GFX
+            distill what branch by abstraction is.
+            I led the pioneering work on branch by abstraction at a former client (Bank of America's GFX
             group in Chicago in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             based on that work.
             The artwork and message from that article was then included in Jez Humble and Dave Farley's
@@ -465,7 +466,7 @@
             in 2010.</p>
         <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from slower
             branching models (and release cadences) to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
-            with feature flags/toggles <i>and of course Branch by Abstraction</i>. See <a
+            with feature flags/toggles <i>and of course branch by abstraction</i>. See <a
                     href="https://devops.paulhammant.com">http://devops.paulhammant.com</a> for more details.</p>
     </div>
     <div class="footer-copyright">

@@ -109,7 +109,7 @@
 
     <h3 align="center">Branch By Abstraction?</h3>
 
-    <p class="flow-text">Yes, <b>by abstraction instead of by branches in source control</b>. And no, that doesn't mean sprinkle
+    <p class="flow-text">Yes, <b>by abstraction instead of by branching in source control</b>. And no, that doesn't mean sprinkle
         conditionals into your source code, it means to use an abstraction concept that's idiomatic for the language in question.</p>
 
     <p class="flow-text"><u>Context:</u> Some types of non-functional change take so long to code that someone suggests doing
@@ -118,16 +118,17 @@
         there is a risk of repeatedly breaking the build. Where there is a risk of breaking the build, there is a "do it on a
         branch" suggestion.</p>
 
-    <p class="flow-text">The same suggestion is also made where
+    <p class="flow-text">Another factor driving that suggestion is when
         there is a mismatch between the release cadence and the time needed to complete the work. In other words change can take
-        many weeks or months and there will be releases to production before the completion of the work in question.</p>
+        many weeks or months and there will be releases to production <b>before</b> the completion of the work in question.</p>
 
     <p class="flow-text">The branch idea
-        would be OK if the resulting merge back could be instantaneous and guaranteed to be a pain-free merge.
+        would be OK if the resulting merge back could be instantaneous and guaranteed to be a pain-free merge. That is
+        impossible though for any higher throughput development team that is also doing regular refactorings as they go.
         Note too that executives often express their displeasure with nonfunctional work taking longer than promised by
         canceling it.</p>
 
-    <p class="flow-text">Branch by Abstraction is a methodical procedure which has some clear steps:</p>
+    <p class="flow-text">Branch by abstraction is a methodical procedure which has some clear steps:</p>
 
     <ol style="font-size: 120%" class="collection">
         <li class="collection-item">Introduce an abstraction to methodically chomp away at that time consuming non-functional change</li>
@@ -138,7 +139,7 @@
 
     <p class="flow-text">That last is the characterizing difference between the methodical branch by abstraction procedure and the
         ordinary abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to the merge back from
-        the branch that you've now avoided</p>
+        the branch that you've now avoided.</p>
 
     <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using <b>UML sequence diagrams</b>:</p>
 
@@ -344,8 +345,8 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 <footer id="footer" class="page-footer">
     <div class="container">
         <p class="flow-text">I'm Paul Hammant<a target="_blank" href="https://hammant.org/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> and I put this site together to try to really
-            distill what Branch by Abstraction is.
-            I led the pioneering work on Branch by Abstraction at a former client (Bank of America's GFX
+            distill what branch by abstraction is.
+            I led the pioneering work on branch by abstraction at a former client (Bank of America's GFX
             group in Chicago in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             based on that work.
             The artwork and message from that article was then included in Jez Humble and Dave Farley's
@@ -353,7 +354,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
             in 2010.</p>
         <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from slower
             branching models (and release cadences) to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
-            with feature flags/toggles <i>and of course Branch by Abstraction</i>. See <a
+            with feature flags/toggles <i>and of course branch by abstraction</i>. See <a
                     href="https://devops.paulhammant.com">http://devops.paulhammant.com</a> for more details.</p>
     </div>
     <div class="footer-copyright">
