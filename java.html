@@ -129,16 +129,33 @@
     <p class="flow-text">Yes, <b>by abstraction instead of by branches in source control</b>. And no, that doesn't mean sprinkle
         conditionals into your source code. It means to use an abstraction concept that's idiomatic for the language in question.</p>
 
-    <p class="flow-text"><u>Context:</u> Some non-functional changes are so quick to code that the migration barely registers in the
-        development team. Some are so long that they're
-        going to be inconvenient for the concurrent development of normal functional deliverables. Specifically, the non-functional changes
-        that impact many parts of the codebase that might risk breaking the build repeatedly over the weeks/months needed to complete them.</p>
+    <p class="flow-text"><u>Context:</u> Some types of non-functional change take so long to code that someone suggests doing
+        the work on a branch and merging back later. These will be the types of changes that are going to impede the concurrent
+        development of normal functional deliverables. Where the  non-functional changes impact many parts of the codebase,
+        there is a risk of repeatedly breaking the build. Where there is a risk of breaking the build, there is a "do it on a
+        branch" suggestion.</p>
 
-    <p class="flow-text">Branch by Abstraction is a methodical procedure. You would introduce an abstraction to methodically
-        chomp away at the lengthy non-functional
-    change that you're needing to complete. While not jeopardizing anyone else's throughput you complete your work, switch
-    over in production and then <b>take out the abstraction</b>. That is the characterizing difference between the methodical branch by
-    abstraction procedure and the many regular usages of abstractions that you have in your codebase. Oh, and the removal of the abstraction (and old implementation) is the analog of the merge back from the branch you've now avoided.</p>
+    <p class="flow-text">The same suggestion is also made where
+        there is a mismatch between the release cadence and the time needed to complete the work. In other words change can take
+        many weeks or months and there will be releases to production before the completion of the work in question.</p>
+
+    <p class="flow-text">The branch idea
+        would be OK if the resulting merge back could be instantaneous and guaranteed to be a pain free merge.
+        Note too that executives often express their displeasure with nonfunctional work taking longer than promised by
+        canceling it</p>
+
+    <p class="flow-text">Branch by Abstraction is a methodical procedure which has some clear steps:</p>
+
+    <ol style="font-size: 120%" class="collection">
+        <li class="collection-item">Introduce an abstraction to methodically chomp away at that time consuming non-functional change</li>
+        <li class="collection-item">In order to not jeopardize anyone else's throughput, you work in a place in the codebase that is separate to the existing code</li>
+        <li class="collection-item">When ready switch over in production (a toggle)</li>
+        <li class="collection-item">Lastly, you take out the abstraction itself </li>
+    </ol>
+
+    <p class="flow-text">That last is the characterizing difference between the methodical branch by abstraction procedure and the
+        ordinary abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to the merge back from
+        the branch that you've now avoided</p>
 
     <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using a <b>Java example project</b>:</p>
 
@@ -392,7 +409,7 @@
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
 
-    <p class="flow-text">As previously mentioned, this last is the characterizing difference to any other use of abstractions in the codebase.
+    <p class="flow-text">As mentioned before, this last is the characterizing difference to any other use of abstractions in the codebase.
         Well, versus the terrible decision to do the lengthy non-functional change on a branch and merge back to trunk/master when complete.
         Those are often late, and risk being canceled part complete. Ot they are super stressful at the time of merge.</p>
 
@@ -464,6 +481,8 @@
                     location.href = this.value + ".html#choice";
                 })
                 .not('.disabled').material_select();
+
+            $( "pre" ).remove();
 
             // var t1 = performance.now();
 
