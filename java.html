@@ -168,9 +168,9 @@
         Java's 'Hibernate' technology for 'iBatis' (now MyBatis). That was hypothetical for the blog entry. In real
         life, a few years later ThoughtWorks' Go team replaced iBatis with Hibernate (<i>life indeed does imitate art, Oscar Wilde</i>). </p>
 
-    <p class="flow-text">But, for the telling of the branch by abstraction story here, let's focus on a very contrived web app presenting a single JSON endpoint for a pseudo-random hai color.</p>
+    <p class="flow-text">But, for the telling of the branch by abstraction story here, let's focus on a very simple contrived web app presenting a single JSON endpoint for a pseudo-random hai color.</p>
 
-    <p class="flow-text">Running a code generator for the 'Jooby' web framework gives us a neat two-line web application that can serve as a starting point for this demo.<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test for the same is fairly simple<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (have both a unit and integration test). The whole commit<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
+    <p class="flow-text">Running a code generator for the 'Jooby' web framework gives us a neat four-line web application that can serve as a starting point for this step by step guide.<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test for the same is fairly simple<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (have both a unit and integration test). The whole commit<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
 
     <div class="row">
     <div style="margin-left: 30px" class="col s12 m7">
@@ -191,7 +191,7 @@
     </div>
     </div>
 
-        <p class="flow-text">That initial <b>two-line</b> generated app was quickly morphed into
+        <p class="flow-text">That initial <b>four-line</b> generated app was quickly morphed into
         one that had made a JSON document response for an end point that passes one of four hair colors back to the caller. Here's what that looks like in the browser: </p>
 
     <div class="row" style="margin-left: 30px">
@@ -392,6 +392,23 @@
     <p class="flow-text">As previously mentioned, this last is the characterizing difference to any other use of abstractions in the codebase.
         Well, versus the terrible decision to do the lengthy non-functional change on a branch and merge back to trunk/master when complete.
         Those are often late, and risk being canceled part complete. Ot they are super stressful at the time of merge.</p>
+
+    <h4 id="5">5. Caveats</h4>
+
+    <p class="flow-text">The case we describe here is only representative. In real life an accomplished developer (with a decent refactoring
+        IDE) would be able to complete the entire migration in a single morning, meaning you would not require branch by abstraction. In reality
+        many object models that quite often attract "improving" rework on some basis, can't be done so quickly. Here's a depiction:</p>
+
+    <img style="display: block; margin: 0 auto;" class="z-depth-2" src="/complicated.png">
+
+    <p class="flow-text" style="text-align: center;">(source for graphic<a target="_blank" href="https://bl.ocks.org/mbostock/4600693"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>)</p>
+
+    <p class="flow-text">The best way to approach such a component model using branch by abstraction procedure, is to focus on the <b>most depend-on and
+        least depending component</b> first. And when that one is complete, do the next one by the same definition.</p>
+
+    <p class="flow-text">There are other complications, too. One is the pre-existing use of the singleton pattern (as outlined in the Design
+        Patterns book, not the Spring/Guice idiom of the same name). If so, completely migrate to Service Locator first, before starting
+        following migration to Dependency Injection.</p>
 
 </div>
 
