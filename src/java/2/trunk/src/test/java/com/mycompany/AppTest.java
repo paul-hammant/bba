@@ -30,11 +30,11 @@ public class AppTest {
   public static JoobyRule app = new JoobyRule(new App());
 
   /**
-   * An integration test that uses RestAssured to
+   * A service test that uses RestAssured to
    * check hair color functionality over HTTP
    */
   @Test
-  public void integrationTest() {
+  public void serviceTest() {
     get("/color/hair.json")
         .then()
         .assertThat()

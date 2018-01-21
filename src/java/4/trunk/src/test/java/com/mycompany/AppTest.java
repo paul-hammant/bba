@@ -32,11 +32,13 @@ public class AppTest {
   public static JoobyRule app = new JoobyRule(new App());
 
   /**
-   * An integration test that uses RestAssured to
-   * check hair color functionality over HTTP
+   * An service test that uses RestAssured to
+   * check hair color functionality over HTTP (whichever is
+   * configured in conf/application.conf (unless
+   * overridden at launch)
    */
   @Test
-  public void integrationTest() {
+  public void serviceTest() {
     get("/color/hair.json")
         .then()
         .assertThat()
