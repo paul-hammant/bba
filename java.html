@@ -252,7 +252,7 @@
         flipped from old to new (or back again) while the software is in use. Unlikely to be ever needed as a feature (in
         conjunction with branch by abstraction, but not impossible to code.</p>
 
-    <h5>The test only differs from the previous version in the way that 'App' is instantiated for the unit test:</h5>
+    <h5>The test only differs from the previous version in the way that App is instantiated for the unit test:</h5>
 
     <pre data-line="63" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
@@ -329,16 +329,19 @@
 
     <h4 id="4">4. Remove the abstraction</h4>
 
-    <p class="flow-text">You will go properly live with a toggle flip, after testing and a signoff in UAT. You'll have practiced flipping
-    that toggle back to "old" in UAT after an initial deployment to "new". You will confirm that both work so that you can assure
-        execs that you can do the same in production if needed.</p>
+    <p class="flow-text">To go live properly the toggle will be flipped in production, but only after a period of testing in
+        UAT followed by a signoff. You will have practiced flipping that toggle back to "old" in UAT after an initial
+        deployment to "new". This confirms that both toggle settings work, and assures
+        executives that you can do the same in production if needed.</p>
 
-    <p class="flow-text">After being live for a couple of weeks, you will remove the old implementation too, and do renames.</p>
+    <p class="flow-text">After being live for a couple of weeks without incident, you will begin the process of removing
+        the old implementation too in development. The same moment is a good one for renames in particular but refactorings
+        in general.</p>
 
-    <p class="flow-text">Maybe immediately after that, but it could also be after a <i>another</i> couple of weeks, you'll remove the old
-        abstraction itself too(commit/push/go-live), ending up with:</p>
+    <p class="flow-text">Maybe immediately after that you will remove the
+        abstraction itself too and commit/push/go-live. Or wait <i>another</i> week before starting that.</p>
 
-    <h5>The `App` class:</h5>
+    <h5>After old code and abstraction removal, the App class:</h5>
 
     <pre data-line="16" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/App.java"></pre>
 
