@@ -195,9 +195,10 @@
         Java's 'Hibernate' technology for 'iBatis' (now MyBatis). That was hypothetical for the blog entry. In real
         life, a few years later ThoughtWorks' Go team replaced iBatis with Hibernate (<i>life indeed does imitate art, Oscar Wilde</i>). </p>
 
-    <p class="flow-text">But, for the telling of the branch by abstraction story here, let's focus on a very simple contrived web app presenting a single JSON endpoint for a pseudo-random hai color.</p>
+    <p class="flow-text">For the telling of the 'branch by  abstraction' story here, we will focus on a contrived but simple web app.
+        One that presents a single JSON endpoint for a pseudo-random 'hair color' over HTTP.</p>
 
-    <p class="flow-text">Running a code generator for the 'Jooby' web framework gives us a neat four-line web application that can serve as a starting point for this step by step guide<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test for the same is fairly simple<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (have both a unit and integration test). The whole commit<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
+    <p class="flow-text">The starting point for this step by step guide is made by running a code generator for the 'Jooby' web  framework. The result of that gives us a neat four-line web application<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. TThe generated test for the same is fairly simple too<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (having both a unit and integration test). The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
 
     <div class="row">
     <div style="margin-left: 30px" class="col s12 m7">
@@ -218,8 +219,8 @@
     </div>
     </div>
 
-        <p class="flow-text">That initial <b>four-line</b> generated app was quickly morphed into
-        one that had made a JSON document response for an end point that passes one of four hair colors back to the caller. Here's what that looks like in the browser: </p>
+        <p class="flow-text">That initial <b>four-line</b> generated web service then morphed into
+        one that had made a JSON document response for an end point that passes back one of four hair colors back to the caller. Here's what that looks like in the browser: </p>
 
     <div class="row" style="margin-left: 30px">
         <img style="padding-left: 0.75em" class="z-depth-2" width="437" height="173" src="/hair_color.png">
@@ -233,25 +234,24 @@
 
     <pre data-line="38,41-43,45,48-50,59-61,63-64,66-70" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
-    <p class="flow-text">See also the diff between generated "Hello World" app and hair color JSON end point that replaced <a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> if you are interested.</p>
+    <p class="flow-text">See also the diff between the generated "Hello World" app and hair color JSON end point that replaced it<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.</p>
 
     <h4 id="1">1. Introduce an abstraction</h4>
 
     <p class="flow-text">It is our hair implementation color that we're going to pretend is going to take ages to
-        migrate from old to new. Specifically pretend that it would be the mother of all commits if it were done
-        to completion in one go. Or that it would be many hundreds of commits to migrate hair color (and the other
-        implied end points) to a new technology.</p>
+        migrate from old to new. Specifically, we will pretend that it would be the mother of all commits if it were done
+        to completion in one go. Or that it would be many hundreds of commits to migrate all end-points to a new technology.</p>
 
     <p class="flow-text">
-        Somewhere primordial you'd introduce a new component. A single place that allowed the caller to be ignorant of whether
+        Somewhere primordial you'd introduce a new component. A single place that allowed the caller to remain ignorant of whether
         they were using the old or the new 'hair color' technology. The choice of old or new hair color technology would
         only be determined at <b>boot time</b>. Some development teams might make that a <b>compile-time</b> fixed choice instead of boot
         time. Those wouldn't be relying on compiler directives (#IFDEF), but one something closer to the build grammar and
-        like 'Maven Profiles' (Maven being Java's standard build technology). Build-time and Boot-time <b>toggles</b>, by another name.
+        like 'Maven Profiles' (Maven being Java's standard build technology). Build-time and boot-time <b>toggles</b>, by another name.
     </p>
 
     <p class="flow-text">
-        A mechanism of abstraction that is idiomatically correct for the language in question is also essential.
+        A abstraction mechanism that is idiomatically-correct for the language in question is also essential.
         For example, Java's interfaces (and implementations of those) is a smarter choice than making a abstract base class
         for 'old' and 'new' to extend. C# would be the same. Ruby and Python have mixins, method_missing, and duck-typing to consider.
         If using Rust, the dev team may consider 'traits'.
@@ -277,9 +277,9 @@
 
     <p class="flow-text"><b>Boot-time</b> toggles are different to <b>run-time</b> ones. The latter are toggles/flags that can be
         flipped from old to new (or back again) while the software is in use. This is unlikely to be ever needed as a feature (in
-        conjunction with branch by abstraction), but not impossible to code.</p>
+        conjunction with branch by abstraction at least), but not impossible to code.</p>
 
-    <h5>The test only differs from the previous version in the way that App is instantiated for the unit test:</h5>
+    <h5>The test only differs from the previous version in the way that the App is instantiated for the unit test:</h5>
 
     <pre data-line="63" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
@@ -297,20 +297,28 @@
 
     <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/4/trunk/conf/application_release4.conf"></pre>
 
-    <p class="flow-text">All good teams have a Continuous Integration server setup to guard the quality the code in the trunk
-        (master branch for Git and Mercurial).
-        The simple modification to the design of that to accommodate branch by abstraction efforts, is to have one more whole
-        CI pipeline for each anticipated permutation of toggles for forthcoming releases. Plus one pipeline that represents
-        the previous release bt only for as long as a roll-back of at least the part of the release pertinent to the toggle
-        that was just activated in production is a possibility</p>
+    <p class="flow-text">All great development teams have a Continuous Integration server setup to guard the quality the code
+        in the trunk (master branch for Git and Mercurial).
+        To accommodate branch by abstraction efforts, the simple modification of CI setup is to have one more whole
+        CI pipeline for each anticipated permutation of toggles going forwards. One more pipeline, too, that represents
+        the previous release. But that one only for as long as a roll-back is a possibility - for the part of the release
+        pertinent to the toggle that was just activated in production. We are racing ahead, though.</p>
 
-    <p class="flow-text">A more sophisticated (less brute force) solution is to have one pipeline process all the
-        common steps in a linear way (compile of prod source, compile of tests, execution of pure unit tests). Then that
+    <p class="flow-text">A more sophisticated solution is to have one CI pipeline process for all the
+        common steps (compile of prod source, compile of tests, execution of pure unit tests). Then that
         same CI job fans out to N
-        parallel pipelines where integration or functional (WebDriver) tests are going to test larger parts
-        of the application or service with toggle set on (or off) explicitly. Larger means multi-process and definate
+        parallel jobs where service tests are going to test larger parts
+        of the web-service with toggle set on (or off) explicitly. Larger means multi-process and definite
         socket use (HTTP in the case of our example). Again, only permutations of pipeline that are meaningful
         for forthcoming releases (and that prior release that is still warm) should be setup.
+    </p>
+
+    <p class="flow-text">
+        As well as more sophisticated, that design is less 'brute force' too. Additionally, our application is a
+        web service, but it could have had a user interface too, and that would require CI-job initiated execution
+        of Selenium-WebDriver following the service tests. Each team would work out the economics of brute force
+        versus the 'parallelized after a certain point' alternate. One thing is clear though: a build failing during CI
+        of any of the pipelines means a failure for all, and a rollback of the commit.
     </p>
 
     <h5>The unit test method cloned for the new hair color implementation:</h5>
