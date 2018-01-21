@@ -438,18 +438,20 @@
 
     <p class="flow-text">The case we describe here is only representative. In real life an accomplished developer (with a decent refactoring
         IDE) would be able to complete the entire migration in a single morning, meaning you would not require branch by abstraction. In reality
-        many object models that quite often attract "improving" rework on some basis, can't be done so quickly. Here's a depiction:</p>
+        many large object models with a rework/refactoring agenda, cannot be done so quickly. Here's a depiction:</p>
 
     <img style="display: block; margin: 0 auto;" class="z-depth-2" src="/complicated.png">
 
     <p class="flow-text" style="text-align: center;">(source for graphic<a target="_blank" href="https://bl.ocks.org/mbostock/4600693"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>)</p>
 
-    <p class="flow-text">The best way to approach such a component model using branch by abstraction procedure, is to focus on the <b>most depend-on and
+    <p class="flow-text">The best way to approach such a component model using branch by abstraction procedure, is to focus on the <b>most depended-on and
         least depending component</b> first. And when that one is complete, do the next one by the same definition.</p>
 
     <p class="flow-text">There are other complications, too. One is the pre-existing use of the singleton pattern (as outlined in the Design
-        Patterns book, not the Spring/Guice idiom of the same name). If so, completely migrate to Service Locator first, before starting
+        Patterns book, not the Spring/Guice idiom of the same name). If so, completely migrate to 'Service Locator' first, before starting a
         following migration to Dependency Injection.</p>
+
+    <p class="flow-text">There is a "Google Singleton Detector"<a target="_blank" href="https://code.google.com/archive/p/google-singleton-detector/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> technology that was made in 2007, but languishes now. I was the designer and made the first commit. It made pretty diagrams illustrating where the entanglement was in a larger Java classbase, helping you find the most depended-on and least depending components (as mentioned above).</p>
 
 </div>
 
