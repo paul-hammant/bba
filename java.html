@@ -318,7 +318,7 @@
         will concurrently create new classes in the old technology, too. You may insist that they write tests though if
         they are adding to your backlog, but otherwise just relax. As long as they are not even close to adding to your
         backlog faster than you're migrating components to the new system you're going to be OK.</p>
-    
+
     <p class="flow-text">As you're coding/committing/pushing small parts of this work towards completion, at some point you're going to
     try to bring up the app itself and click through it in an exploratory way. You'll also be wanting to see that the
     UI functional tests (Selenium, etc) are still passing too. If far from completion of the migration, then these
@@ -369,7 +369,7 @@
     <h5>The implementation now uses Jackson to serialize the color enum directly to JSON:</h5>
 
     <pre data-line="8-11" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-xml">
-    <code>&lt;dependencies>
+<code>&lt;dependencies>
   &lt;!-- Server -->
   &lt;dependency>
     &lt;groupId>org.jooby</groupId>
@@ -381,9 +381,9 @@
     &lt;artifactId>jooby-jackson</artifactId>
   &lt;/dependency>
 
-  &lt;!-- etc -->
+  ...
 
-&lt;/dependencies></code>
+</code>
     </pre>
 
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
