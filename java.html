@@ -199,7 +199,7 @@
     <p class="flow-text">For the telling of the 'branch by  abstraction' story here, we will focus on a contrived but simple web app.
         One that presents a single JSON endpoint for a pseudo-random 'hair color' over HTTP.</p>
 
-    <p class="flow-text">The starting point for this step by step guide is made by running a code generator for the 'Jooby' web  framework. The result of that gives us a neat four-line web application<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test for the same is fairly simple too<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (having both a unit and service test). The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
+    <p class="flow-text">The starting point for this step by step guide is made by running a code generator for the 'Jooby' web  framework. The result of that gives us a neat four-line web application<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test for the same is fairly simple, too<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (having both a unit and service test). The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
 
     <div class="row">
     <div style="margin-left: 30px" class="col s12 m7">
@@ -220,7 +220,7 @@
     </div>
     </div>
 
-        <p class="flow-text">That initial <b>four-line</b> generated web service then morphed into
+        <p class="flow-text">That initial four-line generated web service then morphed into
         one that has a JSON document response that passes back one of four hair colors back to the caller. Here's what that looks like in the browser: </p>
 
     <div class="row" style="margin-left: 30px">
@@ -298,6 +298,31 @@
 
     <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/4/trunk/conf/application_release4.conf"></pre>
 
+    <h5>The unit test method cloned for the new hair color implementation:</h5>
+
+    <pre data-line="62,83-86,88-90,92-94" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/4/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+
+    <p class="flow-text"> ^ besides the cloned method, there's a tactical rename of the old unit test too.
+        Duplicated code here is not the sin you would otherwise think it is.</p>
+
+    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
+
+    <p class="flow-text">Only the developers working on the migration use to the new technology. Everyone else uses
+        the old (established) implementation of the abstraction. That last is by default of course, so the developers
+        working on the new technology should override the boot cycle for the app/service locally but make sure to not check that
+        in accidentally somehow.</p>
+
+    <p class="flow-text">The bulk of the developers assign to regular functional deliverables, need to develop without
+        encountering anything that is transitional. They
+        continue with the old/legacy implementation should not have to do anything to set that up. As mentioned before that should
+        be the default after a mere clone/checkout (and build) from root or the project.</p>
+
+    <p class="flow-text">Note: "everyone else" also means QA/UAT deployments and testing too. That toggle doesn't get flipped
+        to 'new' for everyone until the work is complete and test automation say it is ready. The plan should also change
+        to push it live sooner rather than later.</p>
+
+    <h4 id="2b">2b. New Continuous Integration Pipelines</h4>
+
     <p class="flow-text">All great development teams have a Continuous Integration server setup to guard the quality the code
         in the trunk (master branch for Git and Mercurial).
         To accommodate branch by abstraction efforts, the simple modification of CI setup is needed: have one whole
@@ -321,29 +346,6 @@
         versus the 'parallelized after a certain point' alternate. One thing is clear though: a build failing during CI
         of <b>any</b> of the pipelines means a failure for <b>all</b>, and a rollback of the commit.
     </p>
-
-    <h5>The unit test method cloned for the new hair color implementation:</h5>
-
-    <pre data-line="62,83-86,88-90,92-94" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/4/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
-
-    <p class="flow-text"> ^ besides the cloned method, there's a tactical rename of the old unit test too.
-        Duplicated code here is not the sin you would otherwise think it is.</p>
-
-    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
-
-    <p class="flow-text">Only the developers working on the migration use to the new technology. Everyone else uses
-        the old (established) implementation of the abstraction. That last is by default of course, so the developers
-        working on the new technology should override the boot cycle for the app/service locally but make sure to not check that
-        in accidentally somehow.</p>
-
-    <p class="flow-text">The bulk of the developers assign to regular functional deliverables, need to develop without
-        encountering anything that is transitional. They
-        continue with the old/legacy implementation should not have to do anything to set that up. As mentioned before that should
-        be the default after a mere clone/checkout (and build) from root or the project.</p>
-
-    <p class="flow-text">Note: "everyone else" also means QA/UAT deployments and testing too. That toggle doesn't get flipped
-        to 'new' for everyone until the work is complete and test automation say it is ready. The plan should also change
-        to push it live sooner rather than later.</p>
 
     <h4 id="3">3. Repeat tens or hundreds of times until there are two of everything</h4>
 
@@ -411,27 +413,26 @@
 
     <p class="flow-text"> ^ The 'old' unit test deleted</p>
 
+    <p class="flow-text">As mentioned before, deletion of the abstraction is the characterizing difference to any other use of abstractions in a codebase.</p>
+
     <h5>The implementation now uses Jackson to serialize the color enum directly to JSON:</h5>
 
     <pre data-line="8-11" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-xml">
 <code>&lt;dependencies>
   &lt;!-- Server -->
   &lt;dependency>
-    &lt;groupId>org.jooby</groupId>
-    &lt;artifactId>jooby-netty</artifactId>
+    &lt;groupId>org.jooby&lt;/groupId>
+    &lt;artifactId>jooby-netty&lt;/artifactId>
   &lt;/dependency>
 
   &lt;dependency>
-    &lt;groupId>org.jooby</roupId>
-    &lt;artifactId>jooby-jackson</artifactId>
+    &lt;groupId>org.jooby&lt;/groupId>
+    &lt;artifactId>jooby-jackson&lt;/artifactId>
   &lt;/dependency>
 
 </code></pre>
 
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
-
-
-    <p class="flow-text">As mentioned before, this last is the characterizing difference to any other use of abstractions in the codebase.</p>
 
     <h4 id="5">5. Caveats</h4>
 
