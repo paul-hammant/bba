@@ -131,17 +131,17 @@
 
     <p class="flow-text">Branch by abstraction is a methodical procedure which has some clear steps:</p>
 
-    <ol style="font-size: 130%" class="collection">
-        <li class="collection-item"><b>Introduce an abstraction to methodically chomp away at that time consuming non-functional change</b></li>
+    <ol class="collection">
+        <li style="font-size: 130%" class="collection-item"><b>Introduce an abstraction to methodically chomp away at that time consuming non-functional change</b></li>
         <li class="collection-item">Start with a single most depended on and least depending component</li>
         <li class="collection-item">To not jeopardize anyone else's throughput, work in a place in the codebase that is separate to the existing code</li>
         <li class="collection-item">Methodically complete the work, temporarily duplicating tens or hundreds of things</li>
-        <li class="collection-item">Go live in a 'dark deployment' mode part complete as many times as needed</li>
+        <li style="font-size: 130%"class="collection-item"><b>Go live in a 'dark deployment' mode part complete as many times as needed</b></li>
         <li class="collection-item">Scale up your CI infrastructure to guard old and new implementations</li>
-        <li class="collection-item"><b>When ready switch over in production (a toggle)</b></li>
-        <li class="collection-item">Delete the old implementations</li>
-        <li class="collection-item"><b>Lastly, take out abstraction itself</b></li>
+        <li style="font-size: 130%" class="collection-item"><b>When ready, switch over in production (a toggle flip to end 'dark deployment' for this)</b></li>
+        <li style="font-size: 130%" class="collection-item"><b>Lastly, delete old implementations and the abstraction itself (essential follow up work)</b></li>
     </ol>
+
 
     <p class="flow-text">That last is the characterizing difference between the methodical branch by abstraction procedure and the
         ordinary abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to the merge back from
