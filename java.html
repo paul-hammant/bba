@@ -127,7 +127,8 @@
     <h3 align="center">Branch By Abstraction?</h3>
 
     <p class="flow-text">Yes, <b>by abstraction instead of by branching in source control</b>. And no, that doesn't mean sprinkle
-        conditionals into your source code. It means to use an abstraction concept that's idiomatic for the language in question.</p>
+        conditionals into your source code. It means to use an abstraction concept that's idiomatic for the programming language
+        you are using.</p>
 
     <p class="flow-text"><u>Context:</u> Some types of non-functional change take so long to code that someone suggests doing
         the work on a branch and merging back later. These will be the types of changes that are going to impede the concurrent
@@ -145,13 +146,17 @@
         Note too that executives often express their displeasure with nonfunctional work taking longer than promised by
         canceling it.</p>
 
-    <p class="flow-text">Branch by abstraction is a methodical procedure which has some clear steps:</p>
+    <p class="flow-text">Branch by abstraction is a methodical procedure which has some steps:</p>
 
     <ol style="font-size: 120%" class="collection">
-        <li class="collection-item">Introduce an abstraction to methodically chomp away at that time consuming non-functional change</li>
-        <li class="collection-item">To not jeopardize anyone else's throughput, you work in a place in the codebase that is separate to the existing code</li>
-        <li class="collection-item">When ready switch over in production (a toggle)</li>
-        <li class="collection-item">Lastly, you take out the abstraction itself </li>
+        <li class="collection-item"><b>Introduce an abstraction to methodically chomp away at that time consuming non-functional change</b></li>
+        <li class="collection-item">Start with a single most depended on and least depending component</li>
+        <li class="collection-item">To not jeopardize anyone else's throughput, work in a place in the codebase that is separate to the existing code</li>
+        <li class="collection-item">Methodically complete the work, temporarily duplicating tens or hundreds of things</li>
+        <li class="collection-item">Scale up your CI infrastructure to guard old and new implementations</li>
+        <li class="collection-item"><b>When ready switch over in production (a toggle)</b></li>
+        <li class="collection-item">Delete the old implementations</li>
+        <li class="collection-item"><b>Lastly, take out abstraction itself</b></li>
     </ol>
 
     <p class="flow-text">That last is the characterizing difference between the methodical branch by abstraction procedure and the
@@ -241,13 +246,14 @@
 
     <p class="flow-text">It is our hair implementation color that we're going to pretend is going to take ages to
         migrate from old to new. Specifically, we will pretend that it would be the mother of all commits if it were done
-        to completion in one go. Or that it would be many hundreds of commits to migrate all end-points to a new technology.</p>
+        to completion in one go. Or that it would be many hundreds of commits to migrate all components to a new technology. In our
+    contrived case it is just one component - 'hair color' - that is restfully accessed over HTTP.</p>
 
     <p class="flow-text">
         Somewhere primordial you'd introduce a new component. A single place that allowed the caller to remain ignorant of whether
         they were using the old or the new 'hair color' technology. The choice of old or new hair color technology would
         only be determined at <b>boot time</b>. Some development teams might make that a <b>compile-time</b> fixed choice instead of boot
-        time. Those would not be relying on compiler directives like #IFDEF for C & C++. Instead they would rely on something closer to the
+        time. Those would not be relying on compiler directives like <code>#IFDEF</code> for C & C++. Instead they would rely on something closer to the
         build grammar and like 'Maven Profiles' (Maven being Java's standard build technology).
         Build-time and boot-time <b>toggles</b>, by another name.
     </p>
@@ -263,7 +269,7 @@
 
     <pre data-line="11,17,20-21,25-30" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/App.java"></pre>
 
-    <p class="flow-text"> ^ the highlighted line is the only ones that changed</p>
+    <p class="flow-text"> ^ the highlighted lines are the ones that changed</p>
 
     <pre data-line="6,8" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
 
@@ -288,7 +294,17 @@
 
     <p class="flow-text">See the diff for that commit on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/3"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
-    <h4 id="2">2. Make the new implementation of the abstracted thing</h4>
+
+    <div class="row">
+        <div style="margin-left: 30px" class="col s12 m5">
+            <div class="card-panel amber">
+          <span>Remember that the contrived case being made here for 'hair color' is only about an example that can be listed in a web page.<br><br>In real life you could have hundreds of components and you would only introduce enough abstraction
+    to cover the first component. Choose one that fits most "depended on and least depending" to work with first.</span>
+            </div>
+        </div>
+    </div>
+
+    <h4 id="2">2. Make the new implementation of the abstracted component</h4>
 
     <h5>One new prod Java source, and all others unchanged:</h5>
 
@@ -321,7 +337,7 @@
         to 'new' for everyone until the work is complete and test automation say it is ready. The plan should also change
         to push it live sooner rather than later.</p>
 
-    <h4 id="2b">2b. New Continuous Integration Pipelines</h4>
+    <h4 id="2b">2b. New Continuous Integration pipelines</h4>
 
     <p class="flow-text">All great development teams have a Continuous Integration server setup to guard the quality the code
         in the trunk (master branch for Git and Mercurial).
@@ -347,7 +363,7 @@
         of <b>any</b> of the pipelines means a failure for <b>all</b>, and a rollback of the commit.
     </p>
 
-    <h4 id="3">3. Repeat tens or hundreds of times until there are two of everything</h4>
+    <h4 id="2c">2c. Repeat tens or hundreds of times until there are two of each component</h4>
 
     <p class="flow-text">The point was that the "change that was going to take a while" was going to span a few releases and happen
     concurrently with the development other business functionality. Getting the first example done using a branch by
@@ -369,14 +385,18 @@
     experiments can help you to work out which class/component to work on next. The exercise can also help with
         the calculation of percentage complete for the whole piece of work. Executives will be pushing you
         for for that. Make sure you've already got stakeholder agreement that it is safe to change estimates as you go. Maybe even more than
-        once. Reminding managers that this methodical procedure can be paused and resumed helps too.
+        once. Reminding managers that this methodical procedure can be paused and resumed helps too.</p>
 
-    <h4 id="4">4. Remove the abstraction</h4>
+    <h4 id="3">3. Go Live</h4>
 
     <p class="flow-text">To go live properly the toggle will be flipped in production, but only after a period of testing in
         UAT followed by a signoff. You will have practiced flipping that toggle back to "old" in UAT after an initial
         deployment to "new". This confirms that both toggle settings work, and assures
         executives that you can do the same in production if needed.</p>
+
+    <p class="flow-text">Blah blah</p>
+
+    <h4 id="4">4. Remove the abstraction</h4>
 
     <p class="flow-text">After being live for a couple of weeks without incident, you will begin the process of removing
         the old implementation from the codebase. The same moment is a good one for renames in particular, and refactorings
@@ -436,22 +456,63 @@
 
     <h4 id="5">5. Caveats</h4>
 
+    <h5>5.1 The scale of non-functional requirement</h5>
+
     <p class="flow-text">The case we describe here is only representative. In real life an accomplished developer (with a decent refactoring
         IDE) would be able to complete the entire migration in a single morning, meaning you would not need branch by abstraction. In reality
-        many large object models with a rework/refactoring agenda, cannot be done so quickly. Here's a depiction:</p>
+        many large component models with a rework/refactoring agenda, cannot be done so quickly. Here is a depiction:</p>
 
     <img style="display: block; margin: 0 auto;" class="z-depth-2" src="/complicated.png">
 
     <p class="flow-text" style="text-align: center;">(source for graphic<a target="_blank" href="https://bl.ocks.org/mbostock/4600693"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>)</p>
 
+    <p class="flow-text">The large component model - each needing to be taked from old to new - is the reason branch by abstraction was devised,
+        not the really small cases.</p>
+
+    <h5>5.2 One component at a time, but in order</h5>
+
     <p class="flow-text">The best way to migrate such a component model using branch by abstraction procedure, is to focus on the <b>most depended-on and
         least depending component</b> first. And when that one is complete, do the next one by the same definition.</p>
 
-    <p class="flow-text">There are other complications, too. One is any pre-existing use of the singleton pattern (as outlined in the Design
-        Patterns book, not the Spring/Guice idiom of the same name). If so, you should migrate to 'Service Locator' first. When that is complete
-        you can start a similar methodical migration to Dependency Injection, and take out the service locator</p>
+    <h5>5.3 Static mutable state</h5>
 
-    <p class="flow-text">There is a "Google Singleton Detector"<a target="_blank" href="https://code.google.com/archive/p/google-singleton-detector/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> technology that was made in 2007, but languishes now. I was the designer and made the first commit. It made pretty diagrams illustrating where the entanglement was in a Java classbase. That helped you find the most depended-on and least depending components (as mentioned above). I might get around to blowing the dust off that on GitHub<a target="_blank" href="https://github.com/paul-hammant/java-singleton-detector"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
+    <p class="flow-text">Another complication occurs when there is pre-existing use of the singleton pattern (as outlined in the Design
+        Patterns book, not the Spring/Guice idiom of the same name) in the codebase. If so, you should methodically migrate to 'Service Locator'
+        first. When that is complete you can start a similar methodical migration to dependency injection (DI), and take out the service locator. Not
+        all languages and frameworks suit DI solutions though.</p>
+
+    <p class="flow-text">There is a "Google Singleton Detector"<a target="_blank" href="https://code.google.com/archive/p/google-singleton-detector/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> technology that languishes now. I was the designer and made the first commit in 2007. It made pretty diagrams illustrating where the entanglement was in a Java classbase. That helped you find the most depended-on and least depending components (as mentioned above). I might get around to blowing the dust off that at GitHub<a target="_blank" href="https://github.com/paul-hammant/java-singleton-detector"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
+
+    <h5>5.4 Intermediate components</h5>
+
+    <p class="flow-text">One more thing to consider is that the root thing you would introduce an abstraction for is not as shown in code here.
+        Instead it is more 'root' like in feel. Imagine the exchange rate between two currencies:</p>
+
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-java">
+<code>rate = releaseToggles.getExchangeRate("USD", "GBP");
+</code></pre>
+
+    <p class="flow-text">Most likely you'd engineer something in the primordial abstraction like this:</p>
+
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-java">
+<code>rate = releaseToggles.getExchange().getRate("USD", "GBP");
+</code></pre>
+
+    <p class="flow-text">If your codebase remained in the service locator style (having extinguished singletons), that code fragment could
+        appear many times. But, if you have arrived ata DI nirvana, then that ReleaseToggles component exists but
+        is not permeated to all places where exchange rates are required. Instead, the intermediate abstracted component CurrencyExchange is:</p>
+
+    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-java">
+<code>public class Pricer{
+  private CurrencyExchange exchg;
+  public Pricer(CurrencyExchange exchg) {
+    this.exchg = exchg;
+  }
+  public priceThingInCart(/* params */) {
+    // use the exchg instance (whichever implementation, old or new).
+  }</code></pre>
+
+    <p class="flow-text">You would not want to break the law of demeter during the migration more than you had to.</p>
 
 </div>
 
