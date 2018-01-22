@@ -191,15 +191,19 @@
     <h4 id="2">2. Introduce an abstraction</h4>
 
     <p class="flow-text">
-        Somewhere primordial you'd introduce a new component. A single place that allowed the caller to not know whether
-        they were using the old or the new ShoppingCart persistence capability. At boot time the choice of old or new for
-        ShoppingCart persistence would be determined. Some development teams might make that a compile-time fixed choice.
-        Those wouldn't be relying on compiler directives (#IFDEF), but one something closer to the build grammar and also
-        a mechanism of abstraction that is idiomatically correct for the language in question. For example, Java's interfaces
-        and implementations
-        are smarter choices than making a base class for 'old' and 'new' to extend. C# would be the same. Ruby and Python
-        have mixins and method_missing to consider, and a number of duck-typing possibilities. Rust has traits which the
-        team could consider.
+        Somewhere primordial, you'd introduce a new component. A single place that allowed the caller to remain ignorant of whether
+        they were using the old or the new ShoppingCart persistence technology. The choice of old or new hair color technology would
+        only be determined at <b>boot time</b>. Some development teams might make that a <b>compile-time</b> fixed choice instead of boot
+        time. Those would not be relying on compiler directives like <code>#IFDEF</code> for C and C++. Instead they would
+        rely on something closer to the
+        build grammar. Build-time and boot-time <b>toggles</b>, by another name.
+    </p>
+
+    <p class="flow-text">
+        It is essential to choose an abstraction mechanism that is idiomatically-correct for the language in question.
+        For example, Java's interfaces (and implementations of those) is a smarter choice than making a abstract base class
+        for 'old' and 'new' to extend. C# would be the same. Ruby and Python have mixins, method_missing, and duck-typing to consider.
+        If using Rust, the dev team may consider 'traits'.
     </p>
 
     <p class="flow-text">What is unlikely, though, is <b>run-time</b> toggles. Those are toggles/flags that can be flipped from old to new (or back
