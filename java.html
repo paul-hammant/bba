@@ -148,11 +148,12 @@
 
     <p class="flow-text">Branch by abstraction is a methodical procedure which has some steps:</p>
 
-    <ol style="font-size: 120%" class="collection">
+    <ol style="font-size: 130%" class="collection">
         <li class="collection-item"><b>Introduce an abstraction to methodically chomp away at that time consuming non-functional change</b></li>
         <li class="collection-item">Start with a single most depended on and least depending component</li>
         <li class="collection-item">To not jeopardize anyone else's throughput, work in a place in the codebase that is separate to the existing code</li>
         <li class="collection-item">Methodically complete the work, temporarily duplicating tens or hundreds of things</li>
+        <li class="collection-item">Go live in a 'dark deployment' mode part complete as many times as needed</li>
         <li class="collection-item">Scale up your CI infrastructure to guard old and new implementations</li>
         <li class="collection-item"><b>When ready switch over in production (a toggle)</b></li>
         <li class="collection-item">Delete the old implementations</li>
