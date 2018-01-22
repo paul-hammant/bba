@@ -184,7 +184,7 @@
         </form>
     </div>
 
-    <h5>Starting point</h5>
+    <h4 id="0">0. Starting point: the contrived app used in this page</h4>
 
     <p class="flow-text">The classic case discussed for branch by abstraction is the changing of one persistence technology for another. In the original
         article<a href="#footer"><svg version="1.1" id="Layer_1" width="0.9em" height="0.9em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -204,7 +204,7 @@
     <p class="flow-text">For the telling of the branch by  abstraction story here, we will focus on a contrived but simple web app.
         One that presents a single JSON endpoint for a pseudo-random 'hair color' over HTTP.</p>
 
-    <p class="flow-text">The starting point for this step by step guide is made by running a code generator<a target="_blank" href="http://jooby.org/quickstart/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> for the Jooby web framework<a target="_blank" href="http://jooby.org/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The result of that gives us a neat four-line web application in a single Java class<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test class for the same is fairly simple, too<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (having both a unit and service test). The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
+    <p class="flow-text">I ran a code generator<a target="_blank" href="http://jooby.org/quickstart/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> to make a Jooby web framework<a target="_blank" href="http://jooby.org/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> application. The core of which was a neat four-line web application in a single Java class<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test class for the same was also fairly simple<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. Unconventional too, in that it contains a unit and service test method in one class. The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
 
     <div class="row">
     <div style="margin-left: 30px" class="col s12 m7">
@@ -232,13 +232,17 @@
         <img style="padding-left: 0.75em" class="z-depth-2" width="437" height="173" src="/hair_color.png">
     </div>
 
-    <h5>After implementing the hair color JSON end point:</h5>
+    <h5>Changing that generated web-app to be a hair color end point (JSON via HTTP/GET):</h5>
 
     <pre data-line="16-19,23-25" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
+
+    <p class="flow-text"> ^ the highlighted lines are the ones that changed</p>
 
     <h5>And unit + service tests for that:</h5>
 
     <pre data-line="38,41-43,45,48-50,59-61,63-64,66-70" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+
+    <p class="flow-text"> ^ the highlighted lines are the ones that changed</p>
 
     <p class="flow-text">See also the diff between Jooby's generated "Hello World" app and hair color JSON end point that replaced it<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.</p>
 
