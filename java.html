@@ -91,17 +91,8 @@
             background-color:aliceblue
         }
 
-        .github-embed-main {
-            background-color: #fcfcfc;
-        }
-
-        .github-embed-frames pre{
-            background-color: #fefefe;
-        }
-
         a svg {
             margin-left: 3px;
-            margin-bottom: 2px;
         }
 
     </style>
@@ -571,6 +562,8 @@
                     location.href = this.value + ".html#choice";
                 })
                 .not('.disabled').material_select();
+
+            $("a svg").attr("stroke", "#06D").attr("width", "0.75em").attr("height", "0.75em").removeClass("z-depth-2");
 
             //$( "pre" ).remove();
 
