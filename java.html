@@ -152,16 +152,16 @@
         <li style="font-size: 130%" class="collection-item"><b>Introduce an abstraction to methodically chomp away at that time consuming non-functional change</b></li>
         <li class="collection-item">Start with a single most depended on and least depending component</li>
         <li class="collection-item">To not jeopardize anyone else's throughput, work in a place in the codebase that is separate to the existing code</li>
-        <li class="collection-item">Methodically complete the work, temporarily duplicating tens or hundreds of things</li>
+        <li class="collection-item">Methodically complete the work, temporarily duplicating tens or hundreds of components</li>
         <li style="font-size: 130%"class="collection-item"><b>Go live in a 'dark deployment' mode part complete as many times as needed</b></li>
         <li class="collection-item">Scale up your CI infrastructure to guard old and new implementations</li>
-        <li style="font-size: 130%" class="collection-item"><b>When ready, switch over in production (a toggle flip to end 'dark deployment' for this)</b></li>
+        <li style="font-size: 130%" class="collection-item"><b>When ready, switch over in production (a toggle flip to end 'dark deployment' mode)</b></li>
         <li style="font-size: 130%" class="collection-item"><b>Lastly, delete old implementations and the abstraction itself (essential follow up work)</b></li>
     </ol>
 
     <p class="flow-text">That last is the characterizing difference between the methodical branch by abstraction procedure and the
-        ordinary abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to the merge back from
-        the branch that you've now avoided.</p>
+        ordinary and lasting abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to
+        the merge back from the branch that you've now avoided.</p>
 
     <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using a series of changes in a <b>Java example project</b>:</p>
 
@@ -179,7 +179,7 @@
                         <option disabled value="csharp">C#</option>
                     </optgroup>
                 </select>
-                <label>Illustrate procedure using:</label>
+                <label>Illustrate branch by abstraction using:</label>
             </div>
         </form>
     </div>
@@ -198,13 +198,13 @@
 	c-0.3-0.3-0.5-0.7-0.7-1.1l-0.9,0.9c0.2,0.4,0.4,0.7,0.7,1.1c0.8,0.8,1.8,1.2,2.8,1.2c1.1,0,2.1-0.4,2.8-1.2l2.6-2.6
 	C20.4,9.3,20.4,6.7,18.8,5.2z"/>
 </svg></a> for this, it was swapping out
-        Java's 'Hibernate' technology for 'iBatis' (now MyBatis). That was hypothetical for the blog entry. In real
+        Java's Hibernate technology for iBatis (now MyBatis). That was hypothetical for the blog entry. In real
         life, a few years later ThoughtWorks' Go team replaced iBatis with Hibernate (<i>life indeed does imitate art, Oscar Wilde</i>). </p>
 
-    <p class="flow-text">For the telling of the 'branch by  abstraction' story here, we will focus on a contrived but simple web app.
+    <p class="flow-text">For the telling of the branch by  abstraction story here, we will focus on a contrived but simple web app.
         One that presents a single JSON endpoint for a pseudo-random 'hair color' over HTTP.</p>
 
-    <p class="flow-text">The starting point for this step by step guide is made by running a code generator for the 'Jooby' web  framework. The result of that gives us a neat four-line web application<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test for the same is fairly simple, too<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (having both a unit and service test). The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
+    <p class="flow-text">The starting point for this step by step guide is made by running a code generator<a target="_blank" href="http://jooby.org/quickstart/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> for the Jooby web framework<a target="_blank" href="http://jooby.org/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The result of that gives us a neat four-line web application in a single Java class<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test class for the same is fairly simple, too<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> (having both a unit and service test). The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
 
     <div class="row">
     <div style="margin-left: 30px" class="col s12 m7">
@@ -512,7 +512,7 @@
     // use the exchg instance (whichever implementation, old or new).
   }</code></pre>
 
-    <p class="flow-text">You would not want to break the law of demeter during the migration more than you had to.</p>
+    <p class="flow-text">This because you would not want to break the law of demeter during the migration more than you had to.</p>
 
 </div>
 
