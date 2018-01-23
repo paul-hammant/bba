@@ -332,7 +332,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
     <p class="flow-text">After being live for a couple of weeks, you will remove the old implementation too, and do renames if they make sense.</p>
 
-    <p class="flow-text">Maybe immediately after that, but it could also be after <i>another</i> couple of weeks, you'll remove the old
+    <p class="flow-text">Maybe immediately after that, but it could also be after <i>another</i> couple of weeks, you'll remove the
         abstraction itself too(commit/push/go-live), ending up with:</p>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="566" height="487" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[Add To\nShoppingCart\nRoute -> Shopping\nCart: addItem
@@ -400,7 +400,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
         $(function () {
 
            // var t0 = performance.now();
-            var svgs = $("div svg");
+            var svgs = $("div > svg");
 
             svgs.find("*").removeAttr("stroke");
             svgs.find("g").attr("stroke", "black");
