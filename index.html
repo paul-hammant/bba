@@ -116,7 +116,7 @@
         branch" suggestion.</p>
 
     <p class="flow-text">Another factor driving that suggestion is when
-        there is a mismatch between the release cadence and the time needed to complete the work. In other words change can take
+        there is a mismatch between the release cadence and the time needed to complete the work. In other words, change can take
         many weeks or months and there will be releases to production <b>before</b> the completion of the work in question.</p>
 
     <p class="flow-text">The branch idea
@@ -170,7 +170,7 @@
         Java's 'Hibernate' technology for 'iBatis' (now MyBatis). That was hypothetical for the blog entry. In real
         life, a few years later ThoughtWorks' Go team replaced iBatis with Hibernate (<i>life indeed does imitate art, Oscar Wilde</i>). </p>
 
-    <p class="flow-text">For the telling of the branch by abstraction story here, let's revisit the time-consuming non-functional chore of swapping persistence technologies. From 'old' undesired choice, to a new choice.  For the hypothetical app, there are
+    <p class="flow-text">For the telling of the branch by abstraction story here, let's revisit the time-consuming non-functional chore of swapping persistence technologies. From 'old' undesired choice to a new choice.  For the hypothetical app, there are
         hundreds of components that use the same lib/framework and follow its applicable patterns. Only the business name for those
         persistable things would last.  Let's start with "ShoppingCart" because it is tangible to most readers (but remember that there are hundreds of these to slog through).</p>
 
@@ -190,14 +190,14 @@
         Somewhere primordial, you'd introduce a new component. A single place that allowed the caller to remain ignorant of whether
         they were using the old or the new ShoppingCart persistence technology. The choice of old or new hair color technology would
         only be determined at <b>boot time</b>. Some development teams might make that a <b>compile-time</b> fixed choice instead of boot
-        time. Those would not be relying on compiler directives like <code>#IFDEF</code> for C and C++. Instead they would
+        time. Those would not be relying on compiler directives like <code>#IFDEF</code> for C and C++. Instead, they would
         rely on something closer to the
         build grammar. Build-time and boot-time <b>toggles</b>, by another name.
     </p>
 
     <p class="flow-text">
         It is essential to choose an abstraction mechanism that is idiomatically-correct for the language in question.
-        For example, Java's interfaces (and implementations of those) is a smarter choice than making a abstract base class
+        For example, Java's interfaces (and implementations of those) is a smarter choice than making an abstract base class
         for 'old' and 'new' to extend. C# would be the same. Ruby and Python have mixins, method_missing, and duck-typing to consider.
         If using Rust, the dev team may consider 'traits'.
     </p>
@@ -217,7 +217,7 @@
 
     <h4 id="2b">2b. Sensible renames</h4>
 
-    <p class="flow-text">We should generally feel free to tactically rename/re-package (or namespace) as we go. Hopefully our refactoring
+    <p class="flow-text">We should generally feel free to tactically rename/re-package (or namespace) as we go. Hopefully, our refactoring
         IDE (like Intellij) has our back.</p>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="733" height="565" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[Add To\nShoppingCart\nRoute -> Shopping\nCart: addItem
@@ -296,7 +296,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
     that there were next to none to clone/fork. 😞</p>
 
     <p class="flow-text">It is also worth reminding readers here that this is a methodical process. As the developer of this, you should
-        complete one old to new piece and
+        complete one 'old to new' piece and
         commit/push. You should code everything with the expectation that it will go live but toggled off
         in production (or compiled out).  You can expect that other developers working on functional deliverables
         will concurrently create new classes in the old technology, too. You may insist that they write tests though if
@@ -332,7 +332,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
     <p class="flow-text">After being live for a couple of weeks, you will remove the old implementation too, and do renames if they make sense.</p>
 
-    <p class="flow-text">Maybe immediately after that, but it could also be after a <i>another</i> couple of weeks, you'll remove the old
+    <p class="flow-text">Maybe immediately after that, but it could also be after <i>another</i> couple of weeks, you'll remove the old
         abstraction itself too(commit/push/go-live), ending up with:</p>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="566" height="487" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[Add To\nShoppingCart\nRoute -> Shopping\nCart: addItem
@@ -345,7 +345,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
     <p class="flow-text">As previously mentioned, this last is the characterizing difference to any other use of abstractions in the codebase.
         Well, versus the terrible decision to do the lengthy non-functional change on a branch and merge back to trunk/master when complete.
-        Those are often late, and risk being canceled part complete. Ot they are super stressful at the time of merge.</p>
+        Those are often late, and risk being canceled part complete. Or they are super stressful at the time of merge.</p>
 
 </div>
 
@@ -356,7 +356,7 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
             I led the pioneering work on branch by abstraction at a former client (Bank of America's GFX
             group in Chicago in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             based on that work.
-            The artwork and message from that article was then included in Jez Humble and Dave Farley's
+            The artwork and message from that article were then included in Jez Humble and Dave Farley's
             best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             in 2010.</p>
         <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from slower

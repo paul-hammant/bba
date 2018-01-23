@@ -118,7 +118,7 @@
         branch" suggestion.</p>
 
     <p class="flow-text">Another factor driving that suggestion is when
-        there is a mismatch between the release cadence and the time needed to complete the work. In other words change can take
+        there is a mismatch between the release cadence and the time needed to complete the work. In other words, change can take
         many weeks or months and there will be releases to production before the completion of the work in question.</p>
 
     <p class="flow-text">The new branch idea
@@ -165,7 +165,7 @@
         </form>
     </div>
 
-    <h4 id="0">0. Starting point: the contrived app used in this page</h4>
+    <h4 id="0">0. Starting point: the contrived app used on this page</h4>
 
     <p class="flow-text">The classic case discussed for branch by abstraction is the changing of one persistence technology for another. In the original
         article<a href="#footer"><svg version="1.1" id="Layer_1" width="0.9em" height="0.9em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -213,7 +213,7 @@
         <img style="padding-left: 0.75em" class="z-depth-2" width="437" height="173" src="/hair_color.png">
     </div>
 
-    <h5>Changing that generated web-app to be a hair color end point (JSON via HTTP/GET):</h5>
+    <h5>Changing that generated web-app to be a hair color endpoint (JSON via HTTP/GET):</h5>
 
     <pre data-line="16-19,23-25" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
 
@@ -225,20 +225,20 @@
 
     <p class="flow-text"> ^ the highlighted lines are the ones that changed</p>
 
-    <p class="flow-text">See also the diff between Jooby's generated "Hello World" app and hair color JSON end point that replaced it<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.</p>
+    <p class="flow-text">See also the diff between Jooby's generated "Hello World" app and hair color JSON endpoint that replaced it<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.</p>
 
     <h4 id="1">1. Introduce an abstraction</h4>
 
     <p class="flow-text">It is our hair implementation color that we're going to pretend is going to take ages to
         migrate from old to new. Specifically, we will pretend that it would be the mother of all commits if it were done
         to completion in one go. Or that it would be many hundreds of commits to migrate all components to a new technology. In our
-    contrived case it is just one component - 'hair color' - that is restfully accessed over HTTP.</p>
+    contrived case, it is just one component - 'hair color' - that is restfully accessed over HTTP.</p>
 
     <p class="flow-text">
         Somewhere primordial, you'd introduce a new component. A single place that allowed the caller to remain ignorant of whether
         they were using the old or the new 'hair color' technology. The choice of old or new hair color technology would
         only be determined at <b>boot time</b>. Some development teams might make that a <b>compile-time</b> fixed choice instead of boot
-        time. Those would not be relying on compiler directives like <code>#IFDEF</code> for C and C++. Instead they would
+        time. Those would not be relying on compiler directives like <code>#IFDEF</code> for C and C++. Instead, they would
         rely on something closer to the
         build grammar like 'Maven Profiles' (Maven being Java's standard build technology).
         Build-time and boot-time <b>toggles</b>, by another name.
@@ -246,7 +246,7 @@
 
     <p class="flow-text">
         It is essential to choose an abstraction mechanism that is idiomatically-correct for the language in question.
-        For example, Java's interfaces (and implementations of those) is a smarter choice than making a abstract base class
+        For example, Java's interfaces (and implementations of those) is a smarter choice than making an abstract base class
         for 'old' and 'new' to extend. C# would be the same. Ruby and Python have mixins, method_missing, and duck-typing to consider.
         If using Rust, the dev team may consider 'traits'.
     </p>
@@ -285,7 +285,7 @@
     <div class="row">
         <div style="margin-left: 30px" class="col s12 m5">
             <div class="card-panel amber">
-          <span>Remember that the contrived case being made here for 'hair color' is only about an example that can be listed in a web page.<br><br>In real life you could have hundreds of components but you would only introduce enough abstraction
+          <span>Remember that the contrived case being made here for 'hair color' is only about an example that can be listed in a web page.<br><br>In real life, you could have hundreds of components but you would only introduce enough abstraction
     to cover the first component. Choose one that fits most "depended on and least depending" to work with first.</span>
             </div>
         </div>
@@ -306,19 +306,19 @@
     <pre data-line="62,83-86,88-90,92-94" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/4/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
 
     <p class="flow-text"> ^ besides the cloned method, there's a tactical rename of the old unit test too.
-        Duplicated code here is not the sin you would otherwise think it is.</p>
+        The duplicated code here is not the sin you would otherwise think it is.</p>
 
     <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
-    <p class="flow-text">Only the developers working on the migration use to the new technology. Everyone else uses
-        the old (established) implementation of the abstraction. That last is by default of course, so the developers
+    <p class="flow-text">Only the developers working on the migration use the new technology. Everyone else uses
+        the old (established) implementation of the abstraction. That last is by default, of course, so the developers
         working on the new technology should override the boot cycle for the app/service locally for themselves. They make
         sure to not check that choice in accidentally (somehow).</p>
 
     <p class="flow-text">The bulk of the developers assign to regular functional deliverables, need to develop without
         encountering anything that is transitional. They
         continue with the old/legacy implementation should not have to do anything to set that up. As mentioned before that should
-        be the default after a mere clone/checkout (and build) from root or the project.</p>
+        be the default after a mere clone/checkout (and build) from the root of the project.</p>
 
     <p class="flow-text">Note: "everyone else" also means QA/UAT deployments and testing too. That toggle doesn't get flipped
         to 'new' for everyone until the work is complete and test automation say it is ready. The plan should also change
@@ -344,7 +344,7 @@
 
     <p class="flow-text">
         As well as more sophisticated, that design is less 'brute force' too. Additionally, though our application is a
-        web service, but it could as easily had a thin UI too, and that would need CI job initiated execution
+        web service, it could as easily had a thin UI too, and that would need CI job initiated execution
         of Selenium-WebDriver tests following the service tests. Each team would work out the economics of 'brute force'
         versus the 'parallelized after a certain point' alternate. One thing is clear though: a build failing during CI
         of <b>any</b> of the pipelines means a failure for <b>all</b>, and a rollback of the commit.
@@ -373,7 +373,7 @@
     UI functional tests (Selenium, etc) are still passing too. If far from completion of the migration, then these
     experiments can help you to work out which class/component to work on next. The exercise can also help with
         the calculation of percentage complete for the whole piece of work. Executives will be pushing you
-        for for that. Make sure you've already got stakeholder agreement that it is safe to change estimates as you go. Maybe even more than
+        for that. Make sure you've already got stakeholder agreement that it is safe to change estimates as you go. Maybe even more than
         once. Reminding managers that this methodical procedure can be paused and resumed helps too.</p>
 
     <h4 id="3">3. Go Live</h4>
@@ -445,25 +445,25 @@
 
     <h5>5.1 The scale of non-functional requirement</h5>
 
-    <p class="flow-text">The case we describe here is only representative. In real life, an accomplished developer (with a decent refactoring
-        IDE) would be able to complete the entire migration in a single morning, meaning you would not need branch by abstraction at all. In reality
+    <p class="flow-text">The case we describe here is only a representative one. In real life, an accomplished developer (with a decent refactoring
+        IDE) would be able to complete the entire migration in a single morning, meaning you would not need branch by abstraction at all. In reality,
         many large component models with a rework/refactoring agenda, cannot be done so quickly. Here is a depiction:</p>
 
     <img style="display: block; margin: 0 auto;" class="z-depth-2" src="/complicated.png">
 
     <p class="flow-text" style="text-align: center;">(source for graphic<a target="_blank" href="https://bl.ocks.org/mbostock/4600693"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>)</p>
 
-    <p class="flow-text">The large component model - each needing to be taked from old to new - is the reason branch by abstraction was devised,
+    <p class="flow-text">The large component model - each needing to be taken from old to new - is the reason branch by abstraction was devised,
         not the really small 'non functional change' cases.</p>
 
     <h5>5.2 One component at a time, but in order</h5>
 
-    <p class="flow-text">The best way to migrate such a component model using the branch by abstraction procedure, is to focus on the <b>most depended-on and
+    <p class="flow-text">The best way to migrate such a component model using the branch by abstraction procedure is to focus on the <b>most depended-on and
         least depending component</b> first. And when that one is complete, do the next one by the same definition.</p>
 
     <h5>5.3 Static mutable state</h5>
 
-    <p class="flow-text">Another complication occurs when there is pre-existing use of singletons in the codebase. Singleton as outlined in the Design
+    <p class="flow-text">Another complication occurs when there is a pre-existing use of singletons in the codebase. Singleton as outlined in the Design
         Patterns book, not the Spring/Guice idiom of the same name. If so, you should methodically migrate to 'Service Locator'
         first. When that is complete you can start a similar methodical migration to dependency injection (DI), and take out the service locator. Not
         all languages and frameworks suit DI solutions though.</p>
@@ -473,7 +473,7 @@
     <h5>5.4 Intermediate components</h5>
 
     <p class="flow-text">One more thing to consider is that the root thing you would introduce an abstraction for is not as shown in code above.
-        Instead it is more 'root' like in feel. Imagine the exchange rate between two currencies:</p>
+        Instead, it is more 'root' like in feel. Imagine the exchange rate between two currencies:</p>
 
     <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-java">
 <code>rate = releaseToggles.getExchangeRate("USD", "GBP");
@@ -499,7 +499,7 @@
     // use the exchg instance (whichever implementation, old or new).
   }</code></pre>
 
-    <p class="flow-text">This because you would not want to break the law of demeter during the migration more than you had to.</p>
+    <p class="flow-text">This because you would not want to break the law of Demeter during the migration more than you had to.</p>
 
 </div>
 
@@ -510,7 +510,7 @@
             I led the pioneering work on branch by abstraction at a former client (Bank of America's GFX
             group in Chicago in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             based on that work.
-            The artwork and message from that article was then included in Jez Humble and Dave Farley's
+            The artwork and message from that article were then included in Jez Humble and Dave Farley's
             best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             in 2010.</p>
         <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from slower
@@ -555,7 +555,7 @@
 
             $("a svg").attr("stroke", "#06D").attr("width", "0.75em").attr("height", "0.75em").removeClass("z-depth-2");
 
-            //$( "pre" ).remove();
+            // $( "pre" ).remove();
 
             // var t1 = performance.now();
 
