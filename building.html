@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
     <meta name="theme-color" content="#EE6E73">
     <meta property="og:image" content="https://branchbyabstraction.com/bba_og.png">
-    <title>Branch By Abstraction - Java example</title>
+    <title>Branch By Abstraction - Building buildings example</title>
 
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
-    <link href="prism.css" rel="stylesheet" />
 
     <style>
         nav ul a {
@@ -144,7 +143,7 @@
         ordinary and lasting abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to
         the merge back from the branch that you've now avoided.</p>
 
-    <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using a series of changes in a <b>Java example project</b>:</p>
+    <p id="choice" class="flow-text">Here are the steps of the methodical Branch by Abstraction procedure illustrated using a series of changes to <b>the constructon of the Empire State Building if it were made of software not steel and concrete</b>:</p>
 
     <div class="row">
         <form class="col s12">
@@ -152,10 +151,10 @@
                 <select>
                     <optgroup label="non-language centric">
                         <option value="index">UML sequence diagram</option>
-                        <option value="building">Building Construction metaphor</option>
+                        <option selected value="building">Building Construction metaphor</option>
                     </optgroup>
                     <optgroup label="Language centric">
-                        <option selected value="java">Java</option>
+                        <option value="java">Java</option>
                         <option disabled value="ruby">Ruby</option>
                         <option disabled value="python">Python</option>
                         <option disabled value="csharp">C#</option>
@@ -166,341 +165,35 @@
         </form>
     </div>
 
-    <h4 id="0">0. Starting point: the contrived app used on this page</h4>
-
-    <p class="flow-text">The classic case discussed for branch by abstraction is the changing of one persistence technology for another. In the original
-        article<a href="#footer"><svg version="1.1" id="Layer_1" width="0.9em" height="0.9em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 24 24" stroke="#06D" style="margin-left: -3px; margin-bottom: 0" enable-background="new 0 0 24 24" xml:space="preserve">
-<path d="M12.1,15.9L11,17c-0.5,0.5-1.3,0.8-2,0.8S7.6,17.5,7,17c-1.1-1.1-1.1-2.9,0-4l2.6-2.6c0.5-0.5,1.3-0.8,2-0.8
-	c0.7,0,1.4,0.3,2,0.8c0.3,0.3,0.5,0.7,0.7,1.1l0.9-0.9c-0.2-0.4-0.4-0.7-0.7-1.1c-0.8-0.8-1.8-1.2-2.8-1.2c-1.1,0-2.1,0.4-2.8,1.2
-	l-2.6,2.6c-1.6,1.6-1.6,4.1,0,5.7C6.9,18.6,7.9,19,9,19c1.1,0,2.1-0.4,2.8-1.2l1.8-1.8c-0.2,0-0.3,0-0.5,0
-	C12.8,16,12.5,16,12.1,15.9z"/>
-<path d="M18.8,5.2C18.1,4.4,17.1,4,16,4c-1.1,0-2.1,0.4-2.8,1.2L11.3,7c0.2,0,0.3,0,0.5,0c0.4,0,0.8,0,1.1,0.1l1-1
-	c0.5-0.5,1.3-0.8,2-0.8s1.4,0.3,2,0.8c1.1,1.1,1.1,2.9,0,4l-2.6,2.6c-0.5,0.5-1.3,0.8-2,0.8c-0.7,0-1.4-0.3-2-0.8
-	c-0.3-0.3-0.5-0.7-0.7-1.1l-0.9,0.9c0.2,0.4,0.4,0.7,0.7,1.1c0.8,0.8,1.8,1.2,2.8,1.2c1.1,0,2.1-0.4,2.8-1.2l2.6-2.6
-	C20.4,9.3,20.4,6.7,18.8,5.2z"/>
-</svg></a> for this, it was swapping out
-        Java's Hibernate technology for iBatis (now MyBatis). That was hypothetical for the blog entry. In real
-        life, a few years later ThoughtWorks' Go team replaced iBatis with Hibernate (<i>life indeed does imitate art, Oscar Wilde</i>). </p>
-
-    <p class="flow-text">For the telling of the branch by  abstraction story here, we will focus on a contrived but simple web app.
-        One that presents a single JSON endpoint for a pseudo-random 'hair color' over HTTP.</p>
-
-    <p class="flow-text">I ran a code generator<a target="_blank" href="http://jooby.org/quickstart/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> to make a Jooby web framework<a target="_blank" href="http://jooby.org/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> application. The core of which was a neat four-line web application in a single Java class<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test class for the same was also fairly simple<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. Unconventional too, in that it contains a unit and service test method in one class. The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
-
-    <div class="row">
-    <div style="margin-left: 30px" class="col s12 m7">
-        <div class="card horizontal">
-            <div class="card-image" style="background-color: #000080">
-                <img style= "margin: 8%" src="/logo_jooby-2x.png">
-            </div>
-            <div class="card-stacked">
-                <div class="card-content">
-                    <p>Jooby is a fantastic Java 8 web framework more than ready for productive
-                        development and production deployments.</p>
-                </div>
-                <div class="card-action">
-                    <a target="_blank" href="https://jooby.org/">Read more about Jooby on its comprehensive site</a>
-                </div>
-            </div>
+    <div class="container">
+        <div class="valign-wrapper row">
+            <div class="flow-text right-align col s8">It is 1931 in our software alternate universe, and Empire State Building is pretty much complete, but news has come in that "30 Rock" (a building being planned nearby in New York City) is going to have <b>wheels</b>. Given that, the owners have asked the architects to redesign the Empire State Building to have caterpillar tracks. Not only that, but the switching from a fixed foundation to tracked design <b>will happen concurrently with the floor-by-floor finishing and tenants gain entrance and using the lower floors</b>.</div>
+            <div class="col s4"><img class="z-depth-3" src="empire_state.jpg"></div>
         </div>
-    </div>
-    </div>
 
-        <p class="flow-text">That initial four-line generated web service then morphed into
-        one that has a JSON document response that passes back one of four hair colors back to the caller. Here's what that looks like in the browser: </p>
-
-    <div class="row" style="margin-left: 30px">
-        <img style="padding-left: 0.75em" class="z-depth-2" width="437" height="173" src="/hair_color.png">
-    </div>
-
-    <h5>Changing that generated web-app to be a hair color endpoint (JSON via HTTP/GET):</h5>
-
-    <pre data-line="16-19,23-25" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
-
-    <p class="flow-text"> ^ the highlighted lines are the ones that changed</p>
-
-    <h5>And unit + service tests for that:</h5>
-
-    <pre data-line="38,41-43,45,48-50,59-61,63-64,66-70" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
-
-    <p class="flow-text"> ^ the highlighted lines are the ones that changed</p>
-
-    <p class="flow-text">See also the diff between Jooby's generated "Hello World" app and hair color JSON endpoint that replaced it<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.</p>
-
-    <h4 id="1">1. Introduce an abstraction</h4>
-
-    <p class="flow-text">It is our hair implementation color that we're going to pretend is going to take ages to
-        migrate from old to new. Specifically, we will pretend that it would be the mother of all commits if it were done
-        to completion in one go. Or that it would be many hundreds of commits to migrate all components to a new technology. In our
-    contrived case, it is just one component - 'hair color' - that is restfully accessed over HTTP.</p>
-
-    <p class="flow-text">
-        Somewhere primordial, you'd introduce a new component. A single place that allowed the caller to remain ignorant of whether
-        they were using the old or the new 'hair color' technology. The choice of old or new hair color technology would
-        only be determined at <b>boot time</b>. Some development teams might make that a <b>compile-time</b> fixed choice instead of boot
-        time. Those would not be relying on compiler directives like <code>#IFDEF</code> for C and C++. Instead, they would
-        rely on something closer to the
-        build grammar like 'Maven Profiles' (Maven being Java's standard build technology).
-        Build-time and boot-time <b>toggles</b>, by another name.
-    </p>
-
-    <p class="flow-text">
-        It is essential to choose an abstraction mechanism that is idiomatically-correct for the language in question.
-        For example, Java's interfaces (and implementations of those) is a smarter choice than making an abstract base class
-        for 'old' and 'new' to extend. C# would be the same. Ruby and Python have mixins, method_missing, and duck-typing to consider.
-        If using Rust, the dev team may consider 'traits'.
-    </p>
-
-    <h5>Three prod sources (two new) in src/main/java/com/mycompany/</h5>
-
-    <pre data-line="11,17,20-21,25-30" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/App.java"></pre>
-
-    <p class="flow-text"> ^ the highlighted lines are the ones that changed</p>
-
-    <pre data-line="6,8" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
-
-    <p class="flow-text"> ^ new, our hair color abstraction in a general purpose interface</p>
-
-    <pre data-line="11-15" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/Release3.java" class="language-java"  data-src="src/java/3/trunk/src/main/java/com/mycompany/Release3.java"></pre>
-
-    <p class="flow-text"> ^ new, the first (and instantly legacy) implementation of that general purpose interface</p>
-
-    <h5>Some configuration for the new boot-time toggle choice outside of Java:</h5>
-
-    <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
-
-    <p class="flow-text"><b>Boot-time</b> toggles are different to <b>run-time</b> ones. The latter are toggles/flags that can be
-        flipped from old to new (or back again) while the software is in use. This is unlikely to be ever needed as a feature for a branch
-        by abstraction implementation, but not impossible to code.</p>
-
-    <h5>The test only differs from the previous version in the way that the App is instantiated for the unit test:</h5>
-
-    <pre data-line="63" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
-
-    <p class="flow-text"> ^ the highlighted line is the only one that changed</p>
-
-    <p class="flow-text">See the diff for that commit on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/3"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
-
-
-    <div class="row">
-        <div style="margin-left: 30px" class="col s12 m5">
-            <div class="card-panel amber">
-          <span>Remember that the contrived case being made here for 'hair color' is only about an example that can be listed in a web page.<br><br>In real life, you could have hundreds of components but you would only introduce enough abstraction
-    to cover the first component. Choose one that fits most "depended on and least depending" to work with first.</span>
-            </div>
+        <div class="row"></div>
+        <div class="valign-wrapper row">
+            <div class="col s4"><img class="z-depth-3" src="empire_state_a.jpg"></div>
+            <div class="col s1"></div>
+            <div class="flow-text left-align col s7">Master craftsmen and women (still-coding architect equivalents) intructuce and abstraction a a critical layer in the building that will be where the static foundation is swapped out, and the tracks swapped in.  That abstraction is put in place in what
+                feels like the blink of an eye, but in reality took a day or so to prepare in an parallel universe. Before, during and after the placement of the abstraction all workers carried on at full speed and were barely aware that the abstraction was placed in the building (in the ceiling of floor 5).</div>
         </div>
+
+        <div class="row"></div>
+        <div class="valign-wrapper row">
+            <div class="flow-text right-align col s8">In what appears to be the blink of an eye the caterpillar tracks are put in place and the old floors 1-5 are taken out. As before this was prepped in a parallel universe, and flipped over via a toggle with all workers carrying on at full speed.</div>
+            <div class="col s4"><img class="z-depth-3" src="empire_crawler_a.jpg"></div>
+        </div>
+
+
+        <div class="row"></div>
+        <div class="valign-wrapper row">
+            <div class="col s4"><img class="z-depth-3" src="empire_crawler.jpg"></div>
+            <div class="col s1"></div>
+            <div class="flow-text left-align col s7">Finally, when everyone is sure that the building isn't going to go back to rooted to the ground, the old construction (floors 1-5) and the abstraction are removed, and to all intents and purposes it was as if they never existed.</div>
+        </div>
+
     </div>
-
-    <h4 id="2">2. Make the new implementation of the abstracted component</h4>
-
-    <h5>One new prod Java source, and all others unchanged:</h5>
-
-    <pre data-line="6,8,10-13,15,18,20-21,26-27" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Release4.java"></pre>
-
-    <h5>A second configuration file to use at boot-time to set toggle choice for the new hair color implementation:</h5>
-
-    <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/4/trunk/conf/application_release4.conf"></pre>
-
-    <h5>The unit test method cloned for the new hair color implementation:</h5>
-
-    <pre data-line="62,83-86,88-90,92-94" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/4/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
-
-    <p class="flow-text"> ^ besides the cloned method, there's a tactical rename of the old unit test too.
-        The duplicated code here is not the sin you would otherwise think it is.</p>
-
-    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
-
-    <p class="flow-text">Only the developers working on the migration use the new technology. Everyone else uses
-        the old (established) implementation of the abstraction. That last is by default, of course, so the developers
-        working on the new technology should override the boot cycle for the app/service locally for themselves. They make
-        sure to not check that choice in accidentally (somehow).</p>
-
-    <p class="flow-text">The bulk of the developers assign to regular functional deliverables, need to develop without
-        encountering anything that is transitional. They
-        continue with the old/legacy implementation should not have to do anything to set that up. As mentioned before that should
-        be the default after a mere clone/checkout (and build) from the root of the project.</p>
-
-    <p class="flow-text">Note: "everyone else" also means QA/UAT deployments and testing too. That toggle doesn't get flipped
-        to 'new' for everyone until the work is complete and test automation say it is ready. The plan should also change
-        to push it live sooner rather than later.</p>
-
-    <h4 id="2b">2b. New Continuous Integration pipelines</h4>
-
-    <p class="flow-text">All great development teams have a Continuous Integration server setup to guard the quality of the code
-        in the trunk (master branch for Git and Mercurial).
-        To accommodate branch by abstraction efforts, the simple modification of CI setup is needed: have one whole
-        CI pipeline for each anticipated permutation of toggles going forwards. One more pipeline, too, that represents
-        the previous release. But that one only for as long as a roll-back is a possibility - for the part of the release
-        pertinent to the toggle that was activated in production during (or after) a release. We are racing ahead, though.</p>
-
-    <p class="flow-text">A more sophisticated solution is to have one CI pipeline process for all the
-        common steps: compile of prod source, compile of tests, execution of pure unit tests. Then that
-        same CI job fans out to many
-        parallel jobs where service tests are going to test larger parts
-        of the web-service with toggles explicitly set on (or off). Larger means multi-process and definite
-        socket use (HTTP in the case of our example). Again, only permutations of pipeline that are meaningful
-        for forthcoming releases (and that prior release that is still warm) should be setup in the CI infrastructure.
-    </p>
-
-    <p class="flow-text">
-        As well as more sophisticated, that design is less 'brute force' too. Additionally, though our application is a
-        web service, it could as easily had a thin UI too, and that would need CI job initiated execution
-        of Selenium-WebDriver tests following the service tests. Each team would work out the economics of 'brute force'
-        versus the 'parallelized after a certain point' alternate. One thing is clear though: a build failing during CI
-        of <b>any</b> of the pipelines means a failure for <b>all</b>, and a rollback of the commit.
-    </p>
-
-    <h4 id="2c">2c. Repeat tens or hundreds of times until there are two of each component</h4>
-
-    <p class="flow-text">The point was that the "change that was going to take a while" was going to span a few releases and happen
-    concurrently with the development other business functionality. Getting the first example done using a branch by
-        abstraction was a prerogative. That included the writing of unit and service tests for it. Best of all
-    would be forking of the unit/service tests from the old implementation, but I'm never surprised to find
-    that there were next to none. </p>
-
-    <p class="flow-text">It is also worth reminding readers here that this is a methodical process. As the developer of this, you are
-        going to complete one 'old to new' piece and
-        commit/push. You should code everything with the expectation that it will go live but toggled off
-        in production (or compiled out).</p>
-
-    <p class="flow-text">You can expect that other developers working on functional deliverables
-        will concurrently create new classes in the old technology, too. You may insist that they write tests though if
-        they are adding to your backlog, but otherwise relax about that. As long as they are not even close to adding to your
-        backlog faster than you're migrating components to the new system you're going to be OK.</p>
-
-    <p class="flow-text">As you are coding/committing/pushing small parts of this work towards completion, at some point you're going to
-    try to bring up the app itself and click through it in an exploratory way. You will also be wanting to see that the
-    UI functional tests (Selenium, etc) are still passing too. If far from completion of the migration, then these
-    experiments can help you to work out which class/component to work on next. The exercise can also help with
-        the calculation of percentage complete for the whole piece of work. Executives will be pushing you
-        for that. Make sure you've already got stakeholder agreement that it is safe to change estimates as you go. Maybe even more than
-        once. Reminding managers that this methodical procedure can be paused and resumed helps too.</p>
-
-    <h4 id="3">3. Go Live</h4>
-
-    <p class="flow-text">To go live properly the toggle needs to be flipped in production, but only after a period of testing in
-        UAT followed by a signoff. The team should have practiced flipping that toggle back to "old" in UAT after an initial
-        deployment to "new". This confirms that both toggle settings work in either direction. It assures
-        executives that you can do rollback in production if needed, or go live between binary deployments/releases.</p>
-
-    <h4 id="4">4. Remove the abstraction</h4>
-
-    <p class="flow-text">After being live for a couple of weeks without incident, you will begin the process of removing
-        the old implementation from the codebase. The same moment is a good one for renames in particular, and refactorings
-        in general.</p>
-
-    <p class="flow-text">Maybe immediately after that you will remove the
-        abstraction itself too and commit/push/go-live. Or wait <i>another</i> week before starting that.</p>
-
-    <h5>After old code and abstraction removal, the App class:</h5>
-
-    <pre data-line="16" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/App.java"></pre>
-
-    <h5>The now anemic ReleaseToggles class:</h5>
-
-    <pre data-line="8" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
-
-    <h5>The new Color enum (extracted):</h5>
-
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/Color.java" class="language-java"  data-src="src/java/8/trunk/src/main/java/com/mycompany/Color.java"></pre>
-
-    <h5>The Release4 class:</h5>
-
-    <pre data-line="8-10" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/8/trunk/src/main/java/com/mycompany/Release4.java"></pre>
-
-    <p class="flow-text"> ^ the Release3 class was deleted of course</p>
-
-    <h5>Release 4 configuration renamed to default:</h5>
-
-    <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/conf/application.conf" class="language-yaml" data-src="src/java/8/trunk/conf/application.conf"></pre>
-
-    <h5>And the tests:</h5>
-
-    <pre data-line="51" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/8/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
-
-    <p class="flow-text"> ^ The 'old' unit test deleted</p>
-
-    <p class="flow-text">As mentioned before, <b>deletion of the abstraction when it has outlived its usefulness</b> is the characterizing difference to any other use of abstractions in a codebase. </p>
-
-    <h5>The implementation now uses Jackson to serialize the color enum directly to JSON:</h5>
-
-    <pre data-line="8-11" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-xml">
-<code>&lt;dependencies>
-  &lt;!-- Server -->
-  &lt;dependency>
-    &lt;groupId>org.jooby&lt;/groupId>
-    &lt;artifactId>jooby-netty&lt;/artifactId>
-  &lt;/dependency>
-
-  &lt;dependency>
-    &lt;groupId>org.jooby&lt;/groupId>
-    &lt;artifactId>jooby-jackson&lt;/artifactId>
-  &lt;/dependency>
-
-</code></pre>
-
-    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
-
-    <h4 id="5">5. Caveats</h4>
-
-    <h5>5.1 The scale of non-functional requirement</h5>
-
-    <p class="flow-text">The case we describe here is only a representative one. In real life, an accomplished developer (with a decent refactoring
-        IDE) would be able to complete the entire migration in a single morning, meaning you would not need branch by abstraction at all. In reality,
-        many large component models with a rework/refactoring agenda, cannot be done so quickly. Here is a depiction:</p>
-
-    <img style="display: block; margin: 0 auto;" class="z-depth-2" src="/complicated.png">
-
-    <p class="flow-text" style="text-align: center;">(source for graphic<a target="_blank" href="https://bl.ocks.org/mbostock/4600693"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>)</p>
-
-    <p class="flow-text">The large component model - each needing to be taken from old to new - is the reason branch by abstraction was devised,
-        not the really small 'non functional change' cases.</p>
-
-    <h5>5.2 One component at a time, but in order</h5>
-
-    <p class="flow-text">The best way to migrate such a component model using the branch by abstraction procedure is to focus on the <b>most depended-on and
-        least depending component</b> first. And when that one is complete, do the next one by the same definition.</p>
-
-    <h5>5.3 Static mutable state</h5>
-
-    <p class="flow-text">Another complication occurs when there is a pre-existing use of singletons in the codebase. Singleton as outlined in the Design
-        Patterns book, not the Spring/Guice idiom of the same name. If so, you should methodically migrate to 'Service Locator'
-        first. When that is complete you can start a similar methodical migration to dependency injection (DI), and take out the service locator. Not
-        all languages and frameworks suit DI solutions though.</p>
-
-    <p class="flow-text">There is a "Google Singleton Detector"<a target="_blank" href="https://code.google.com/archive/p/google-singleton-detector/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> technology that languishes now. I was the designer and made the first commit in 2007. It made pretty diagrams illustrating where the entanglement was in a Java classbase. That helped you find the most depended-on and least depending components (as mentioned above). I might get around to blowing the dust off that at GitHub<a target="_blank" href="https://github.com/paul-hammant/java-singleton-detector"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
-
-    <h5>5.4 Intermediate components</h5>
-
-    <p class="flow-text">One more thing to consider is that the root thing you would introduce an abstraction for is not as shown in code above.
-        Instead, it is more 'root' like in feel. Imagine the exchange rate between two currencies:</p>
-
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-java">
-<code>rate = releaseToggles.getExchangeRate("USD", "GBP");
-</code></pre>
-
-    <p class="flow-text">Most likely you would engineer something in the primordial abstraction like this:</p>
-
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-java">
-<code>rate = releaseToggles.getExchange().getRate("USD", "GBP");
-</code></pre>
-
-    <p class="flow-text">If your codebase remained in the service locator style (having extinguished singletons), that code fragment could
-        appear many times. But, if you have arrived at a DI nirvana, then that ReleaseToggles component exists but
-        is not permeated to all places where exchange rates are required. Instead, the intermediate abstracted component CurrencyExchange is:</p>
-
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-java">
-<code>public class Pricer{
-  private CurrencyExchange exchg;
-  public Pricer(CurrencyExchange exchg) {
-    this.exchg = exchg;
-  }
-  public priceThingInCart(/* params */) {
-    // use the exchg instance (whichever implementation, old or new).
-  }</code></pre>
-
-    <p class="flow-text">This because you would not want to break the law of Demeter during the migration more than you had to.</p>
 
 </div>
 
@@ -537,17 +230,6 @@
     (function ($) {
         $(function () {
 
-            Prism.plugins.toolbar.registerButton('link-to-file-on-gh', function() {
-                var button = document.createElement('button');
-                button.innerHTML = 'Same on GitHub';
-
-                button.addEventListener('click', function (evt) {
-                    window.open(evt.target.parentElement.parentElement.parentElement.attributes.ghLink.value, '_blank');
-                    // alert(env.element);
-                });
-                return button;
-            });
-
             $('select')
                 .on('change', function() {
                     location.href = this.value + ".html#choice";
@@ -556,9 +238,6 @@
 
             $("a svg").attr("stroke", "#06D").attr("width", "0.75em").attr("height", "0.75em").removeClass("z-depth-2");
 
-            // $( "pre" ).remove();
-
-            // var t1 = performance.now();
 
         });
     })(jQuery);
