@@ -144,24 +144,27 @@
 
     <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using <b>UML sequence diagrams</b></p>
 
-    <div class="row">
-        <form class="col s12">
-            <div class="input-field col s12 m6">
-                <select>
-                    <optgroup label="non-language centric">
-                        <option selected value="index">UML sequence diagram</option>
-                        <option value="building">Building Construction metaphor</option>
-                    </optgroup>
-                    <optgroup label="Language centric">
-                        <option value="java">Java</option>
-                        <option disabled value="ruby">Ruby</option>
-                        <option disabled value="python">Python</option>
-                        <option disabled value="csharp">C#</option>
-                    </optgroup>
-                </select>
-                <label>Current branch by abstraction example:</label>
-            </div>
-        </form>
+    <div class="container card-panel red lighten-5 flow-text">
+        <div class="row s12">Current branch by abstraction example:</div>
+        <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12 m6 z-depth-3">
+                    <select class="flow-text">
+                        <optgroup label="non-language centric">
+                            <option selected value="index">UML sequence diagrams</option>
+                            <option value="building">Building Construction metaphor</option>
+                        </optgroup>
+                        <optgroup label="Language centric">
+                            <option value="java">Java source changes</option>
+                            <option disabled value="ruby">Ruby source changes</option>
+                            <option disabled value="python">Python source changes</option>
+                            <option disabled value="csharp">C# source changes</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="row s12 right-align">(click to change)</div>
     </div>
 
     <h4 id="1">1. Identify the change that will take a while</h4>
@@ -359,8 +362,8 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
             The artwork and message from that article were then included in Jez Humble and Dave Farley's
             best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             in 2010.</p>
-        <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from slower
-            branching models and release cadences to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+        <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from bad
+            branching models and slower release cadences to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             with feature flags/toggles <i>and of course branch by abstraction</i>. See <a
                     href="https://devops.paulhammant.com">http://devops.paulhammant.com</a> for more details.</p>
     </div>

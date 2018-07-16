@@ -145,29 +145,32 @@
 
     <p id="choice" class="flow-text">Here are the steps of the methodical Branch by Abstraction procedure illustrated using a series of changes to <b>the constructon of the Empire State Building if it were made of software not steel and concrete</b></p>
 
-    <div class="row">
-        <form class="col s12">
-            <div class="input-field col s12 m6">
-                <select>
-                    <optgroup label="non-language centric">
-                        <option value="index">UML sequence diagram</option>
-                        <option selected value="building">Building Construction metaphor</option>
-                    </optgroup>
-                    <optgroup label="Language centric">
-                        <option value="java">Java</option>
-                        <option disabled value="ruby">Ruby</option>
-                        <option disabled value="python">Python</option>
-                        <option disabled value="csharp">C#</option>
-                    </optgroup>
-                </select>
-                <label>Current branch by abstraction example:</label>
-            </div>
-        </form>
+    <div class="container card-panel red lighten-5 flow-text">
+        <div class="row s12">Current branch by abstraction example:</div>
+        <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12 m6 z-depth-3">
+                    <select class="flow-text">
+                        <optgroup label="non-language centric">
+                            <option value="index">UML sequence diagrams</option>
+                            <option selected value="building">Building Construction metaphor</option>
+                        </optgroup>
+                        <optgroup label="Language centric">
+                            <option value="java">Java source changes</option>
+                            <option disabled value="ruby">Ruby source changes</option>
+                            <option disabled value="python">Python source changes</option>
+                            <option disabled value="csharp">C# source changes</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="row s12 right-align">(click to change)</div>
     </div>
 
     <div class="container">
         <div class="valign-wrapper row">
-            <div class="flow-text right-align col s8">It is 1931 in our software alternate universe, and the Empire State Building is pretty much complete, but news has come in that "30 Rock" (a building being planned nearby in New York City) is going to have <b>wheels</b>. Given that, the owners have asked the architects to redesign the Empire State Building to have <b>caterpillar tracks</b>. Not only that, but the switching from a fixed foundation to the tracked design <b>will happen concurrently with the floor-by-floor finishing and tenants gain entrance and using the lower floors</b>.</div>
+            <div class="flow-text right-align col s8">It is 1931 in our software alternate universe, and the Empire State Building is pretty much complete, but news has come in that "30 Rock" (a building being planned nearby in New York City) is going to have <b>wheels</b>. Given that, the owners have asked the architects to redesign the Empire State Building to have <b>caterpillar tracks</b>. Not only that, but the switching from a fixed foundation to the tracked design <b>will happen concurrently with the floor-by-floor finishing and tenants moving into the lower floors that are already finished</b>.</div>
             <div class="col s4"><img class="z-depth-3" src="empire_state.jpg"></div>
         </div>
 
@@ -175,12 +178,27 @@
         <div class="valign-wrapper row">
             <div class="col s4"><img class="z-depth-3" src="empire_state_a.jpg"></div>
             <div class="col s1"></div>
-            <div class="flow-text left-align col s7">Master craftsmen and women (still-coding architect equivalents) introduce an abstraction at a critical layer in the building that will be where the static foundation is swapped out, and the tracks swapped in.  That abstraction is put in place in what feels like the blink of an eye, but in reality took a day or so to prepare in an parallel universe. Before, during and after the placement of the abstraction all workers carried on at full speed and were barely aware that the abstraction was placed in the building (in the ceiling of floor 5).</div>
+            <div class="flow-text left-align col s7">Master craftsmen and women (still-coding architect equivalents) introduce an abstraction at a critical layer in the building that will be where the static foundation is swapped out, and the caterpillar tracks swapped in.  That abstraction is put in place in what feels like the blink of an eye, but in reality took a day or so to prepare in an parallel universe. Before, during and after the placement of the abstraction all workers carried on at full speed and were barely aware that the abstraction was placed in the building (in the ceiling of floor 5), if that was not implicit from 'blink of an eye' as mentioned.</div>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="valign-wrapper row">
+            <div class="flow-text left-align col s12">A caterpillar track for the building is assembled in parallel. Methodically so, and tested as it is being made. Testing includes ensuring it fits the abstraction and only involved two workers (developer equivalents).</div>
+        </div>
+        <div class="valign-wrapper row">
+            <div class="col s3"></div>
+            <div class="col s6"><img class="center-align z-depth-3" src="crawler-being-built.png"></div>
+            <div class="col s3"></div>
+
+        </div>
+        <div class="valign-wrapper row">
+            <div class="flow-text left-align col s12">Everyone working on/in the existing building carry on as normal with the on-traditioanl-foundations design, and are unaware that that caterpillar tracks are bing made and indeed tested ahead of deployment.</div>
         </div>
 
         <div class="row"></div>
         <div class="valign-wrapper row">
-            <div class="flow-text right-align col s8">In what appears to be the blink of an eye the caterpillar tracks are put in place and the old floors 1-5 are taken out. As before this was prepped in a parallel universe, and flipped over via a toggle with all workers carrying on at full speed.</div>
+            <div class="flow-text right-align col s8">In what appears to be the blink of an eye (again) the caterpillar tracks are put in place and the old floors 1-5 are taken out. As before this was prepped in a parallel universe, and flipped over via a toggle with all workers carrying on at full speed. Woe betide any workers still working on floors 1-5 while that happened, but all workers on the ther 97 floors were all safe.</div>
             <div class="col s4"><img class="z-depth-3" src="empire_crawler_a.jpg"></div>
         </div>
 
@@ -189,9 +207,12 @@
         <div class="valign-wrapper row">
             <div class="col s4"><img class="z-depth-3" src="empire_crawler.jpg"></div>
             <div class="col s1"></div>
-            <div class="flow-text left-align col s7">Finally, when everyone is sure that the building isn't going to go back to rooted to the ground, the old construction (floors 1-5) and the abstraction are removed, and to all intents and purposes it was as if they never existed.</div>
+            <div class="flow-text left-align col s7">Finally, when everyone is sure that the building isn't going to go back to the on-foundations varient (which would be easy), the abstraction and former floors 1 to 5 are destroyed, and to all intents and purposes it was as if they never existed. To those in the building at the time, as before, this was instantatenous with no bumbs/tremors or flickering of lights.</div>
         </div>
 
+        <br/>
+        <p>Thanks to Arsalan33 on Fivrr<a hef="https://www.fiverr.com/arsalan33"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> for the "Empire Crawler" artwork.
+        </p>
     </div>
 
 </div>
@@ -206,14 +227,14 @@
             The artwork and message from that article were then included in Jez Humble and Dave Farley's
             best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             in 2010.</p>
-        <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from slower
-            branching models and release cadences to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+        <p class="flow-text">I'm New York—based, and visit enterprises in the US to help them plan their migrations from bad
+            branching models and slower release cadences to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             with feature flags/toggles <i>and of course branch by abstraction</i>. See <a
                     href="https://devops.paulhammant.com">http://devops.paulhammant.com</a> for more details.</p>
     </div>
     <div class="footer-copyright">
         <div class="container">
-            &copy; 2018, Paul Hammant. Thanks to Netlify for hosting<a hef="https://www.netlify.com"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            &copy; 2018, Paul Hammant. Thanks to Netlify for hosting<a hef="https://www.netlify.com"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.
         </div>
     </div>
 </footer>
