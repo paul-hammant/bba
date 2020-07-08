@@ -13,8 +13,8 @@
             crossorigin="anonymous"></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <style>
         nav ul a {
@@ -104,6 +104,30 @@
     </div>
 
     <h3 align="center">Branch By Abstraction?</h3>
+
+    <ul id="slide-out" class="sidenav">
+        <li>
+            <div class="user-view">
+                <iframe width='160' height='400' src='https://leanpub.com/trunk-based-development/embed' frameborder='0'
+                        allowtransparency='true'></iframe>
+            </div>
+        </li>
+    </ul>
+
+    <div class="col s2 m2">
+        <div class="card-panel small grey lighten-5 z-depth-1">
+            <div class="row valign-wrapper">
+                <div class="col s8">
+                  <span class="black-text">
+                    "Trunk-Based Development and Branch by Abstraction" book is now available on Leanpub
+                  </span>
+                </div>
+                <div class="col s4">
+                    <a href="#" data-target="slide-out" class="sidenav-trigger btn-small">☜ See details in sidebar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <p class="flow-text">Yes, <b>by abstraction instead of by branching in source control</b>. And no, that doesn't mean sprinkle
         conditionals into your source code, it means to use an abstraction concept that's idiomatic for the programming language
@@ -356,8 +380,8 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
     <div class="container">
         <p class="flow-text">I'm Paul Hammant<a target="_blank" href="https://hammant.org/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> and I put this site together to attempt to
             distill what branch by abstraction is.
-            I led the pioneering work on branch by abstraction at a former client (Bank of America's GFX
-            group in Chicago in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            I led the pioneering work on branch by abstraction at a former client (a bank's foreign exchange
+            group in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
             based on that work.
             The artwork and message from that article were then included in Jez Humble and Dave Farley's
             best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
@@ -465,11 +489,13 @@ persistenceFactory = instantiateFrom(pfClassName);</code></pre>
 
 //            var t1 = performance.now();
 
+            $('.sidenav').sidenav();
+
             $('select')
                 .on('change', function() {
                     location.href = this.value + ".html#choice";
                 })
-                .not('.disabled').material_select();
+                .not('.disabled').formSelect();
 
             $("a svg").attr("stroke", "#06D").attr("width", "0.75em").attr("height", "0.75em").removeClass("z-depth-2");
 
