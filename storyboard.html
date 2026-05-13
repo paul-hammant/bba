@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html xmlns:og="http://opengraphprotocol.org/schema/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <meta name="theme-color" content="#EE6E73">
+    <meta property="og:image" content="https://branchbyabstraction.com/bba_og.png">
+    <title>Branch By Abstraction - Storyboard room example</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <style>
+        nav ul a { color: #96a5b2; }
+        nav ul li.active a { color: white; }
+
+        .page-footer {
+            color: black;
+            background-color: white;
+        }
+
+        .page-footer .footer-copyright {
+            color: black;
+            background-color: aliceblue;
+        }
+
+        a svg { margin-left: 3px; }
+
+        .storyboard-stage {
+            background: linear-gradient(180deg, #ffffff 0%, #f7f7f2 100%);
+            border: 1px solid #d9d9d1;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .storyboard-strip {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .storyboard-strip figure {
+            margin: 0;
+            background: #fff;
+            border: 1px solid #d9d9d1;
+        }
+
+        .storyboard-strip img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .storyboard-strip figcaption {
+            padding: 8px 10px;
+            border-top: 1px solid #d9d9d1;
+            background: #fbfbf8;
+            font-size: 0.95rem;
+        }
+
+        @media screen and (max-width: 992px) {
+            .storyboard-strip {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .storyboard-strip {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .storyboard-caption {
+            border-top: 1px solid #d9d9d1;
+            background: #fbfbf8;
+        }
+
+        .panel-list {
+            margin-top: 18px;
+        }
+
+        .panel-step {
+            border: 1px solid #d9d9d1;
+            background: #fff;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
+
+        .panel-step h5 {
+            margin: 0 0 6px 0;
+            font-size: 1.2rem;
+        }
+
+        .panel-step p {
+            margin: 0;
+        }
+
+        .scene-note {
+            background: #fff8e1;
+            border-left: 4px solid #f5a623;
+            padding: 12px 14px;
+            margin-top: 18px;
+        }
+    </style>
+</head>
+<body style="background-color: aliceblue">
+
+<main>
+<div class="container" style="background-color: white; padding-left: 10px; padding-right: 10px; padding-top: 5px; margin-top: 15px; margin-bottom: 15px; padding-bottom: 15px">
+
+    <p id="choice" class="flow-text">Here is the same branch by abstraction idea told as a storyboard room metaphor.</p>
+
+    <div class="container card-panel red lighten-5 flow-text">
+        <div class="row s12">Current branch by abstraction example:</div>
+        <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12 m6 z-depth-3">
+                    <select class="flow-text">
+                        <optgroup label="non-language centric">
+                            <option value="index">UML sequence diagrams</option>
+                            <option value="building">Building Construction metaphor</option>
+                            <option selected value="storyboard">Storyboard room metaphor</option>
+                        </optgroup>
+                        <optgroup label="Language centric">
+                            <option value="java">Java source changes</option>
+                            <option disabled value="ruby">Ruby source changes</option>
+                            <option disabled value="python">Python source changes</option>
+                            <option disabled value="csharp">C# source changes</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="row s12 right-align">(click to change)</div>
+    </div>
+
+    <div class="storyboard-stage">
+        <div class="storyboard-strip">
+            <figure>
+                <img src="frame-0001_v1.jpg" alt="Storyboard frame 1, an empty script room with desk and shelves">
+                <figcaption>1. The room</figcaption>
+            </figure>
+            <figure>
+                <img src="frame-0002_v1.jpg" alt="Storyboard frame 2, two people reviewing a script at a table">
+                <figcaption>2. Break it into beats</figcaption>
+            </figure>
+            <figure>
+                <img src="frame-0003_v1.jpg" alt="Storyboard frame 3, a wide table covered in many storyboard panels">
+                <figcaption>3. Draw the panels</figcaption>
+            </figure>
+            <figure>
+                <img src="frame-0004_v1.jpg" alt="Storyboard frame 4, storyboard panels on a wall with arrows and shot notes">
+                <figcaption>4. Add camera language</figcaption>
+            </figure>
+            <figure>
+                <img src="frame-0005_v1.jpg" alt="Storyboard frame 5, a director and artist refining the sequence together">
+                <figcaption>5. Refine the cut</figcaption>
+            </figure>
+        </div>
+        <div class="storyboard-caption" style="padding: 18px 20px;">
+            <p class="flow-text" style="margin: 0;">
+                Picture a script room after the coffee has gone cold. The writer has already done the hard part:
+                sluglines, action lines, dialogue, the whole thing. The director and storyboard artist then turn that
+                text into thumbnail panels, one beat at a time.
+            </p>
+        </div>
+    </div>
+
+    <div class="panel-list">
+        <div class="panel-step">
+            <h5>1. Write the script</h5>
+            <p class="flow-text">The scene exists as words. The room is quiet, and the pages carry the structure: who enters, what changes, and what matters next.</p>
+        </div>
+        <div class="panel-step">
+            <h5>2. Break it into beats</h5>
+            <p class="flow-text">A page becomes a sequence of moments. A close-up, a reaction, a cutaway, an entrance. The story starts to show its shape.</p>
+        </div>
+        <div class="panel-step">
+            <h5>3. Draw the panels</h5>
+            <p class="flow-text">The thumbnails arrive. Each panel captures just enough of the moment to make the scene readable without over-explaining it.</p>
+        </div>
+        <div class="panel-step">
+            <h5>4. Add camera language</h5>
+            <p class="flow-text">Arrows, framing notes, and shot labels appear around the panels. The visual system underneath the story becomes explicit.</p>
+        </div>
+        <div class="panel-step">
+            <h5>5. Rework without rewriting</h5>
+            <p class="flow-text">The sequence can be redrawn, reordered, or tightened while the underlying story stays intact. The representation changes; the premise does not.</p>
+        </div>
+        <div class="panel-step">
+            <h5>6. Retire the rough draft</h5>
+            <p class="flow-text">Once the storyboard holds together, the earlier working assumptions can be put away. The finished visual plan carries the production forward.</p>
+        </div>
+    </div>
+
+    <div class="scene-note">
+        <p class="flow-text" style="margin: 0;">
+            Tools such as <a target="_blank" href="https://boords.com/ai-storyboard-generator">Boords</a> and
+            <a target="_blank" href="https://www.studiobinder.com/digital-storyboard/">StudioBinder</a> already
+            support script-to-storyboard workflows, which makes this metaphor feel closer to normal pre-production
+            than it did a few years ago.
+        </p>
+    </div>
+
+</div>
+
+<footer id="footer" class="page-footer">
+    <div class="container">
+        <p class="flow-text">I'm Paul Hammant<a target="_blank" href="https://hammant.org/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> and I put this site together to attempt to distill what branch by abstraction is.
+            I led the pioneering work on branch by abstraction at a former client (a bank's foreign exchange
+            group in Chicago in 2005 & 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            based on that work.</p>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            &copy; 2018, Paul Hammant. Thanks to Netlify for hosting<a href="https://www.netlify.com"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.
+        </div>
+    </div>
+</footer>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inview/1.0.0/jquery.inview.min.js"></script>
+<script>
+    (function ($) {
+        $(function () {
+            $('.sidenav').sidenav();
+
+            $('select')
+                .on('change', function() {
+                    location.href = this.value + ".html#choice";
+                })
+                .not('.disabled').formSelect();
+
+            $("a svg").attr("stroke", "#06D").attr("width", "0.75em").attr("height", "0.75em").removeClass("z-depth-2");
+        });
+    })(jQuery);
+</script>
+</body>
+</html>
