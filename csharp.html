@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
     <meta name="theme-color" content="#EE6E73">
     <meta property="og:image" content="https://branchbyabstraction.com/bba_og.png">
-    <title>Branch By Abstraction - Java example</title>
+    <title>Branch By Abstraction - .NET example</title>
 
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -168,7 +168,7 @@
         ordinary and lasting abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to
         the merge back from the branch that you've now avoided.</p>
 
-    <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using a series of changes in a <b>Java example project</b></p>
+    <p id="choice" class="flow-text">Here are the steps of the methodical procedure illustrated using a series of changes in a <b>.NET (C#) example project</b></p>
 
     <div class="container card-panel red lighten-5 flow-text">
         <div class="row s12">Current branch by abstraction example:</div>
@@ -182,10 +182,10 @@
                             <option value="storyboard">Storyboard room metaphor</option>
                         </optgroup>
                         <optgroup label="Language centric">
-                            <option selected value="java">Java source changes</option>
+                            <option value="java">Java source changes</option>
                             <option disabled value="ruby">Ruby source changes</option>
                             <option disabled value="python">Python source changes</option>
-                            <option value="csharp">C# source changes</option>
+                            <option selected value="csharp">C# source changes</option>
                         </optgroup>
                     </select>
                 </div>
@@ -214,47 +214,47 @@
     <p class="flow-text">For the telling of the branch by  abstraction story here, we will focus on a contrived but simple web app.
         One that presents a single JSON endpoint for a pseudo-random 'hair color' over HTTP.</p>
 
-    <p class="flow-text">I ran a code generator<a target="_blank" href="http://jooby.org/quickstart/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> to make a Jooby web framework<a target="_blank" href="http://jooby.org/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> application. The core of which was a neat four-line web application in a single Java class<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/main/java/com/mycompany/App.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The generated test class for the same was also fairly simple<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/1/src/test/java/com/mycompany/AppTest.java"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. Unconventional too, in that it contains a unit and service test method in one class. The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
+    <p class="flow-text">I ran the <code>dotnet new webapi --use-controllers</code> template<a target="_blank" href="https://learn.microsoft.com/dotnet/core/tools/dotnet-new"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> to scaffold an ASP.NET Core web application<a target="_blank" href="https://learn.microsoft.com/aspnet/core/"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. The core of which was a neat little controller action returning a string<a target="_blank" href="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/1/Controllers/HelloController.cs"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> wired up by a tiny <code>Program.cs</code>. The test class for the same was also fairly simple<a target="_blank" href="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/1/MyCompany.Tests/HelloTests.cs"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>. Unconventional too, in that it contains a unit and service test method in one class. The first commit in this GitHub repo<a target="_blank" href="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/commit/1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> tells the whole story.</p>
 
     <div class="row">
     <div style="margin-left: 30px" class="col s12 m7">
         <div class="card horizontal">
-            <div class="card-image" style="background-color: #000080">
-                <img style= "margin: 8%" src="/logo_jooby-2x.png">
+            <div class="card-image" style="background-color: #512BD4">
+                <span style="color: white; font-size: 2.2em; font-weight: 600; margin: 0.5em; display: block">.NET</span>
             </div>
             <div class="card-stacked">
                 <div class="card-content">
-                    <p>Jooby is a fantastic Java 8 web framework more than ready for productive
+                    <p>ASP.NET Core is a fast, cross-platform web framework more than ready for productive
                         development and production deployments.</p>
                 </div>
                 <div class="card-action">
-                    <a target="_blank" href="https://jooby.org/">Read more about Jooby on its comprehensive site</a>
+                    <a target="_blank" href="https://learn.microsoft.com/aspnet/core/">Read more about ASP.NET Core on its comprehensive site</a>
                 </div>
             </div>
         </div>
     </div>
     </div>
 
-        <p class="flow-text">That initial four-line generated web service then morphed into
+        <p class="flow-text">That initial generated web service then morphed into
         one that has a JSON document response that passes back one of four hair colors back to the caller. Here's what that looks like in the browser: </p>
 
     <div class="row" style="margin-left: 30px">
         <img style="padding-left: 0.75em" class="z-depth-2" width="437" height="173" src="/hair_color.png">
     </div>
 
-    <h5>Changing that generated web-app to be a hair color endpoint (JSON via HTTP/GET):</h5>
+    <h5>The generated <code>HelloController</code> is replaced by a hair color endpoint (JSON via HTTP/GET):</h5>
 
-    <pre data-line="16-19,23-25" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/2/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <pre data-line="9-19,21-25" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/2/Controllers/ColorController.cs" class="language-csharp" data-src="src/dotnet/2/trunk/Controllers/ColorController.cs"></pre>
 
-    <p class="flow-text"> ^ the highlighted lines are the ones that changed</p>
+    <p class="flow-text"> ^ the highlighted lines define the new endpoint</p>
 
     <h5>And unit + service tests for that:</h5>
 
-    <pre data-line="38,41-43,45,48-50,59-61,63-64,66-70" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/2/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/2/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <pre data-line="23-33,40-49" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/2/MyCompany.Tests/ColorTests.cs" class="language-csharp" data-src="src/dotnet/2/trunk/MyCompany.Tests/ColorTests.cs"></pre>
 
     <p class="flow-text"> ^ the highlighted lines are the ones that changed</p>
 
-    <p class="flow-text">See also the diff between Jooby's generated "Hello World" app and hair color JSON endpoint that replaced it<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.</p>
+    <p class="flow-text">See also the diff between the generated "Hello World" app and hair color JSON endpoint that replaced it<a target="_blank" href="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/commit/2"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.</p>
 
     <h4 id="1">1. Introduce an abstraction</h4>
 
@@ -267,48 +267,61 @@
         Somewhere primordial, you'd introduce a new component. A single place that allowed the caller to remain ignorant of whether
         they were using the old or the new 'hair color' technology. The choice of old or new hair color technology would
         only be determined at <b>boot time</b>. Some development teams might make that a <b>compile-time</b> fixed choice instead of boot
-        time. Those would not be relying on compiler directives like <code>#IFDEF</code> for C and C++. Instead, they would
+        time. Those would not be relying on compiler directives like <code>#if</code> in C#. Instead, they would
         rely on something closer to the
-        build grammar like 'Maven Profiles' (Maven being Java's standard build technology).
+        build grammar like 'MSBuild configurations' or solution-level project references.
         Build-time and boot-time <b>toggles</b>, by another name.
     </p>
 
     <p class="flow-text">
         It is essential to choose an abstraction mechanism that is idiomatically-correct for the language in question.
-        For example, Java's interfaces (and implementations of those) is a smarter choice than making an abstract base class
-        for 'old' and 'new' to extend. C# would be the same. Ruby and Python have mixins, method_missing, and duck-typing to consider.
-        If using Rust, the dev team may consider 'traits'.
+        For .NET, a C# <code>interface</code> resolved through the built-in dependency-injection container is the smarter choice
+        rather than an abstract base class for 'old' and 'new' to extend. Java would be the same. Ruby and Python have mixins,
+        method_missing, and duck-typing to consider. If using Rust, the dev team may consider 'traits'.
     </p>
 
-    <h5>Three prod sources (two new) in src/main/java/com/mycompany/</h5>
+    <p class="flow-text">
+        The nimble .NET difference from the Java telling: rather than wiring the abstraction by hand everywhere, the
+        <code>ColorController</code> simply declares an <code>IReleaseToggles</code> constructor parameter and the framework
+        injects whichever implementation was registered at boot. The boot-time choice lives in <code>appsettings.json</code>
+        and is resolved reflectively in <code>Program.cs</code> &mdash; a config change, not a recompile.
+    </p>
 
-    <pre data-line="11,17,20-21,25-30" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <h5>Two changed prod sources (controller now injected, Program.cs now wires the toggle):</h5>
+
+    <pre data-line="9,11,21" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/3/Controllers/ColorController.cs" class="language-csharp" data-src="src/dotnet/3/trunk/Controllers/ColorController.cs"></pre>
 
     <p class="flow-text"> ^ the highlighted lines are the ones that changed</p>
 
-    <pre data-line="6,8" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/3/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
+    <pre data-line="11-14,22-27" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/3/Program.cs" class="language-csharp" data-src="src/dotnet/3/trunk/Program.cs"></pre>
+
+    <p class="flow-text"> ^ the boot-time toggle: the type named in config is instantiated reflectively and registered in DI</p>
+
+    <h5>Two new prod sources:</h5>
+
+    <pre data-line="4,6" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/3/IReleaseToggles.cs" class="language-csharp" data-src="src/dotnet/3/trunk/IReleaseToggles.cs"></pre>
 
     <p class="flow-text"> ^ new, our hair color abstraction in a general purpose interface</p>
 
-    <pre data-line="11-15" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/main/java/com/mycompany/Release3.java" class="language-java"  data-src="src/java/3/trunk/src/main/java/com/mycompany/Release3.java"></pre>
+    <pre data-line="4-10" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/3/Release3.cs" class="language-csharp"  data-src="src/dotnet/3/trunk/Release3.cs"></pre>
 
     <p class="flow-text"> ^ new, the first (and instantly legacy) implementation of that general purpose interface</p>
 
-    <h5>Some configuration for the new boot-time toggle choice outside of Java:</h5>
+    <h5>Some configuration for the new boot-time toggle choice outside of C#:</h5>
 
-    <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/conf/application.conf" class="language-yaml" data-src="src/java/3/trunk/conf/application.conf"></pre>
+    <pre data-line="7" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/3/appsettings.json" class="language-json" data-src="src/dotnet/3/trunk/appsettings.json"></pre>
 
     <p class="flow-text"><b>Boot-time</b> toggles are different to <b>run-time</b> ones. The latter are toggles/flags that can be
         flipped from old to new (or back again) while the software is in use. This is unlikely to be ever needed as a feature for a branch
         by abstraction implementation, but not impossible to code.</p>
 
-    <h5>The test only differs from the previous version in the way that the App is instantiated for the unit test:</h5>
+    <h5>The test only differs from the previous version in the way that the controller is instantiated for the unit test:</h5>
 
-    <pre data-line="63" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/3/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/3/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <pre data-line="42" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/3/MyCompany.Tests/ColorTests.cs" class="language-csharp" data-src="src/dotnet/3/trunk/MyCompany.Tests/ColorTests.cs"></pre>
 
     <p class="flow-text"> ^ the highlighted line is the only one that changed</p>
 
-    <p class="flow-text">See the diff for that commit on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/3"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
+    <p class="flow-text">See the diff for that commit on Github<a target="_blank" href="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/commit/3"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
 
     <div class="row">
@@ -322,22 +335,24 @@
 
     <h4 id="2">2. Make the new implementation of the abstracted component</h4>
 
-    <h5>One new prod Java source, and all others unchanged:</h5>
+    <h5>One new prod C# source, and all others unchanged:</h5>
 
-    <pre data-line="6,8,10-13,15,18,20-21,26-27" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/4/trunk/src/main/java/com/mycompany/Release4.java"></pre>
+    <pre data-line="6-12,16-20,22" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/4/Release4.cs" class="language-csharp"  data-src="src/dotnet/4/trunk/Release4.cs"></pre>
 
     <h5>A second configuration file to use at boot-time to set toggle choice for the new hair color implementation:</h5>
 
-    <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/conf/application_release4.conf" class="language-yaml" data-src="src/java/4/trunk/conf/application_release4.conf"></pre>
+    <pre data-line="2" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/4/appsettings.Release4.json" class="language-json" data-src="src/dotnet/4/trunk/appsettings.Release4.json"></pre>
+
+    <p class="flow-text">A developer working on the migration launches with this overlay, e.g. <code>DOTNET_ENVIRONMENT=Release4 dotnet run</code>, so ASP.NET Core layers <code>appsettings.Release4.json</code> over the default. Everyone else gets the established implementation with no setup.</p>
 
     <h5>The unit test method cloned for the new hair color implementation:</h5>
 
-    <pre data-line="62,83-86,88-90,92-94" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/4/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/4/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <pre data-line="17,42,58-67" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/4/MyCompany.Tests/ColorTests.cs" class="language-csharp" data-src="src/dotnet/4/trunk/MyCompany.Tests/ColorTests.cs"></pre>
 
     <p class="flow-text"> ^ besides the cloned method, there's a tactical rename of the old unit test too.
         The duplicated code here is not the sin you would otherwise think it is.</p>
 
-    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
+    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/commit/4"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
     <p class="flow-text">Only the developers working on the migration use the new technology. Everyone else uses
         the old (established) implementation of the abstraction. That last is by default, of course, so the developers
@@ -421,54 +436,48 @@
     <p class="flow-text">Maybe immediately after that you will remove the
         abstraction itself too and commit/push/go-live. Or wait <i>another</i> week before starting that.</p>
 
-    <h5>After old code and abstraction removal, the App class:</h5>
+    <h5>After old code and abstraction removal, the ColorController class:</h5>
 
-    <pre data-line="16" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/App.java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/App.java"></pre>
+    <pre data-line="10,13" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/5/Controllers/ColorController.cs" class="language-csharp" data-src="src/dotnet/8/trunk/Controllers/ColorController.cs"></pre>
 
-    <h5>The now anemic ReleaseToggles class:</h5>
+    <p class="flow-text"> ^ the controller no longer takes an <code>IReleaseToggles</code>; it returns a typed object that the framework serializes directly</p>
 
-    <pre data-line="8" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/ReleaseToggles.java" class="language-java" data-src="src/java/8/trunk/src/main/java/com/mycompany/ReleaseToggles.java"></pre>
+    <h5>The now anemic IReleaseToggles interface:</h5>
 
-    <h5>The new Color enum (extracted):</h5>
+    <pre data-line="6" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/5/IReleaseToggles.cs" class="language-csharp" data-src="src/dotnet/8/trunk/IReleaseToggles.cs"></pre>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/Color.java" class="language-java"  data-src="src/java/8/trunk/src/main/java/com/mycompany/Color.java"></pre>
+    <h5>The new Color enum (extracted to its own file):</h5>
+
+    <pre data-line="6-7" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/5/Color.cs" class="language-csharp"  data-src="src/dotnet/8/trunk/Color.cs"></pre>
 
     <h5>The Release4 class:</h5>
 
-    <pre data-line="8-10" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/main/java/com/mycompany/Release4.java" class="language-java"  data-src="src/java/8/trunk/src/main/java/com/mycompany/Release4.java"></pre>
+    <pre data-line="6-8" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/5/Release4.cs" class="language-csharp"  data-src="src/dotnet/8/trunk/Release4.cs"></pre>
 
     <p class="flow-text"> ^ the Release3 class was deleted of course</p>
 
-    <h5>Release 4 configuration renamed to default:</h5>
+    <h5>Release 4 configuration folded into the default appsettings.json (and appsettings.Release4.json deleted):</h5>
 
-    <pre data-line="4" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/conf/application.conf" class="language-yaml" data-src="src/java/8/trunk/conf/application.conf"></pre>
+    <pre data-line="7" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/5/appsettings.json" class="language-json" data-src="src/dotnet/8/trunk/appsettings.json"></pre>
 
     <h5>And the tests:</h5>
 
-    <pre data-line="51" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/src/test/java/com/mycompany/AppTest.java" class="language-java" data-src="src/java/8/trunk/src/test/java/com/mycompany/AppTest.java"></pre>
+    <pre data-line="42,46" ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/5/MyCompany.Tests/ColorTests.cs" class="language-csharp" data-src="src/dotnet/8/trunk/MyCompany.Tests/ColorTests.cs"></pre>
 
     <p class="flow-text"> ^ The 'old' unit test deleted</p>
 
     <p class="flow-text">As mentioned before, <b>deletion of the abstraction when it has outlived its usefulness</b> is the characterizing difference to any other use of abstractions in a codebase. </p>
 
-    <h5>The implementation now uses Jackson to serialize the color enum directly to JSON:</h5>
+    <h5>The implementation now uses <code>System.Text.Json</code> to serialize the color enum directly to JSON &mdash; no extra package, it ships in the framework:</h5>
 
-    <pre data-line="8-11" ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-xml">
-<code>&lt;dependencies>
-  &lt;!-- Server -->
-  &lt;dependency>
-    &lt;groupId>org.jooby&lt;/groupId>
-    &lt;artifactId>jooby-netty&lt;/artifactId>
-  &lt;/dependency>
-
-  &lt;dependency>
-    &lt;groupId>org.jooby&lt;/groupId>
-    &lt;artifactId>jooby-jackson&lt;/artifactId>
-  &lt;/dependency>
-
+    <pre ghLink="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/blob/5/Color.cs" class="language-csharp">
+<code>// the enum carries its own converter; the controller returns the
+// typed object and ASP.NET Core serializes it to {"color":"Red"}
+[JsonConverter(typeof(JsonStringEnumConverter&lt;Color>))]
+public enum Color { Blonde, Brown, Black, Red }
 </code></pre>
 
-    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/commit/5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
+    <p class="flow-text">See the whole commit's diff on Github<a target="_blank" href="https://github.com/paul-hammant/little_dotnet_branch_by_abstraction_demo/commit/5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a></p>
 
     <h4 id="5">5. Caveats</h4>
 
@@ -504,29 +513,32 @@
     <p class="flow-text">One more thing to consider is that the root thing you would introduce an abstraction for is not as shown in code above.
         Instead, it is more 'root' like in feel. Imagine the exchange rate between two currencies:</p>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-java">
-<code>rate = releaseToggles.getExchangeRate("USD", "GBP");
+    <pre class="language-csharp">
+<code>rate = releaseToggles.GetExchangeRate("USD", "GBP");
 </code></pre>
 
     <p class="flow-text">Most likely you would engineer something in the primordial abstraction like this:</p>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-java">
-<code>rate = releaseToggles.getExchange().getRate("USD", "GBP");
+    <pre class="language-csharp">
+<code>rate = releaseToggles.GetExchange().GetRate("USD", "GBP");
 </code></pre>
 
     <p class="flow-text">If your codebase remained in the service locator style (having extinguished singletons), that code fragment could
         appear many times. But, if you have arrived at a DI nirvana, then that ReleaseToggles component exists but
         is not permeated to all places where exchange rates are required. Instead, the intermediate abstracted component CurrencyExchange is:</p>
 
-    <pre ghLink="https://github.com/paul-hammant/little_java_branch_by_abstraction_demo/blob/5/pom.xml" class="language-java">
-<code>public class Pricer{
-  private CurrencyExchange exchg;
-  public Pricer(CurrencyExchange exchg) {
-    this.exchg = exchg;
-  }
-  public priceThingInCart(/* params */) {
-    // use the exchg instance (whichever implementation, old or new).
-  }</code></pre>
+    <pre class="language-csharp">
+<code>public class Pricer
+{
+    private readonly ICurrencyExchange _exchg;
+
+    public Pricer(ICurrencyExchange exchg) => _exchg = exchg;
+
+    public Money PriceThingInCart(/* params */)
+    {
+        // use the _exchg instance (whichever implementation, old or new).
+    }
+}</code></pre>
 
     <p class="flow-text">This because you would not want to break the law of Demeter during the migration more than you had to.</p>
 
