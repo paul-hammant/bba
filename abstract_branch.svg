@@ -20,21 +20,51 @@
       <circle cx="1" cy="1" r="0.9" fill="#f2848d"/>
     </pattern>
 
-    <!-- The trunk silhouette, reused to clip the core and to mask the shards so
-         that each shard is dimmed where it crosses the trunk, exactly as in the
-         original artwork. -->
+    <!-- The trunk silhouette, reused to clip the core to the band. -->
     <path id="bbaTrunkPath"
           d="M 67 52 L 874 67 L 874 102 L 580 101 L 340 126 L 73 128 L 67 68 Z"/>
 
     <clipPath id="bbaTrunkClip">
       <use href="#bbaTrunkPath"/>
     </clipPath>
+
+    <!-- Each limb casts onto whatever lies beneath it, so a shard crossing the
+         trunk reads as passing over the trunk rather than being cut into it.
+         Tight and fairly hard, to suit flat artwork.
+
+         Built from the long-hand blur/offset/flood/composite/merge chain rather
+         than feDropShadow: the shorthand is unsupported by librsvg and by older
+         browsers, and those renderers drop the filtered element entirely rather
+         than falling back to no shadow. -->
+    <filter id="bbaLimbShadow" x="-25%" y="-25%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.2"/>
+      <feOffset dx="4" dy="4" result="limbOffset"/>
+      <feFlood flood-color="#000" flood-opacity="0.42"/>
+      <feComposite in2="limbOffset" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- The trunk gets its own, softer and further off, so it sits above the page
+         but below the limbs. -->
+    <filter id="bbaTrunkShadow" x="-10%" y="-40%" width="130%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="5" dy="6" result="trunkOffset"/>
+      <feFlood flood-color="#000" flood-opacity="0.26"/>
+      <feComposite in2="trunkOffset" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
 
-  <!-- z-order, back to front:
-       10 trunk band, 20 pink core, 30 shards behind, 40 shard-over-trunk overlay -->
+  <!-- z-order, back to front: 10 trunk band, 20 pink core, 30 limbs.
+       Each layer casts onto the one beneath it. -->
 
-  <g id="layer-trunk" data-layer="10">
+  <g id="layer-trunk" data-layer="10" filter="url(#bbaTrunkShadow)">
     <use href="#bbaTrunkPath" fill="url(#bbaHatch)"/>
   </g>
 
@@ -45,8 +75,10 @@
 
   <!-- Each shard is its own addressable element. They are drawn once, whole, so a
        shard reads as a single piece of work that happens to pass through the trunk
-       rather than as two unrelated fragments either side of it. -->
-  <g id="layer-shards" data-layer="30">
+       rather than as two unrelated fragments either side of it. The filter is set
+       on the group but applies per child, so each limb casts its own shadow rather
+       than the whole set casting one silhouette. -->
+  <g id="layer-shards" data-layer="30" filter="url(#bbaLimbShadow)">
     <polygon id="shard-blue-nw"   data-shard="blue"
              points="215,54 179,54 200,41 205,38 209,36 228,42 230,43 229,44 224,48 217,53" fill="#2b2bff"/>
     <polygon id="shard-magenta-n" data-shard="magenta"
