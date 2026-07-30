@@ -108,11 +108,9 @@
         }
 
         .plate .label {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             line-height: 1.25;
             color: #17181a;
-            word-break: break-word;
         }
 
         .plate[aria-pressed="true"] .label { font-weight: 700; }
@@ -300,12 +298,12 @@
     </div>
 
     <div class="caveat">
-        <p class="flow-text" style="margin: 0;">Two of the red buttons are worth staring at. <code>guaranteed_elapsed_time</code>
+        <p class="flow-text" style="margin: 0;">Two of the red buttons are worth staring at. <b>Guaranteed elapsed time</b>
             never lights up, whatever you press &mdash; no strategy can promise you a date, and branch by abstraction is
             arguably the slowest of the three in total elapsed time, because you are carrying two of everything for a while
             and then paying to delete one of them. What it buys you instead is the two below it: you can stop at any point,
             and what you have at that point ships. An executive who cancels the work in week six leaves you with working
-            software rather than an abandoned branch. And <code>risky_at_every_step</code> is the button nobody presses on
+            software rather than an abandoned branch. And <b>risky at every step</b> is the button nobody presses on
             purpose. It is the one that presses itself.</p>
     </div>
 
@@ -339,6 +337,7 @@
     var STRATEGIES = [
         {
             id: "branch_by_source_control",
+            label: "Branch by source control",
             grants: [],
             inflicts: ["risky_at_every_step"],
             line: "Work goes off to one side where nobody can see it. Everything rests on a merge back that " +
@@ -346,6 +345,7 @@
         },
         {
             id: "if_conditions",
+            label: "Use if-conditions",
             grants: [],
             inflicts: ["risky_at_every_step"],
             line: "The fork moves into the business logic, once per call site, in every language the system " +
@@ -354,6 +354,7 @@
         },
         {
             id: "branch_by_abstraction",
+            label: "Branch by abstraction",
             grants: ["risk_free", "guaranteed_quality", "options_built_in", "pausable_and_resumable",
                      "work_shippable_at_every_point"],
             inflicts: [],
@@ -361,6 +362,16 @@
                   "place, and the abstraction is deleted when the work is done. That deletion is the merge back."
         }
     ];
+
+    var PROPERTY_LABELS = {
+        risk_free: "Risk free",
+        guaranteed_elapsed_time: "Guaranteed elapsed time",
+        guaranteed_quality: "Guaranteed quality",
+        options_built_in: "Options built in",
+        pausable_and_resumable: "Pausable and resumable",
+        work_shippable_at_every_point: "Work shippable at every point along the way",
+        risky_at_every_step: "Risky at every step"
+    };
 
     var PROPERTIES = [
         "risk_free",
@@ -376,22 +387,22 @@
     var wanted = {};
     var chosen = null;
 
-    function plate(id, colour, pressed) {
+    function plate(id, label, colour, pressed) {
         return '<button type="button" class="plate" data-id="' + id + '" aria-pressed="' + pressed + '">' +
                '<span class="dome ' + colour + '"></span>' +
-               '<span class="label">' + id + '</span>' +
+               '<span class="label">' + label + '</span>' +
                (colour === "red" ? '<span class="verdict" data-verdict="' + id + '"></span>' : '') +
                '</button>';
     }
 
     function render() {
         var s = STRATEGIES.map(function (st) {
-            return plate(st.id, "blue", chosen === st.id);
+            return plate(st.id, st.label, "blue", chosen === st.id);
         }).join("");
         document.getElementById("strategies").innerHTML = s;
 
         var p = PROPERTIES.map(function (id) {
-            return plate(id, "red", !!wanted[id]);
+            return plate(id, PROPERTY_LABELS[id], "red", !!wanted[id]);
         }).join("");
         document.getElementById("properties").innerHTML = p;
 
@@ -447,7 +458,7 @@
         });
         var self_inflicted = st.inflicts.filter(function (id) { return !wanted[id]; });
 
-        var html = "&gt; <span class='strat'>" + st.id + "</span> &mdash; " + st.line + "<br>";
+        var html = "&gt; <span class='strat'>" + st.label + "</span> &mdash; " + st.line + "<br>";
 
         if (wants.length) {
             html += "&gt; of " + wants.length + " asked for: " + got.length + " granted";
@@ -457,7 +468,8 @@
 
         if (st.inflicts.length) {
             html += "&gt; <span class='warn'>also selected for you, without being asked: " +
-                    st.inflicts.join(", ") + ".</span>";
+                    st.inflicts.map(function (id) { return PROPERTY_LABELS[id].toLowerCase(); }).join(", ") +
+                    ".</span>";
             if (self_inflicted.length) {
                 html += " <span class='warn'>nobody presses that one on purpose.</span>";
             }
