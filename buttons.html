@@ -1,0 +1,525 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <meta name="theme-color" content="#EE6E73">
+    <meta property="og:image" content="https://branchbyabstraction.com/bba_og.png">
+    <title>Branch By Abstraction - The button panel</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <style>
+        nav ul a { color: #96a5b2; }
+        nav ul li.active a { color: white; }
+
+        .page-footer { color: black; background-color: white; }
+        .page-footer .footer-copyright { color: black; background-color: aliceblue; }
+
+        a svg { margin-left: 3px; }
+
+        .panel-shell {
+            background: #b9cfe6;
+            border: 6px solid #17181a;
+            border-radius: 4px;
+            padding: 16px;
+            margin-top: 18px;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+        }
+
+        .panel-row {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .panel-row.strategies { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .panel-row.properties { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+        @media screen and (max-width: 900px) {
+            .panel-row.properties { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media screen and (max-width: 600px) {
+            .panel-row.strategies { grid-template-columns: 1fr; }
+            .panel-row.properties { grid-template-columns: 1fr; }
+        }
+
+        /* Each button is a plate with a dome on it, as per the panel in the
+           meme this is a nod to. */
+        .plate {
+            background: #fdfdfd;
+            border: 3px solid #17181a;
+            border-radius: 3px;
+            padding: 14px 10px 12px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-family: inherit;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .plate:focus-visible { outline: 4px solid #0b63ce; outline-offset: 3px; }
+
+        /* Screw heads, purely decorative. */
+        .plate::before, .plate::after {
+            content: "";
+            position: absolute;
+            top: 5px;
+            width: 5px;
+            height: 5px;
+            border: 2px solid #17181a;
+            border-radius: 50%;
+        }
+        .plate::before { left: 5px; }
+        .plate::after { right: 5px; }
+
+        .dome {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            border: 3px solid #17181a;
+            box-shadow: 0 6px 0 #17181a;
+            transition: box-shadow 0.06s ease, transform 0.06s ease;
+        }
+
+        .dome.red {
+            background: radial-gradient(circle at 34% 30%, #ff8a80 0%, #ef2b23 46%, #b3130d 100%);
+        }
+
+        .dome.blue {
+            background: radial-gradient(circle at 34% 30%, #8ab6ff 0%, #2b6fef 46%, #0d3fb3 100%);
+        }
+
+        /* Latched: the dome sits down on the plate and stays there. */
+        .plate[aria-pressed="true"] .dome {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 #17181a, inset 0 4px 10px rgba(0, 0, 0, 0.55);
+        }
+
+        .plate .label {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.85rem;
+            line-height: 1.25;
+            color: #17181a;
+            word-break: break-word;
+        }
+
+        .plate[aria-pressed="true"] .label { font-weight: 700; }
+
+        /* Verdict lamp - only meaningful once a strategy is chosen. */
+        .verdict {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            padding: 2px 8px;
+            border: 2px solid #17181a;
+            border-radius: 2px;
+            background: #e6e6e6;
+            color: #6c6c6c;
+            min-height: 1.5em;
+        }
+
+        .verdict.granted { background: #1f8f3a; color: #fff; }
+        .verdict.denied { background: #4a4a4a; color: #fff; }
+        .verdict.inflicted { background: #c0170f; color: #fff; }
+
+        .readout {
+            border: 3px solid #17181a;
+            background: #17181a;
+            color: #6fe36f;
+            font-family: "Courier New", Courier, monospace;
+            padding: 12px 14px;
+            margin-top: 4px;
+            font-size: 1rem;
+            line-height: 1.5;
+            min-height: 5.5em;
+        }
+
+        .readout .strat { color: #7fb6ff; font-weight: 700; }
+        .readout .warn { color: #ff8a80; }
+
+        .panel-legend {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.82rem;
+            color: #17181a;
+            margin: 2px 0 12px 0;
+        }
+
+        .swatch {
+            display: inline-block;
+            width: 11px;
+            height: 11px;
+            border: 2px solid #17181a;
+            border-radius: 50%;
+            vertical-align: -1px;
+            margin: 0 3px 0 10px;
+        }
+        .swatch.blue { background: #2b6fef; margin-left: 0; }
+        .swatch.red { background: #ef2b23; }
+
+        .reset-row { margin-top: 6px; }
+
+        .caveat {
+            background: #fff8e1;
+            border-left: 4px solid #f5a623;
+            padding: 12px 14px;
+            margin-top: 18px;
+        }
+    </style>
+</head>
+<body style="background-color: aliceblue">
+
+<main>
+<div class="container" style="background-color: white; padding-left: 10px; padding-right: 10px; padding-top: 5px; margin-top: 15px; margin-bottom: 15px; padding-bottom: 15px">
+
+    <div class="row">
+        <div class="col s12 center-align">
+            <img src="abstract_branch.png" alt="Branch by abstraction" style="max-width: 100%; height: auto"/>
+        </div>
+    </div>
+
+    <h3 align="center">Branch By Abstraction?</h3>
+
+    <ul id="slide-out" class="sidenav">
+        <li>
+            <div class="user-view">
+                <iframe width='160' height='400' src='https://leanpub.com/trunk-based-development/embed' frameborder='0'
+                        allowtransparency='true'></iframe>
+            </div>
+        </li>
+    </ul>
+
+    <div class="col s2 m2">
+        <div class="card-panel small grey lighten-5 z-depth-1">
+            <div class="row valign-wrapper">
+                <div class="col s8">
+                  <span class="black-text">
+                    "Trunk-Based Development and Branch by Abstraction" book is now available on Leanpub
+                  </span>
+                </div>
+                <div class="col s4">
+                    <a href="#" data-target="slide-out" class="sidenav-trigger btn-small">☜ See details in sidebar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="flow-text">Yes, <b>by abstraction instead of by branching in source control</b>. And no, that doesn't mean sprinkle
+        conditionals into your source code. It means to use an abstraction concept that's idiomatic for the programming language
+        you are using.</p>
+
+    <p class="flow-text"><u>Context:</u> Some types of non-functional change take so long to code that someone suggests doing
+        the work on a branch and merging back later. These will be the types of changes that are going to impede the concurrent
+        development of normal functional deliverables. Where the non-functional changes impact many parts of the codebase,
+        there is a risk of repeatedly breaking the build. Where there is a risk of breaking the build, there is a "do it on a
+        branch" suggestion.</p>
+
+    <p class="flow-text">Another factor driving that suggestion is when
+        there is a mismatch between the release cadence and the time needed to complete the work. In other words, change can take
+        many weeks or months and there will be releases to production before the completion of the work in question.</p>
+
+    <p class="flow-text">The branch idea
+        would be OK if the resulting merge back could be instantaneous and guaranteed to be a pain-free merge. That is
+        impossible though for any higher throughput development team that is also doing regular refactorings as they go.
+        Note too that executives often express their displeasure with nonfunctional work taking longer than promised by
+        canceling it.</p>
+
+    <p class="flow-text">Branch by abstraction is a methodical procedure which has some steps:</p>
+
+    <ol class="collection">
+        <li style="font-size: 130%" class="collection-item"><b>Introduce an abstraction to methodically chomp away at that time consuming non-functional change</b></li>
+        <li class="collection-item">Start with a single most depended on and least depending component</li>
+        <li class="collection-item">To not jeopardize anyone else's throughput, work in a place in the codebase that is separate to the existing code</li>
+        <li class="collection-item">Methodically complete the work, temporarily duplicating tens or hundreds of components</li>
+        <li style="font-size: 130%" class="collection-item"><b>Go live in a 'dark deployment' mode part complete as many times as needed</b></li>
+        <li class="collection-item">Scale up your CI infrastructure to guard old and new implementations</li>
+        <li style="font-size: 130%" class="collection-item"><b>When ready, switch over in production (a toggle flip to end 'dark deployment' mode)</b></li>
+        <li style="font-size: 130%" class="collection-item"><b>Lastly, delete old implementations and the abstraction itself (essential follow up work)</b></li>
+    </ol>
+
+    <p class="flow-text">That last is the characterizing difference between the methodical branch by abstraction procedure and the
+        ordinary and lasting abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to
+        the merge back from the branch that you've now avoided.</p>
+
+    <p id="choice" class="flow-text">Here is the same idea told as <b>a button panel</b>. Press the red buttons for the
+        properties you would like your long non-functional change to have. Press as many as you want &mdash; wanting is free.
+        Then press a blue button to pick how you are actually going to do the work, and the panel will tell you which of
+        those wishes you get.</p>
+
+    <div class="container card-panel red lighten-5 flow-text">
+        <div class="row s12">Current branch by abstraction example:</div>
+        <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12 m6 z-depth-3">
+                    <select class="flow-text">
+                        <optgroup label="non-language centric">
+                            <option value="index">UML sequence diagrams</option>
+                            <option value="building">Building Construction metaphor</option>
+                            <option value="storyboard">Storyboard room metaphor</option>
+                            <option value="openmic">Open mic night review</option>
+                            <option selected value="buttons">The button panel</option>
+                        </optgroup>
+                        <optgroup label="Language centric">
+                            <option value="java">Java source changes</option>
+                            <option disabled value="ruby">Ruby source changes</option>
+                            <option disabled value="python">Python source changes</option>
+                            <option value="csharp">C# source changes</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="row s12 right-align">(click to change)</div>
+    </div>
+
+    <div class="panel-shell">
+        <p class="panel-legend">
+            <span class="swatch blue"></span> HOW YOU WILL DO THE WORK &mdash; pick one
+            <span class="swatch red"></span> WHAT YOU WANT FROM IT &mdash; press as many as you like
+        </p>
+
+        <div class="panel-row strategies" id="strategies"></div>
+        <div class="panel-row properties" id="properties"></div>
+
+        <div class="readout" id="readout" aria-live="polite"></div>
+
+        <div class="reset-row">
+            <button type="button" class="btn-small grey darken-3" id="reset">Release all buttons</button>
+        </div>
+    </div>
+
+    <div class="caveat">
+        <p class="flow-text" style="margin: 0;">Two of the red buttons are worth staring at. <code>guaranteed_elapsed_time</code>
+            never lights up, whatever you press &mdash; no strategy can promise you a date, and branch by abstraction is
+            arguably the slowest of the three in total elapsed time, because you are carrying two of everything for a while
+            and then paying to delete one of them. What it buys you instead is the two below it: you can stop at any point,
+            and what you have at that point ships. An executive who cancels the work in week six leaves you with working
+            software rather than an abandoned branch. And <code>risky_at_every_step</code> is the button nobody presses on
+            purpose. It is the one that presses itself.</p>
+    </div>
+
+</div>
+
+<footer id="footer" class="page-footer">
+    <div class="container">
+        <p class="flow-text">I'm Paul Hammant<a target="_blank" href="https://hammant.org/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> and I put this site together to attempt to
+            distill what branch by abstraction is.
+            I led the pioneering work on branch by abstraction at a former client (a bank's foreign exchange
+            group in Chicago in 2005 &amp; 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            based on that work.
+            The artwork and message from that article were then included in Jez Humble and Dave Farley's
+            best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            in 2010.</p>
+        <p class="flow-text">I'm UK&mdash;based, and have previously visited enterprises in the US to help them plan their migrations from bad
+            branching models and slower release cadences to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            with feature flags/toggles <i>and of course branch by abstraction</i>.</p>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            &copy; 2018-2026, Paul Hammant. Thanks to Netlify for hosting<a href="https://www.netlify.com"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.
+        </div>
+    </div>
+</footer>
+
+</main>
+
+<script type="text/javascript">
+
+    var STRATEGIES = [
+        {
+            id: "branch_by_source_control",
+            grants: [],
+            inflicts: ["risky_at_every_step"],
+            line: "Work goes off to one side where nobody can see it. Everything rests on a merge back that " +
+                  "cannot be rehearsed, and that gets harder every day the branch is open."
+        },
+        {
+            id: "if_conditions",
+            grants: [],
+            inflicts: ["risky_at_every_step"],
+            line: "The fork moves into the business logic, once per call site, in every language the system " +
+                  "happens to be written in. You can stop whenever you like. You cannot pick it back up, because " +
+                  "nobody knows how many sites are left or which way each one currently forks."
+        },
+        {
+            id: "branch_by_abstraction",
+            grants: ["risk_free", "guaranteed_quality", "options_built_in", "pausable_and_resumable",
+                     "work_shippable_at_every_point"],
+            inflicts: [],
+            line: "One seam, chosen deliberately. Old and new both live behind it, the choice is made in a single " +
+                  "place, and the abstraction is deleted when the work is done. That deletion is the merge back."
+        }
+    ];
+
+    var PROPERTIES = [
+        "risk_free",
+        "guaranteed_elapsed_time",
+        "guaranteed_quality",
+        "options_built_in",
+        "pausable_and_resumable",
+        "work_shippable_at_every_point",
+        "risky_at_every_step"
+    ];
+
+    // Wanting is free, so the red buttons latch independently of any strategy.
+    var wanted = {};
+    var chosen = null;
+
+    function plate(id, colour, pressed) {
+        return '<button type="button" class="plate" data-id="' + id + '" aria-pressed="' + pressed + '">' +
+               '<span class="dome ' + colour + '"></span>' +
+               '<span class="label">' + id + '</span>' +
+               (colour === "red" ? '<span class="verdict" data-verdict="' + id + '"></span>' : '') +
+               '</button>';
+    }
+
+    function render() {
+        var s = STRATEGIES.map(function (st) {
+            return plate(st.id, "blue", chosen === st.id);
+        }).join("");
+        document.getElementById("strategies").innerHTML = s;
+
+        var p = PROPERTIES.map(function (id) {
+            return plate(id, "red", !!wanted[id]);
+        }).join("");
+        document.getElementById("properties").innerHTML = p;
+
+        paintVerdicts();
+        paintReadout();
+    }
+
+    function paintVerdicts() {
+        var st = chosen ? STRATEGIES.filter(function (x) { return x.id === chosen; })[0] : null;
+
+        PROPERTIES.forEach(function (id) {
+            var el = document.querySelector('[data-verdict="' + id + '"]');
+            if (!el) return;
+            el.className = "verdict";
+
+            if (!st) {
+                el.textContent = wanted[id] ? "wanted" : "";
+                return;
+            }
+
+            if (st.inflicts.indexOf(id) !== -1) {
+                el.className = "verdict inflicted";
+                el.textContent = "INFLICTED";
+            } else if (st.grants.indexOf(id) !== -1) {
+                el.className = "verdict granted";
+                el.textContent = "GRANTED";
+            } else {
+                el.className = "verdict denied";
+                el.textContent = "NOT AVAILABLE";
+            }
+        });
+    }
+
+    function paintReadout() {
+        var out = document.getElementById("readout");
+        var wants = PROPERTIES.filter(function (id) { return wanted[id]; });
+
+        if (!chosen) {
+            if (!wants.length) {
+                out.innerHTML = "&gt; awaiting input. press the red buttons for what you want, " +
+                                "then a blue button for what you will actually do.";
+            } else {
+                out.innerHTML = "&gt; " + wants.length + " wish" + (wants.length === 1 ? "" : "es") +
+                                " registered. wanting is free. now press a blue button.";
+            }
+            return;
+        }
+
+        var st = STRATEGIES.filter(function (x) { return x.id === chosen; })[0];
+        var got = wants.filter(function (id) { return st.grants.indexOf(id) !== -1; });
+        var denied = wants.filter(function (id) {
+            return st.grants.indexOf(id) === -1 && st.inflicts.indexOf(id) === -1;
+        });
+        var self_inflicted = st.inflicts.filter(function (id) { return !wanted[id]; });
+
+        var html = "&gt; <span class='strat'>" + st.id + "</span> &mdash; " + st.line + "<br>";
+
+        if (wants.length) {
+            html += "&gt; of " + wants.length + " asked for: " + got.length + " granted";
+            if (denied.length) { html += ", " + denied.length + " not available"; }
+            html += ".<br>";
+        }
+
+        if (st.inflicts.length) {
+            html += "&gt; <span class='warn'>also selected for you, without being asked: " +
+                    st.inflicts.join(", ") + ".</span>";
+            if (self_inflicted.length) {
+                html += " <span class='warn'>nobody presses that one on purpose.</span>";
+            }
+        }
+
+        out.innerHTML = html;
+    }
+
+    document.addEventListener("click", function (e) {
+        var btn = e.target.closest ? e.target.closest(".plate") : null;
+        if (!btn) return;
+        var id = btn.getAttribute("data-id");
+
+        if (PROPERTIES.indexOf(id) !== -1) {
+            // Latch only: a wish, once made, stays made until you release everything.
+            wanted[id] = true;
+        } else {
+            // One strategy at a time. You do not get to do two of these at once.
+            chosen = id;
+        }
+        render();
+    });
+
+    document.getElementById("reset").addEventListener("click", function () {
+        wanted = {};
+        chosen = null;
+        render();
+    });
+
+    render();
+
+    (function ($) {
+        $(function () {
+            $('.sidenav').sidenav();
+
+            $('select')
+                .on('change', function() {
+                    location.href = this.value + ".html#choice";
+                })
+                .not('.disabled').formSelect();
+
+            $("a svg").attr("stroke", "#06D").attr("width", "0.75em").attr("height", "0.75em").removeClass("z-depth-2");
+        });
+    })(jQuery);
+
+</script>
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+    var sc_project=11608253;
+    var sc_invisible=1;
+    var sc_security="3d0246f7";
+    var scJsHost = (("https:" == document.location.protocol) ?
+        "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+        scJsHost+
+        "statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+                                      href="http://statcounter.com/" target="_blank"><img
+        class="statcounter"
+        src="//c.statcounter.com/11608253/0/3d0246f7/1/" alt="Web
+Analytics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+</body>
+</html>
