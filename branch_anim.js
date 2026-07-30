@@ -32,14 +32,22 @@
         "shard-blue-se":    [815.6, 119.5]
     };
 
+    var REST = "translate(0px, 0px) rotate(0deg) scale(1)";
+
     function rnd(a, b) { return a + Math.random() * (b - a); }
     function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
+    /*
+     * CSS transform syntax, not SVG attribute syntax - they are not
+     * interchangeable. CSS needs comma-separated arguments with units, and its
+     * rotate() takes an angle only, so rotation about a limb's own centroid comes
+     * from transform-origin rather than from rotate(deg cx cy). Feeding SVG-style
+     * strings to element.style.transform gets them silently rejected.
+     */
     function xf(cx, cy, dx, dy, rot, scale) {
-        return "translate(" + dx.toFixed(2) + " " + dy.toFixed(2) + ") " +
-               "rotate(" + rot.toFixed(2) + " " + cx + " " + cy + ") " +
-               "translate(" + cx + " " + cy + ") scale(" + scale.toFixed(3) + ") " +
-               "translate(" + (-cx) + " " + (-cy) + ")";
+        return "translate(" + dx.toFixed(2) + "px, " + dy.toFixed(2) + "px) " +
+               "rotate(" + rot.toFixed(2) + "deg) " +
+               "scale(" + scale.toFixed(3) + ")";
     }
 
     /*
@@ -91,7 +99,7 @@
 
         // A single limb leaves; the rest hold station. Quiet, and easy to miss.
         soloist: function (id, i, n, cx, cy, star) {
-            if (i !== star) { return "translate(0 0)"; }
+            if (i !== star) { return REST; }
             return xf(cx, cy, rnd(-60, 60), rnd(-40, 40), rnd(-90, 90), rnd(0.8, 1.3));
         }
     };
@@ -103,11 +111,14 @@
         if (!limbs.length) { return; }
 
         limbs.forEach(function (el) {
+            var c = CENTROIDS[el.id] || [471, 92];
             el.style.transition = "transform " + MOVE_MS + "ms cubic-bezier(.34,.01,.28,1)";
-            // The polygons carry absolute coordinates, so transforms must be applied
-            // in the SVG user space rather than relative to a CSS box.
+            // The polygons carry absolute user-space coordinates, so transforms are
+            // resolved against the viewBox rather than a CSS border box, and each
+            // limb pivots about its own centroid.
             el.style.transformBox = "view-box";
-            el.style.transformOrigin = "0 0";
+            el.style.transformOrigin = c[0] + "px " + c[1] + "px";
+            el.style.transform = REST;
         });
 
         var queue = [];
@@ -137,7 +148,7 @@
         }
 
         function home() {
-            limbs.forEach(function (el) { el.style.transform = "translate(0 0)"; });
+            limbs.forEach(function (el) { el.style.transform = REST; });
             setTimeout(displace, MOVE_MS + HOLD_MS);
         }
 
@@ -161,10 +172,30 @@
             var svg = doc.documentElement;
             if (!svg || svg.nodeName !== "svg") { return; }
 
-            svg.setAttribute("width", "100%");
-            svg.setAttribute("height", "auto");
+            // Match whatever the <img> was actually occupying. An inline <svg>
+            // has no intrinsic size the way a replaced <img> does, and the frame
+            // it sits in is a shrink-to-fit float - so "width: 100%" alone would
+            // resolve against a collapsed parent and land on the 300x150 SVG
+            // default. Pin the measured width and let the viewBox give height.
+            var w = Math.round(img.getBoundingClientRect().width) || 943;
+            svg.removeAttribute("width");
+            svg.removeAttribute("height");
             svg.style.display = "block";
+            svg.style.width = w + "px";
+            svg.style.height = "auto";
+            svg.style.maxWidth = "100%";
             img.parentNode.replaceChild(svg, img);
+
+            // Keep it in step with the page if the window is resized.
+            if (window.addEventListener) {
+                window.addEventListener("resize", function () {
+                    var parent = svg.parentNode;
+                    if (!parent) { return; }
+                    var pw = parent.getBoundingClientRect().width;
+                    if (pw > 0) { svg.style.width = Math.round(pw) + "px"; }
+                });
+            }
+
             start(svg);
         }).catch(function () {
             /* Leave the <img> alone - a still header is a fine outcome. */
