@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 943 204" width="943" height="204"
+     role="img" aria-labelledby="bbaTitle bbaDesc" preserveAspectRatio="xMidYMid meet">
+  <title id="bbaTitle">Branch by abstraction</title>
+  <desc id="bbaDesc">A single unbroken trunk of code, hatched, with a pink core running its length.
+    Coloured shards of work cross the trunk and pass out of it again, none of them splitting the
+    trunk itself.</desc>
+
+  <defs>
+    <!-- The hatching that gives the trunk its texture. Drawn as a pattern so it
+         scales with the artwork instead of being baked into pixels. -->
+    <pattern id="bbaHatch" width="5.66" height="5.66" patternUnits="userSpaceOnUse"
+             patternTransform="rotate(45)">
+      <rect width="5.66" height="5.66" fill="#daffa4"/>
+      <rect width="3.4" height="5.66" fill="#000"/>
+    </pattern>
+
+    <!-- The pink core is stippled in the original; a fine dot pattern gets close. -->
+    <pattern id="bbaStipple" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="4" fill="#fc9da5"/>
+      <circle cx="1" cy="1" r="0.9" fill="#f2848d"/>
+    </pattern>
+
+    <!-- The trunk silhouette, reused to clip the core and to mask the shards so
+         that each shard is dimmed where it crosses the trunk, exactly as in the
+         original artwork. -->
+    <path id="bbaTrunkPath"
+          d="M 67 52 L 874 67 L 874 102 L 580 101 L 340 126 L 73 128 L 67 68 Z"/>
+
+    <clipPath id="bbaTrunkClip">
+      <use href="#bbaTrunkPath"/>
+    </clipPath>
+  </defs>
+
+  <!-- z-order, back to front:
+       10 trunk band, 20 pink core, 30 shards behind, 40 shard-over-trunk overlay -->
+
+  <g id="layer-trunk" data-layer="10">
+    <use href="#bbaTrunkPath" fill="url(#bbaHatch)"/>
+  </g>
+
+  <g id="layer-core" data-layer="20" clip-path="url(#bbaTrunkClip)">
+    <path d="M 100 79 L 847 81 L 847 94 L 610 94 L 370 110 L 130 114 L 100 103 Z"
+          fill="url(#bbaStipple)"/>
+  </g>
+
+  <!-- Each shard is its own addressable element. They are drawn once, whole, so a
+       shard reads as a single piece of work that happens to pass through the trunk
+       rather than as two unrelated fragments either side of it. -->
+  <g id="layer-shards" data-layer="30">
+    <polygon id="shard-blue-nw"   data-shard="blue"
+             points="215,54 179,54 200,41 205,38 209,36 228,42 230,43 229,44 224,48 217,53" fill="#2b2bff"/>
+    <polygon id="shard-magenta-n" data-shard="magenta"
+             points="349,57 322,57 346,41 348,40 359,46 362,48 360,50 354,54" fill="#ff40ff"/>
+    <polygon id="shard-yellow-n"  data-shard="yellow"
+             points="431,59 438,55 474,36 477,36 480,37 484,39 454,55 444,60 435,60" fill="#ffff80"/>
+    <polygon id="shard-red-ne"    data-shard="red"
+             points="723,66 749,55 753,55 756,56 758,57 754,59 740,65 737,66" fill="#ff2600"/>
+
+    <polygon id="shard-red-w"     data-shard="red"
+             points="234,85 230,108 203,108 201,106 199,102 198,99 197,94 197,92 198,87 199,84 200,82 204,78 214,80 233,84" fill="#ff2600"/>
+    <polygon id="shard-blue-mid"  data-shard="blue"
+             points="355,81 355,84 352,99 348,100 335,103 331,103 329,101 328,99 327,95 327,93 328,88 330,84 332,82 348,81" fill="#2b2bff"/>
+    <polygon id="shard-yellow-mid" data-shard="yellow"
+             points="507,84 557,84 557,85 508,91 503,91 502,90 503,88" fill="#ffff80"/>
+
+    <polygon id="shard-yellow-sw" data-shard="yellow"
+             points="139,135 194,135 195,136 196,138 196,140 166,176 163,179 162,179 157,170 141,140 139,136" fill="#ffff80"/>
+    <polygon id="shard-red-s"     data-shard="red"
+             points="448,129 448,130 425,147 423,148 415,144 402,137 391,131 386,128 385,127 392,126 421,123 431,122 440,122 444,125" fill="#ff2600"/>
+    <polygon id="shard-magenta-se" data-shard="magenta"
+             points="649,124 641,124 638,122 621,109 630,109 647,122" fill="#ff40ff"/>
+    <polygon id="shard-blue-se"   data-shard="blue"
+             points="854,140 847,140 796,111 789,107 788,106 798,106 800,107 853,139" fill="#2b2bff"/>
+  </g>
+
+</svg>

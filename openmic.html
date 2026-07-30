@@ -32,6 +32,36 @@
 
         a svg { margin-left: 3px; }
 
+        .picture {
+            position: relative;
+            float: left;
+            margin: 0 20px 25px 20px;
+        }
+
+        .hook {
+            width: 5px;
+            height: 5px;
+            background-color: #2F4F4F;
+            margin: 0 auto 32px auto;
+            border-radius: 50%;
+            box-shadow: 0 1px 0 1px #a49c7c;
+        }
+
+        .frame {
+            border-top: 6px solid #b89675;
+            border-right: 6px solid #7b654f;
+            border-bottom: 6px solid #7b654f;
+            border-left: 6px solid #a67c52;
+            box-shadow: 4px 4px 0 0 rgba(189, 166, 72, 0.6);
+            z-index: 1;
+        }
+
+        .inside {
+            background: linear-gradient(149deg, #d3d4d5 0%, #d3d4d5 50%, #ccc 51%, #ccc 100%);
+            border: 10px solid #fff;
+            box-shadow: 1px 1px 1px 1px rgba(189, 193, 194, 0.3) inset;
+        }
+
         .review {
             background: #fffdf7;
             border: 1px solid #e3ddcd;
@@ -213,9 +243,15 @@
 <main>
 <div class="container" style="background-color: white; padding-left: 10px; padding-right: 10px; padding-top: 5px; margin-top: 15px; margin-bottom: 15px; padding-bottom: 15px">
 
-    <div class="row">
-        <div class="col s12 center-align">
-            <img src="abstract_branch.png" alt="Branch by abstraction" style="max-width: 100%; height: auto"/>
+    <div class="wrapper">
+        <div class="picture">
+            <div class="nail"></div>
+            <div class="hook"></div>
+            <div class="frame">
+                <div class="inside">
+                    <img alt="Abstract Branch by Paul Hammant" height="auto" width="100%" src="abstract_branch.svg"/>
+                </div>
+            </div>
         </div>
     </div>
 
