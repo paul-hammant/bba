@@ -135,75 +135,47 @@
             -webkit-hyphens: manual;
         }
 
-        /* Listings sidebar - set as a newspaper's what's-on column would be:
-           same serif as the review, tighter, ruled between entries. */
-        .listings {
+        /* Venue statement - deliberately not the review's newspaper serif. This
+           is meant to read as an official notice pinned to a door: plain face,
+           narrow measure, no flourishes. */
+        .notice {
             margin-top: 22px;
-            background: #fffdf7;
-            border: 1px solid #e3ddcd;
-            padding: 18px 22px 20px 22px;
-            font-family: "Times New Roman", Times, Georgia, "Liberation Serif", serif;
-            color: #1c1c1c;
+            background: #fff;
+            border: 1px solid #c9c9c9;
+            border-top: 6px solid #2b2b2b;
+            padding: 20px 24px 18px 24px;
+            max-width: 46em;
+            color: #262626;
         }
 
-        .listings-head {
-            border-bottom: 3px double #2b2b2b;
-            padding-bottom: 8px;
-            margin-bottom: 14px;
+        .notice-head {
+            margin-bottom: 16px;
         }
 
-        .listings-kicker {
-            font-variant: small-caps;
-            letter-spacing: 0.16em;
-            font-size: 0.9rem;
-            color: #6a6252;
+        .notice-kicker {
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: 0.78rem;
+            color: #767676;
             margin: 0;
         }
 
-        .listings-title {
-            font-size: 1.7rem;
+        .notice-title {
+            font-size: 1.45rem;
             font-weight: 700;
-            line-height: 1.15;
-            margin: 6px 0 4px 0;
+            line-height: 1.2;
+            margin: 6px 0 0 0;
         }
 
-        .listings-note {
-            font-style: italic;
-            color: #6a6252;
-            font-size: 1rem;
-            margin: 0;
+        .notice p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin: 0 0 12px 0;
         }
 
-        .listings-body {
-            margin: 0;
-        }
-
-        .listings-body dt {
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-top: 14px;
-            padding-top: 12px;
-            border-top: 1px solid #e3ddcd;
-        }
-
-        .listings-body dt:first-of-type {
-            border-top: 0;
-            padding-top: 0;
-            margin-top: 0;
-        }
-
-        .listings-body dd {
-            margin: 5px 0 0 0;
-            font-size: 1.1rem;
-            line-height: 1.5;
-        }
-
-        .listings-body .slot {
-            font-variant: tabular-nums;
-            font-feature-settings: "tnum";
-            color: #b3413a;
-            padding-right: 10px;
-            white-space: nowrap;
+        .notice-sig {
+            margin-top: 18px;
+            color: #767676;
         }
 
         .encore {
@@ -310,9 +282,9 @@
         ordinary and lasting abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to
         the merge back from the branch that you've now avoided.</p>
 
-    <p id="choice" class="flow-text">Here is the same idea told as <b>a review of an open mic night</b>, at which a third
-        contender &mdash; <i>branch by if-condition</i> &mdash; also took the microphone. It is the shabby third choice, and the
-        review explains why.</p>
+    <p id="choice" class="flow-text">Here is the same idea told as <b>a review of an open mic night at QCon</b>, at which a
+        third contender &mdash; <i>branch by if-condition</i> &mdash; also took the microphone. It is the shabby third
+        choice, and the review explains why. A statement from the venue follows.</p>
 
     <div class="container card-panel red lighten-5 flow-text">
         <div class="row s12">Current branch by abstraction example:</div>
@@ -344,13 +316,13 @@
         <div class="review-masthead">
             <p class="review-pub">The Quarterly Trunk &mdash; Stage &amp; Screen</p>
             <p class="review-headline">Branch by abstraction instead of branch by source control</p>
-            <p class="review-standfirst">Two old rivals traded polished sets at the conference open mic. Then a third act
+            <p class="review-standfirst">Two old rivals traded polished sets at the QCon open mic. Then a third act
                 shuffled to the microphone, and the evening stopped being an evening.</p>
             <p class="review-byline">Reviewed by Cody McCodeface &middot; <span class="stars" title="two stars">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
                 &middot; Runtime: unresolved</p>
         </div>
 
-        <p class="drop flow-text">There is a particular kind of hush that falls over a conference bar when the sign-up sheet
+        <p class="drop flow-text">There is a particular kind of hush that falls over a QCon bar when the sign-up sheet
             goes round, and on this occasion it was earned. The billing promised the rivalry everyone came for: <b>branch by
             source control</b>, the grand old incumbent, against <b>branch by abstraction</b>, the upstart that keeps being
             invited back. What we got instead was two decent sets and then a hostage situation.</p>
@@ -487,51 +459,42 @@ SELECT * FROM carts_new  WHERE     :use_new_persistence</code></pre>
 
     </div>
 
-    <div class="listings">
-        <div class="listings-head">
-            <p class="listings-kicker">The Quarterly Trunk &mdash; Listings</p>
-            <p class="listings-title">Tonight's running order</p>
-            <p class="listings-note">For readers who left at the interval. Times approximate; one of them notional.</p>
+    <div class="notice">
+        <div class="notice-head">
+            <p class="notice-kicker">For immediate release</p>
+            <p class="notice-title">A statement regarding Tuesday's open mic</p>
         </div>
 
-        <dl class="listings-body">
-            <dt><span class="slot">19:30</span> The billing</dt>
-            <dd>Two acts, one problem: a non-functional change too long to fit in a single release. The incumbent proposes a
-                branch. The upstart proposes an abstraction. A full room, for once.</dd>
+        <p>Venue Operations would like to apologise to patrons affected by the overrun of the third act at Tuesday
+            evening's open mic session.</p>
 
-            <dt><span class="slot">19:35</span> Branch by source control</dt>
-            <dd>Forty minutes of material assembled where nobody can see it, resting entirely on a closing merge back that
-                is never rehearsed. Fine in principle, if that merge could be instant and painless. It cannot, and the
-                longer the set runs the less true it gets.</dd>
+        <p>We are unable at this time to state the duration of the overrun, as the act has not yet concluded.</p>
 
-            <dt><span class="slot">20:15</span> Branch by abstraction</dt>
-            <dd>Three minutes. One seam, chosen with care &mdash; the most depended-on and least depending component. Old
-                and new both live behind it, and the choice is made in exactly one place, at boot or build time. Then it
-                deletes the abstraction in front of the room and leaves. The deletion <i>is</i> the merge back.</dd>
+        <p>We wish to record that the performer was removed from the stage at 20:50, promptly and courteously, in
+            accordance with our published procedures. We understand that a number of patrons have written to us to point
+            out that this is not the same thing as the act having stopped. We accept that distinction, and we are grateful
+            to those patrons for their patience in explaining it to our staff on the night.</p>
 
-            <dt><span class="slot">20:18</span> Branch by if-condition &mdash; opening line</dt>
-            <dd>Genuinely funny, and I will not pretend otherwise. One conditional, one decision point, clear and cheap and
-                honest about itself. Nobody has ever been harmed by the first verse. This is where the set should have
-                ended.</dd>
+        <p>Our team had been assured in advance, in writing, that the act came off after twenty minutes. That assurance
+            was given in good faith by a party no longer associated with the booking. A review of how such assurances are
+            obtained is under way, and we expect it to conclude before the act does.</p>
 
-            <dt><span class="slot">20:24</span> &hellip; and the same line again, in translation</dt>
-            <dd>The middle tier's rendition. Then the browser's. Then the reporting SQL, polarity inverted by a hand no
-                longer with the company. The mobile client defaults the other way. One joke, retold by different people in
-                different languages, drifting apart without supervision.</dd>
+        <p>An audit of the venue's speakers, screens and connected devices is in progress. We had not previously had cause
+            to establish how many there are. A figure will be published in due course. Patrons who become aware of a
+            speaker still carrying the act are asked to notify a member of staff rather than attempt to silence it
+            themselves, as two of the devices identified so far were not known to be devices.</p>
 
-            <dt><span class="slot">20:41</span> The arithmetic</dt>
-            <dd>The abstraction had one decision point and could tell you where. This act has as many as have been written,
-                across as many languages as the building happens to contain, and the number is unknown and rising. The
-                complaint is not untidiness. It is that nobody can count.</dd>
+        <p>Refunds are available to patrons who were present for verses four and later, and to patrons who have since
+            encountered the act elsewhere in the building, including in the car park.</p>
 
-            <dt><span class="slot">20:50</span> Escorted off (first attempt)</dt>
-            <dd>Courteous, prompt, and completely ineffective. The performer left. The performance did not.</dd>
+        <p>We would like to thank the two acts who finished. We note in particular that the second of these concluded by
+            removing its own equipment from the stage and leaving the space clear for the next performer, and we have
+            asked our events team to make this the standard we book to in future. It costs a venue nothing and it is,
+            we now appreciate, the entire difference.</p>
 
-            <dt><span class="slot">&mdash;&mdash;:&mdash;&mdash;</span> Curtain</dt>
-            <dd>Not listed, because there isn't one. There is no counterpart here to "delete the abstraction", so there is
-                no finale &mdash; and work with no finale is never finished, only abandoned. The management were assured
-                twenty minutes. In writing.</dd>
-        </dl>
+        <p>Enquiries may be directed to the duty manager, who is currently in the corridor.</p>
+
+        <p class="notice-sig">&mdash; Venue Operations</p>
     </div>
 
     <div class="encore">
@@ -545,9 +508,11 @@ SELECT * FROM carts_new  WHERE     :use_new_persistence</code></pre>
 
     <div>
         <br/>
-        <p>"The Quarterly Trunk" is not a real publication and the review above is an invented set-piece, not a report of
-            any actual conference session. Any resemblance to a talk you have sat through is the point rather than a
-            coincidence.
+        <p>Both pieces above are fiction. "The Quarterly Trunk", Cody McCodeface and the venue's statement are invented,
+            no such open mic took place, and nothing here is a report of an actual QCon<a target="_blank" href="https://qconferences.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            session, speaker or member of staff. QCon appears because it is where this argument actually gets had, over a
+            drink, and with thanks to Floyd Marinescu for being a good sport about it. Any resemblance to a migration you
+            have personally lived through is the point rather than a coincidence.
         </p>
     </div>
 
