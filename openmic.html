@@ -350,42 +350,65 @@
         <p class="flow-text">I had assumed <b>branch by if-condition</b> was a bit of programme filler. It is, I am told, a
             veteran &mdash; it has been doing this since before the incumbent had a name for what it did &mdash; and it took
             the microphone with the unhurried confidence of something that has never once been asked to stop. It opened
-            with a line that got a real laugh, and I want to be fair here, because the laugh was deserved. The opening line
-            was this:</p>
+            with a line that got a real laugh, and I want to be fair here, because the laugh was deserved. The material was
+            a loyalty scheme migrating to a new rewards engine. The opening line was this:</p>
 
-        <pre class="language-java"><code class="language-java">if (useNewPersistenceTech) {
-    persistenceFactory = new NewPersistenceFactory();
+        <pre class="language-java"><code class="language-java">if (useNewRewards) {
+    RewardPoints.accruePointsAfterTravel(person, POINTS_BASELINE * miles);
 } else {
-    persistenceFactory = new OldPersistenceFactory();
+    RewardSystem.incrementCosFlightsTraveled(person, oneWayOrReturn);
 }</code></pre>
 
-        <p class="flow-text">Clear. Cheap. Honest about itself. Had the act ended there it would have earned a warm notice
-            and a slot next quarter. The trouble began at the second verse, which was the same verse, delivered again in a
-            different accent for the browser at the back:</p>
+        <p class="flow-text">The laugh was one of recognition, and it curdled about four seconds later, when the room
+            finished reading it. Look at what the two halves actually take. One counts miles, the other counts flights.
+            One wants a baseline multiplier, the other wants to know whether the trip was a return. These are not two
+            implementations of one idea. They are two <i>different ideas</i>, and the conditional is not choosing between
+            technologies &mdash; it is holding two incompatible models of what a customer has earned, in the middle of the
+            business logic, at the exact point where the earning happens. There is no seam here. There is a fork in the
+            road with the road still attached to both ends.</p>
 
-        <pre class="language-javascript"><code class="language-javascript">const factory = flags.useNewPersistenceTech
-    ? new NewPersistenceClient()
-    : new OldPersistenceClient();</code></pre>
+        <p class="flow-text">And a fork at a call site has to be repeated at every call site. The second verse was the
+            redemption path, same fork, different shape, because redeeming is not accruing:</p>
 
-        <p class="flow-text">Then a third, in the reporting tier, where the flag had been renamed by someone no longer with
+        <pre class="language-java"><code class="language-java">if (useNewRewards) {
+    RewardPoints.redeem(person, pointsRequired(cabin, miles));
+} else {
+    // legacy: tiers, not points - and it throws if the member is Silver
+    RewardSystem.deductFlightCredits(person, creditsFor(cabin));
+}</code></pre>
+
+        <p class="flow-text">Then the same fork again in the browser, where a front-end developer had been asked to show
+            members their balance and had, quite reasonably, written down what they were told:</p>
+
+        <pre class="language-javascript"><code class="language-javascript">const balance = flags.useNewRewards
+    ? `${member.points.toLocaleString()} points`
+    : `${member.flightCredits} flights to next tier`;</code></pre>
+
+        <p class="flow-text">Then a fourth, in the reporting tier, where the flag had been renamed by someone no longer with
             the company, and the polarity &mdash; I checked my notes twice &mdash; had been quietly inverted:</p>
 
-        <pre class="language-sql"><code class="language-sql">SELECT * FROM carts_old  WHERE NOT :use_new_persistence
+        <pre class="language-sql"><code class="language-sql">SELECT member_id, points_balance      FROM rewards_new WHERE     :legacy_scheme_off
 UNION ALL
-SELECT * FROM carts_new  WHERE     :use_new_persistence</code></pre>
+SELECT member_id, flights_ytd * 1000   FROM rewards_old WHERE NOT :legacy_scheme_off</code></pre>
+
+        <p class="flow-text">That <code>* 1000</code> is somebody's guess at an exchange rate, sitting in a reporting query,
+            where finance will find it. Nobody on stage acknowledged it. I am not sure anybody on stage knew.</p>
 
         <p class="flow-text">Somewhere around the fifth verse it became clear that this was not a set with a structure. It
             was a set with a <i>surface area</i>. Each verse was recognisably the same joke, and each had been retold by a
-            different person, in a different language, at a different time, with no one keeping a list. The mobile client's
-            rendition defaulted the other way. The batch job's rendition had been commented out and then uncommented by a
-            second hand. Two verses, eleven minutes apart, contradicted each other outright, and the audience noticed
-            before the performer did.</p>
+            different person, in a different language, at a different time, with no one keeping a list &mdash; and because
+            the fork sits in the business logic rather than behind a seam, each retelling had to make its own decision about
+            what the business rule even <i>was</i>. The mobile client defaulted the other way. The batch job's rendition had
+            been commented out and then uncommented by a second hand. Two verses, eleven minutes apart, disagreed about
+            whether a cancelled flight took the points back, and the audience noticed before the performer did.</p>
 
         <p class="flow-text">This is the whole indictment, and it is worth stating plainly, because it is not a matter of
-            taste. The abstraction had <i>one</i> place where the choice was made. If-condition has as many places as it has
-            been repeated, across as many languages as the system happens to be written in, and &mdash; the fatal part
-            &mdash; nobody in the building knows the number. You cannot take a bow you cannot count your way to. There is no
-            grep that returns confidence. Ask how many verses are left and the honest answer is a shrug.</p>
+            taste. The abstraction put the choice behind a seam, so there was <i>one</i> place that knew about it and every
+            caller was ignorant by design. If-condition puts the choice at the call sites, so every caller must know, and
+            there are as many places as there are calls &mdash; across as many languages as the system happens to be
+            written in, each with its own opinion about what the rule is. And the fatal part: nobody in the building knows
+            the number. You cannot take a bow you cannot count your way to. There is no grep that returns confidence, because
+            the verses do not share a phrase to grep for. Ask how many are left and the honest answer is a shrug.</p>
 
         <table class="tally striped">
             <caption>Where the choice gets made, by act</caption>
@@ -409,7 +432,7 @@ SELECT * FROM carts_new  WHERE     :use_new_persistence</code></pre>
             </tr>
             <tr>
                 <td>Branch by if-condition</td>
-                <td>Unknown, and growing</td>
+                <td>One per call site &mdash; unknown, and growing</td>
                 <td>&mdash;</td>
             </tr>
             </tbody>
@@ -452,8 +475,9 @@ SELECT * FROM carts_new  WHERE     :use_new_persistence</code></pre>
         <p class="flow-text">Branch by source control asks you to trust a finale it has not written. Branch by abstraction
             performs its finale in front of you and leaves the stage empty. Branch by if-condition never has a finale,
             because a finale requires knowing where the thing is, and by the eleventh verse in the fourth language, nobody
-            does. Two stars, both of them for the opening line, which really was funny, and which really should have been
-            the entire set.</p>
+            does. Two stars, both of them for the opening line, which really was funny &mdash; and which, had anyone
+            stopped to ask what it was actually choosing between, would have been the whole set and a much shorter
+            evening.</p>
 
         <p class="flow-text" style="font-style: italic; color: #6a6252">The open mic runs continuously. It has not been
             confirmed whether the third act has finished.</p>
@@ -497,9 +521,12 @@ SELECT * FROM carts_new  WHERE     :use_new_persistence</code></pre>
         <p class="flow-text" style="margin: 0;">To be clear about the target: this is not an argument against feature
             flags/toggles<a target="_blank" href="https://trunkbaseddevelopment.com/feature-flags/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>,
             which are a fine and necessary tool. It is an argument against using a conditional as your <i>abstraction
-            mechanism</i> for a long non-functional migration. One flag consulted in one place, behind an idiomatic
-            abstraction, is branch by abstraction. The same flag consulted in ninety places across four languages is the
-            third act, and it does not know how to get off stage.</p>
+            mechanism</i> for a long non-functional migration. One flag, read once, behind an idiomatic abstraction that
+            callers never see &mdash; that is branch by abstraction, and the flag is doing the job flags are for. The same
+            flag read at ninety call sites, in four languages, each site forking on old and new business methods that take
+            different arguments and mean different things, is the third act. Note that the first of those still has a
+            conditional in it somewhere. The difference is not whether you wrote an <code>if</code>. It is whether anything
+            else in the codebase had to know you did.</p>
     </div>
 
     <div>
