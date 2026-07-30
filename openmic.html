@@ -135,24 +135,75 @@
             -webkit-hyphens: manual;
         }
 
-        .setlist {
-            margin-top: 18px;
+        /* Listings sidebar - set as a newspaper's what's-on column would be:
+           same serif as the review, tighter, ruled between entries. */
+        .listings {
+            margin-top: 22px;
+            background: #fffdf7;
+            border: 1px solid #e3ddcd;
+            padding: 18px 22px 20px 22px;
+            font-family: "Times New Roman", Times, Georgia, "Liberation Serif", serif;
+            color: #1c1c1c;
         }
 
-        .setlist .act {
-            border: 1px solid #d9d9d1;
-            background: #fff;
-            padding: 14px 16px;
-            margin-bottom: 12px;
+        .listings-head {
+            border-bottom: 3px double #2b2b2b;
+            padding-bottom: 8px;
+            margin-bottom: 14px;
         }
 
-        .setlist .act h5 {
-            margin: 0 0 6px 0;
-            font-size: 1.2rem;
-        }
-
-        .setlist .act p {
+        .listings-kicker {
+            font-variant: small-caps;
+            letter-spacing: 0.16em;
+            font-size: 0.9rem;
+            color: #6a6252;
             margin: 0;
+        }
+
+        .listings-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            line-height: 1.15;
+            margin: 6px 0 4px 0;
+        }
+
+        .listings-note {
+            font-style: italic;
+            color: #6a6252;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .listings-body {
+            margin: 0;
+        }
+
+        .listings-body dt {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #e3ddcd;
+        }
+
+        .listings-body dt:first-of-type {
+            border-top: 0;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .listings-body dd {
+            margin: 5px 0 0 0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .listings-body .slot {
+            font-variant: tabular-nums;
+            font-feature-settings: "tnum";
+            color: #b3413a;
+            padding-right: 10px;
+            white-space: nowrap;
         }
 
         .encore {
@@ -406,8 +457,22 @@ SELECT * FROM carts_new  WHERE     :use_new_persistence</code></pre>
 
         <div class="pull-quote">You cannot escort a performer off stage when the performer is the wiring.</div>
 
+        <p class="flow-text">The managers made a second attempt, from a different doorway, and to their credit they made it
+            without any visible loss of composure. It achieved nothing, because there was nothing in the doorway to
+            intercept. Two of them then went to look for the monitor speaker, which I think was the first genuinely
+            reasonable decision anyone had made all evening, and which was also the moment the scale of the problem became
+            a matter of arithmetic rather than stagecraft.</p>
+
+        <p class="flow-text">By now there were managers in the corridor who had not been in the room for the booking, and
+            I want to be careful to be fair to them, because they were not fools and they were not enjoying themselves.
+            One was explaining, to nobody in particular, that they had been assured beforehand that this act came off after
+            twenty minutes. Another said that the assurance had been given in writing, and seemed to find this both
+            important and, on reflection, not much help. A third asked how many speakers the venue had. Nobody in the
+            corridor knew, and it was becoming clear that this was not a question anyone had thought to ask, because it had
+            not occurred to a single person present that an act might simply not have an end.</p>
+
         <p class="flow-text">I saved myself at the one-hour mark. I would like to report this as a considered critical
-            judgement; it was closer to a fire drill. On my way out I passed a stage manager on a radio, patiently asking
+            judgement; it was closer to a fire drill. On my way out I passed a manager on a radio, patiently asking
             somebody in another building whether they knew of any other speakers. The reply was inaudible, but the shape of
             it was not. They did not know. That is the review.</p>
 
@@ -422,48 +487,51 @@ SELECT * FROM carts_new  WHERE     :use_new_persistence</code></pre>
 
     </div>
 
-    <div class="setlist">
-        <div class="act">
-            <h5>1. The billing</h5>
-            <p class="flow-text">Two contenders for the same problem: a long non-functional change that will not fit inside
-                one release. The incumbent proposes a branch. The upstart proposes an abstraction. Everyone came to see
-                which one holds up.</p>
+    <div class="listings">
+        <div class="listings-head">
+            <p class="listings-kicker">The Quarterly Trunk &mdash; Listings</p>
+            <p class="listings-title">Tonight's running order</p>
+            <p class="listings-note">For readers who left at the interval. Times approximate; one of them notional.</p>
         </div>
-        <div class="act">
-            <h5>2. The incumbent's set</h5>
-            <p class="flow-text">Work happens off to one side, unseen, and everything rests on a merge back that has not
-                been rehearsed. It would be fine if that merge were instantaneous and painless. It is neither, and the
-                longer the set runs the less true it gets.</p>
-        </div>
-        <div class="act">
-            <h5>3. The upstart's set</h5>
-            <p class="flow-text">One seam, chosen deliberately. Old and new both live behind it. The choice is made in a
-                single place, at boot time or build time &mdash; and then the abstraction is deleted in full view. The
-                deletion <i>is</i> the merge back.</p>
-        </div>
-        <div class="act">
-            <h5>4. The third act opens well</h5>
-            <p class="flow-text">A single <code>if</code> at a single decision point is clear, cheap and honest. One of
-                them is not the problem. Nobody has ever been harmed by the first verse.</p>
-        </div>
-        <div class="act">
-            <h5>5. The same verse, in every dialect</h5>
-            <p class="flow-text">The middle tier has it. The browser has it. The reporting SQL has it, with the polarity
-                inverted. The mobile client defaults the other way. Same intent, re-expressed by different hands in
-                different languages, drifting apart independently.</p>
-        </div>
-        <div class="act">
-            <h5>6. Nobody knows the count</h5>
-            <p class="flow-text">The abstraction has one decision point. If-conditions have as many as have been written,
-                and the number is unknown and rising. This is the difference that matters &mdash; not tidiness, but
-                countability.</p>
-        </div>
-        <div class="act">
-            <h5>7. The act that cannot be ended</h5>
-            <p class="flow-text">Escorting the performer off stage does not stop the performance, because the performance
-                was never in one place. There is no equivalent of "delete the abstraction", so there is no finale, so the
-                work is never actually finished &mdash; it is only abandoned.</p>
-        </div>
+
+        <dl class="listings-body">
+            <dt><span class="slot">19:30</span> The billing</dt>
+            <dd>Two acts, one problem: a non-functional change too long to fit in a single release. The incumbent proposes a
+                branch. The upstart proposes an abstraction. A full room, for once.</dd>
+
+            <dt><span class="slot">19:35</span> Branch by source control</dt>
+            <dd>Forty minutes of material assembled where nobody can see it, resting entirely on a closing merge back that
+                is never rehearsed. Fine in principle, if that merge could be instant and painless. It cannot, and the
+                longer the set runs the less true it gets.</dd>
+
+            <dt><span class="slot">20:15</span> Branch by abstraction</dt>
+            <dd>Three minutes. One seam, chosen with care &mdash; the most depended-on and least depending component. Old
+                and new both live behind it, and the choice is made in exactly one place, at boot or build time. Then it
+                deletes the abstraction in front of the room and leaves. The deletion <i>is</i> the merge back.</dd>
+
+            <dt><span class="slot">20:18</span> Branch by if-condition &mdash; opening line</dt>
+            <dd>Genuinely funny, and I will not pretend otherwise. One conditional, one decision point, clear and cheap and
+                honest about itself. Nobody has ever been harmed by the first verse. This is where the set should have
+                ended.</dd>
+
+            <dt><span class="slot">20:24</span> &hellip; and the same line again, in translation</dt>
+            <dd>The middle tier's rendition. Then the browser's. Then the reporting SQL, polarity inverted by a hand no
+                longer with the company. The mobile client defaults the other way. One joke, retold by different people in
+                different languages, drifting apart without supervision.</dd>
+
+            <dt><span class="slot">20:41</span> The arithmetic</dt>
+            <dd>The abstraction had one decision point and could tell you where. This act has as many as have been written,
+                across as many languages as the building happens to contain, and the number is unknown and rising. The
+                complaint is not untidiness. It is that nobody can count.</dd>
+
+            <dt><span class="slot">20:50</span> Escorted off (first attempt)</dt>
+            <dd>Courteous, prompt, and completely ineffective. The performer left. The performance did not.</dd>
+
+            <dt><span class="slot">&mdash;&mdash;:&mdash;&mdash;</span> Curtain</dt>
+            <dd>Not listed, because there isn't one. There is no counterpart here to "delete the abstraction", so there is
+                no finale &mdash; and work with no finale is never finished, only abandoned. The management were assured
+                twenty minutes. In writing.</dd>
+        </dl>
     </div>
 
     <div class="encore">
