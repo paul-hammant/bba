@@ -38,6 +38,8 @@
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
             padding: 22px 26px 8px 26px;
             margin-top: 18px;
+            font-family: "Times New Roman", Times, Georgia, "Liberation Serif", serif;
+            color: #1c1c1c;
         }
 
         .review-masthead {
@@ -55,10 +57,12 @@
         }
 
         .review-headline {
-            font-size: 2.1rem;
-            line-height: 1.15;
+            font-size: 2.4rem;
+            line-height: 1.1;
             font-weight: 700;
-            margin: 8px 0 6px 0;
+            margin: 8px 0 8px 0;
+            text-align: center;
+            letter-spacing: -0.01em;
         }
 
         .review-standfirst {
@@ -76,7 +80,33 @@
 
         .review p {
             font-size: 1.15rem;
-            line-height: 1.7;
+            line-height: 1.55;
+        }
+
+        /* Justified body copy, as a newspaper would set it. Hyphenation matters
+           here - justification without it opens rivers of whitespace on narrow
+           screens. Masthead paragraphs are nested a level deeper, so the
+           direct-child selector leaves the headline and byline ragged. */
+        .review > p {
+            text-align: justify;
+            text-justify: inter-word;
+            hyphens: auto;
+            -webkit-hyphens: auto;
+            -ms-hyphens: auto;
+        }
+
+        /* Narrow columns and justification fight each other; ragged-right reads
+           better below tablet width. */
+        @media screen and (max-width: 600px) {
+            .review > p {
+                text-align: left;
+                hyphens: manual;
+                -webkit-hyphens: manual;
+            }
+
+            .review-headline {
+                font-size: 1.8rem;
+            }
         }
 
         .review p.drop::first-letter {
@@ -97,9 +127,12 @@
             background: #fff;
             padding: 12px 16px;
             margin: 22px 0;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-style: italic;
-            line-height: 1.5;
+            line-height: 1.4;
+            text-align: left;
+            hyphens: manual;
+            -webkit-hyphens: manual;
         }
 
         .setlist {
@@ -262,7 +295,7 @@
             <p class="review-headline">Branch by abstraction instead of branch by source control</p>
             <p class="review-standfirst">Two old rivals traded polished sets at the conference open mic. Then a third act
                 shuffled to the microphone, and the evening stopped being an evening.</p>
-            <p class="review-byline">Reviewed by our correspondent &middot; <span class="stars" title="two stars">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+            <p class="review-byline">Reviewed by Cody McCodeface &middot; <span class="stars" title="two stars">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
                 &middot; Runtime: unresolved</p>
         </div>
 
@@ -371,7 +404,7 @@ SELECT * FROM carts_new  WHERE     :use_new_persistence</code></pre>
             was not there: <i>removing the act from the stage did not end the act</i>, because the act had never actually
             been in one place to remove.</p>
 
-        <div class="pull-quote">You cannot escort a thing off stage when the thing is in the wiring.</div>
+        <div class="pull-quote">You cannot escort a performer off stage when the performer is the wiring.</div>
 
         <p class="flow-text">I saved myself at the one-hour mark. I would like to report this as a considered critical
             judgement; it was closer to a fire drill. On my way out I passed a stage manager on a radio, patiently asking
