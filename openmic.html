@@ -1,0 +1,518 @@
+<!DOCTYPE HTML>
+<html xmlns:og="http://opengraphprotocol.org/schema/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <meta name="theme-color" content="#EE6E73">
+    <meta property="og:image" content="https://branchbyabstraction.com/bba_og.png">
+    <title>Branch By Abstraction - Open mic review</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="prism.css">
+
+    <style>
+        nav ul a { color: #96a5b2; }
+        nav ul li.active a { color: white; }
+
+        .page-footer {
+            color: black;
+            background-color: white;
+        }
+
+        .page-footer .footer-copyright {
+            color: black;
+            background-color: aliceblue;
+        }
+
+        a svg { margin-left: 3px; }
+
+        .review {
+            background: #fffdf7;
+            border: 1px solid #e3ddcd;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            padding: 22px 26px 8px 26px;
+            margin-top: 18px;
+        }
+
+        .review-masthead {
+            border-bottom: 3px double #2b2b2b;
+            padding-bottom: 10px;
+            margin-bottom: 18px;
+        }
+
+        .review-pub {
+            font-variant: small-caps;
+            letter-spacing: 0.16em;
+            font-size: 0.95rem;
+            color: #6a6252;
+            margin: 0;
+        }
+
+        .review-headline {
+            font-size: 2.1rem;
+            line-height: 1.15;
+            font-weight: 700;
+            margin: 8px 0 6px 0;
+        }
+
+        .review-standfirst {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #4a4438;
+            margin: 0;
+        }
+
+        .review-byline {
+            font-size: 0.95rem;
+            color: #6a6252;
+            margin: 12px 0 0 0;
+        }
+
+        .review p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+        }
+
+        .review p.drop::first-letter {
+            float: left;
+            font-size: 3.6rem;
+            line-height: 0.82;
+            padding: 4px 8px 0 0;
+            font-weight: 700;
+        }
+
+        .stars {
+            font-size: 1.4rem;
+            letter-spacing: 0.1em;
+        }
+
+        .pull-quote {
+            border-left: 4px solid #b3413a;
+            background: #fff;
+            padding: 12px 16px;
+            margin: 22px 0;
+            font-size: 1.3rem;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .setlist {
+            margin-top: 18px;
+        }
+
+        .setlist .act {
+            border: 1px solid #d9d9d1;
+            background: #fff;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
+
+        .setlist .act h5 {
+            margin: 0 0 6px 0;
+            font-size: 1.2rem;
+        }
+
+        .setlist .act p {
+            margin: 0;
+        }
+
+        .encore {
+            background: #fff8e1;
+            border-left: 4px solid #f5a623;
+            padding: 12px 14px;
+            margin-top: 18px;
+        }
+
+        .tally {
+            background: #fff;
+            border: 1px solid #d9d9d1;
+            margin-top: 18px;
+        }
+
+        .tally caption {
+            text-align: left;
+            padding: 12px 14px;
+            font-style: italic;
+            color: #6a6252;
+            border-bottom: 1px solid #d9d9d1;
+        }
+
+        .tally td, .tally th {
+            padding: 8px 14px;
+        }
+
+        pre[class*="language-"] {
+            margin: 8px 0 0 0;
+        }
+    </style>
+</head>
+<body style="background-color: aliceblue">
+
+<main>
+<div class="container" style="background-color: white; padding-left: 10px; padding-right: 10px; padding-top: 5px; margin-top: 15px; margin-bottom: 15px; padding-bottom: 15px">
+
+    <div class="row">
+        <div class="col s12 center-align">
+            <img src="abstract_branch.png" alt="Branch by abstraction" style="max-width: 100%; height: auto"/>
+        </div>
+    </div>
+
+    <h3 align="center">Branch By Abstraction?</h3>
+
+    <ul id="slide-out" class="sidenav">
+        <li>
+            <div class="user-view">
+                <iframe width='160' height='400' src='https://leanpub.com/trunk-based-development/embed' frameborder='0'
+                        allowtransparency='true'></iframe>
+            </div>
+        </li>
+    </ul>
+
+    <div class="col s2 m2">
+        <div class="card-panel small grey lighten-5 z-depth-1">
+            <div class="row valign-wrapper">
+                <div class="col s8">
+                  <span class="black-text">
+                    "Trunk-Based Development and Branch by Abstraction" book is now available on Leanpub
+                  </span>
+                </div>
+                <div class="col s4">
+                    <a href="#" data-target="slide-out" class="sidenav-trigger btn-small">☜ See details in sidebar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="flow-text">Yes, <b>by abstraction instead of by branching in source control</b>. And no, that doesn't mean sprinkle
+        conditionals into your source code. It means to use an abstraction concept that's idiomatic for the programming language
+        you are using.</p>
+
+    <p class="flow-text"><u>Context:</u> Some types of non-functional change take so long to code that someone suggests doing
+        the work on a branch and merging back later. These will be the types of changes that are going to impede the concurrent
+        development of normal functional deliverables. Where the non-functional changes impact many parts of the codebase,
+        there is a risk of repeatedly breaking the build. Where there is a risk of breaking the build, there is a "do it on a
+        branch" suggestion.</p>
+
+    <p class="flow-text">Another factor driving that suggestion is when
+        there is a mismatch between the release cadence and the time needed to complete the work. In other words, change can take
+        many weeks or months and there will be releases to production before the completion of the work in question.</p>
+
+    <p class="flow-text">The branch idea
+        would be OK if the resulting merge back could be instantaneous and guaranteed to be a pain-free merge. That is
+        impossible though for any higher throughput development team that is also doing regular refactorings as they go.
+        Note too that executives often express their displeasure with nonfunctional work taking longer than promised by
+        canceling it.</p>
+
+    <p class="flow-text">Branch by abstraction is a methodical procedure which has some steps:</p>
+
+    <ol class="collection">
+        <li style="font-size: 130%" class="collection-item"><b>Introduce an abstraction to methodically chomp away at that time consuming non-functional change</b></li>
+        <li class="collection-item">Start with a single most depended on and least depending component</li>
+        <li class="collection-item">To not jeopardize anyone else's throughput, work in a place in the codebase that is separate to the existing code</li>
+        <li class="collection-item">Methodically complete the work, temporarily duplicating tens or hundreds of components</li>
+        <li style="font-size: 130%" class="collection-item"><b>Go live in a 'dark deployment' mode part complete as many times as needed</b></li>
+        <li class="collection-item">Scale up your CI infrastructure to guard old and new implementations</li>
+        <li style="font-size: 130%" class="collection-item"><b>When ready, switch over in production (a toggle flip to end 'dark deployment' mode)</b></li>
+        <li style="font-size: 130%" class="collection-item"><b>Lastly, delete old implementations and the abstraction itself (essential follow up work)</b></li>
+    </ol>
+
+    <p class="flow-text">That last is the characterizing difference between the methodical branch by abstraction procedure and the
+        ordinary and lasting abstractions in your codebase. The removal of the abstraction (and old implementation) is the equivalent to
+        the merge back from the branch that you've now avoided.</p>
+
+    <p id="choice" class="flow-text">Here is the same idea told as <b>a review of an open mic night</b>, at which a third
+        contender &mdash; <i>branch by if-condition</i> &mdash; also took the microphone. It is the shabby third choice, and the
+        review explains why.</p>
+
+    <div class="container card-panel red lighten-5 flow-text">
+        <div class="row s12">Current branch by abstraction example:</div>
+        <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12 m6 z-depth-3">
+                    <select class="flow-text">
+                        <optgroup label="non-language centric">
+                            <option value="index">UML sequence diagrams</option>
+                            <option value="building">Building Construction metaphor</option>
+                            <option value="storyboard">Storyboard room metaphor</option>
+                            <option selected value="openmic">Open mic night review</option>
+                        </optgroup>
+                        <optgroup label="Language centric">
+                            <option value="java">Java source changes</option>
+                            <option disabled value="ruby">Ruby source changes</option>
+                            <option disabled value="python">Python source changes</option>
+                            <option value="csharp">C# source changes</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="row s12 right-align">(click to change)</div>
+    </div>
+
+    <div class="review">
+
+        <div class="review-masthead">
+            <p class="review-pub">The Quarterly Trunk &mdash; Stage &amp; Screen</p>
+            <p class="review-headline">Branch by abstraction instead of branch by source control</p>
+            <p class="review-standfirst">Two old rivals traded polished sets at the conference open mic. Then a third act
+                shuffled to the microphone, and the evening stopped being an evening.</p>
+            <p class="review-byline">Reviewed by our correspondent &middot; <span class="stars" title="two stars">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+                &middot; Runtime: unresolved</p>
+        </div>
+
+        <p class="drop flow-text">There is a particular kind of hush that falls over a conference bar when the sign-up sheet
+            goes round, and on this occasion it was earned. The billing promised the rivalry everyone came for: <b>branch by
+            source control</b>, the grand old incumbent, against <b>branch by abstraction</b>, the upstart that keeps being
+            invited back. What we got instead was two decent sets and then a hostage situation.</p>
+
+        <p class="flow-text">Branch by source control went first, as it always insists on doing. It is a heavy performer,
+            and it knows it. The whole act is built around a single promised finale &mdash; the merge back &mdash; which it
+            declines to rehearse and describes only in the future tense. For forty minutes it worked in isolation, off to one
+            side, gathering material nobody else in the room could see. The material was not bad. But an act whose punchline
+            depends on landing perfectly, once, at the end, after weeks of drift, is an act that lives or dies on a
+            promise. The room has watched it die before. Someone at the back muttered "just tell us how it ends" and was
+            not, I noticed, shushed.</p>
+
+        <p class="flow-text">Branch by abstraction followed and did the smartest thing available to it: three tight minutes
+            and off. One seam, one place where old and new meet, chosen with obvious care &mdash; the most depended-on and
+            least depending component, which in stagecraft terms is simply knowing where to stand. It never asked the
+            audience to imagine a finale, because it performed the finale: it introduced the thing, it used the thing, and
+            then, in front of everyone, it <i>removed the thing</i>. The abstraction was deleted on stage. That deletion is
+            the merge back, paid up front, in public, with no debt carried out of the room.</p>
+
+        <div class="pull-quote">Brevity was not this act's style choice. Brevity was its argument.</div>
+
+        <p class="flow-text">And then the sheet turned over, and there was a third name on it.</p>
+
+        <p class="flow-text">I had assumed <b>branch by if-condition</b> was a bit of programme filler. It is, I am told, a
+            veteran &mdash; it has been doing this since before the incumbent had a name for what it did &mdash; and it took
+            the microphone with the unhurried confidence of something that has never once been asked to stop. It opened
+            with a line that got a real laugh, and I want to be fair here, because the laugh was deserved. The opening line
+            was this:</p>
+
+        <pre class="language-java"><code class="language-java">if (useNewPersistenceTech) {
+    persistenceFactory = new NewPersistenceFactory();
+} else {
+    persistenceFactory = new OldPersistenceFactory();
+}</code></pre>
+
+        <p class="flow-text">Clear. Cheap. Honest about itself. Had the act ended there it would have earned a warm notice
+            and a slot next quarter. The trouble began at the second verse, which was the same verse, delivered again in a
+            different accent for the browser at the back:</p>
+
+        <pre class="language-javascript"><code class="language-javascript">const factory = flags.useNewPersistenceTech
+    ? new NewPersistenceClient()
+    : new OldPersistenceClient();</code></pre>
+
+        <p class="flow-text">Then a third, in the reporting tier, where the flag had been renamed by someone no longer with
+            the company, and the polarity &mdash; I checked my notes twice &mdash; had been quietly inverted:</p>
+
+        <pre class="language-sql"><code class="language-sql">SELECT * FROM carts_old  WHERE NOT :use_new_persistence
+UNION ALL
+SELECT * FROM carts_new  WHERE     :use_new_persistence</code></pre>
+
+        <p class="flow-text">Somewhere around the fifth verse it became clear that this was not a set with a structure. It
+            was a set with a <i>surface area</i>. Each verse was recognisably the same joke, and each had been retold by a
+            different person, in a different language, at a different time, with no one keeping a list. The mobile client's
+            rendition defaulted the other way. The batch job's rendition had been commented out and then uncommented by a
+            second hand. Two verses, eleven minutes apart, contradicted each other outright, and the audience noticed
+            before the performer did.</p>
+
+        <p class="flow-text">This is the whole indictment, and it is worth stating plainly, because it is not a matter of
+            taste. The abstraction had <i>one</i> place where the choice was made. If-condition has as many places as it has
+            been repeated, across as many languages as the system happens to be written in, and &mdash; the fatal part
+            &mdash; nobody in the building knows the number. You cannot take a bow you cannot count your way to. There is no
+            grep that returns confidence. Ask how many verses are left and the honest answer is a shrug.</p>
+
+        <table class="tally striped">
+            <caption>Where the choice gets made, by act</caption>
+            <thead>
+            <tr>
+                <th>Act</th>
+                <th>Decision points</th>
+                <th>How it ends</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Branch by source control</td>
+                <td>One, deferred</td>
+                <td>A merge back, promised, often late or cancelled</td>
+            </tr>
+            <tr>
+                <td>Branch by abstraction</td>
+                <td>One, at a chosen seam</td>
+                <td>Deletion of the abstraction &mdash; done, on stage</td>
+            </tr>
+            <tr>
+                <td>Branch by if-condition</td>
+                <td>Unknown, and growing</td>
+                <td>&mdash;</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="flow-text">The stage managers made their first attempt at the fifty-minute mark. They were courteous
+            about it. The house lights came up, the next act's name was read out, and branch by if-condition was walked to
+            the wings by two people in lanyards, still talking, and did not resist. I made a note that it was over. The note
+            was wrong.</p>
+
+        <p class="flow-text">Because the voice carried on. Not from the wings &mdash; from the room. A monitor speaker
+            near the bar picked up a verse nobody had cued. Then the second-floor overflow screen, which had been showing a
+            static holding slide, began playing a verse from what I can only assume was a recording made years earlier by
+            someone who has since changed teams. A phone on the merchandise table joined in, one bar behind. The performer
+            was not on stage. The performance was still going. This is the part I would struggle to convey to anyone who
+            was not there: <i>removing the act from the stage did not end the act</i>, because the act had never actually
+            been in one place to remove.</p>
+
+        <div class="pull-quote">You cannot escort a thing off stage when the thing is in the wiring.</div>
+
+        <p class="flow-text">I saved myself at the one-hour mark. I would like to report this as a considered critical
+            judgement; it was closer to a fire drill. On my way out I passed a stage manager on a radio, patiently asking
+            somebody in another building whether they knew of any other speakers. The reply was inaudible, but the shape of
+            it was not. They did not know. That is the review.</p>
+
+        <p class="flow-text">Branch by source control asks you to trust a finale it has not written. Branch by abstraction
+            performs its finale in front of you and leaves the stage empty. Branch by if-condition never has a finale,
+            because a finale requires knowing where the thing is, and by the eleventh verse in the fourth language, nobody
+            does. Two stars, both of them for the opening line, which really was funny, and which really should have been
+            the entire set.</p>
+
+        <p class="flow-text" style="font-style: italic; color: #6a6252">The open mic runs continuously. It has not been
+            confirmed whether the third act has finished.</p>
+
+    </div>
+
+    <div class="setlist">
+        <div class="act">
+            <h5>1. The billing</h5>
+            <p class="flow-text">Two contenders for the same problem: a long non-functional change that will not fit inside
+                one release. The incumbent proposes a branch. The upstart proposes an abstraction. Everyone came to see
+                which one holds up.</p>
+        </div>
+        <div class="act">
+            <h5>2. The incumbent's set</h5>
+            <p class="flow-text">Work happens off to one side, unseen, and everything rests on a merge back that has not
+                been rehearsed. It would be fine if that merge were instantaneous and painless. It is neither, and the
+                longer the set runs the less true it gets.</p>
+        </div>
+        <div class="act">
+            <h5>3. The upstart's set</h5>
+            <p class="flow-text">One seam, chosen deliberately. Old and new both live behind it. The choice is made in a
+                single place, at boot time or build time &mdash; and then the abstraction is deleted in full view. The
+                deletion <i>is</i> the merge back.</p>
+        </div>
+        <div class="act">
+            <h5>4. The third act opens well</h5>
+            <p class="flow-text">A single <code>if</code> at a single decision point is clear, cheap and honest. One of
+                them is not the problem. Nobody has ever been harmed by the first verse.</p>
+        </div>
+        <div class="act">
+            <h5>5. The same verse, in every dialect</h5>
+            <p class="flow-text">The middle tier has it. The browser has it. The reporting SQL has it, with the polarity
+                inverted. The mobile client defaults the other way. Same intent, re-expressed by different hands in
+                different languages, drifting apart independently.</p>
+        </div>
+        <div class="act">
+            <h5>6. Nobody knows the count</h5>
+            <p class="flow-text">The abstraction has one decision point. If-conditions have as many as have been written,
+                and the number is unknown and rising. This is the difference that matters &mdash; not tidiness, but
+                countability.</p>
+        </div>
+        <div class="act">
+            <h5>7. The act that cannot be ended</h5>
+            <p class="flow-text">Escorting the performer off stage does not stop the performance, because the performance
+                was never in one place. There is no equivalent of "delete the abstraction", so there is no finale, so the
+                work is never actually finished &mdash; it is only abandoned.</p>
+        </div>
+    </div>
+
+    <div class="encore">
+        <p class="flow-text" style="margin: 0;">To be clear about the target: this is not an argument against feature
+            flags/toggles<a target="_blank" href="https://trunkbaseddevelopment.com/feature-flags/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>,
+            which are a fine and necessary tool. It is an argument against using a conditional as your <i>abstraction
+            mechanism</i> for a long non-functional migration. One flag consulted in one place, behind an idiomatic
+            abstraction, is branch by abstraction. The same flag consulted in ninety places across four languages is the
+            third act, and it does not know how to get off stage.</p>
+    </div>
+
+    <div>
+        <br/>
+        <p>"The Quarterly Trunk" is not a real publication and the review above is an invented set-piece, not a report of
+            any actual conference session. Any resemblance to a talk you have sat through is the point rather than a
+            coincidence.
+        </p>
+    </div>
+
+</div>
+
+<footer id="footer" class="page-footer">
+    <div class="container">
+        <p class="flow-text">I'm Paul Hammant<a target="_blank" href="https://hammant.org/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> and I put this site together to attempt to
+            distill what branch by abstraction is.
+            I led the pioneering work on branch by abstraction at a former client (a bank's foreign exchange
+            group in Chicago in 2005 &amp; 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            based on that work.
+            The artwork and message from that article were then included in Jez Humble and Dave Farley's
+            best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            in 2010.</p>
+        <p class="flow-text">I'm UK&mdash;based, and have previously visited enterprises in the US to help them plan their migrations from bad
+            branching models and slower release cadences to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            with feature flags/toggles <i>and of course branch by abstraction</i>. See <a
+                    href="https://devops.paulhammant.com">http://devops.paulhammant.com</a> for more details.</p>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            &copy; 2018-2026, Paul Hammant. Thanks to Netlify for hosting<a href="https://www.netlify.com"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.
+        </div>
+    </div>
+</footer>
+
+</main>
+
+<script src="prism.js"></script>
+
+<script type="text/javascript">
+
+    (function ($) {
+        $(function () {
+
+            $('.sidenav').sidenav();
+
+            $('select')
+                .on('change', function() {
+                    location.href = this.value + ".html#choice";
+                })
+                .not('.disabled').formSelect();
+
+            $("a svg").attr("stroke", "#06D").attr("width", "0.75em").attr("height", "0.75em").removeClass("z-depth-2");
+
+        });
+    })(jQuery);
+
+</script>
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+    var sc_project=11608253;
+    var sc_invisible=1;
+    var sc_security="3d0246f7";
+    var scJsHost = (("https:" == document.location.protocol) ?
+        "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+        scJsHost+
+        "statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+                                      href="http://statcounter.com/" target="_blank"><img
+        class="statcounter"
+        src="//c.statcounter.com/11608253/0/3d0246f7/1/" alt="Web
+Analytics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+</body>
+</html>
