@@ -401,8 +401,21 @@
         }).join("");
         document.getElementById("strategies").innerHTML = s;
 
+        // A red button stays down only if you are actually getting it. Wishes the
+        // chosen strategy cannot honour pop back out - which is the whole point of
+        // the panel. Inflicted properties are held down whether you asked or not.
+        var st = chosen ? STRATEGIES.filter(function (x) { return x.id === chosen; })[0] : null;
+
         var p = PROPERTIES.map(function (id) {
-            return plate(id, PROPERTY_LABELS[id], "red", !!wanted[id]);
+            var down;
+            if (!st) {
+                down = !!wanted[id];
+            } else if (st.inflicts.indexOf(id) !== -1) {
+                down = true;
+            } else {
+                down = !!wanted[id] && st.grants.indexOf(id) !== -1;
+            }
+            return plate(id, PROPERTY_LABELS[id], "red", down);
         }).join("");
         document.getElementById("properties").innerHTML = p;
 
