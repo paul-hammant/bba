@@ -723,6 +723,14 @@
                               "<p>Trunk green says the code your customers run is fine. Branch green says your work " +
                               "is fine. The combination of the two is the only artefact that will ever ship, and " +
                               "until you build it, nobody has ever compiled it, let alone tested it.</p>" +
+                              "<p>Of course, we are being highly optimistic that a CI daemon can merge the branch " +
+                              "into trunk atomically and conflict-free, unattended, on every commit. It cannot, and " +
+                              "the days it cannot are the days the third build tells you nothing &mdash; it goes red " +
+                              "on the merge itself rather than on anything a test asserted. That is still worth " +
+                              "knowing, and it is still not the same as a passing build. So the honest reading of " +
+                              "<b>D</b> is narrower than it first appears: on a good day it verifies the combination, " +
+                              "and on a bad day it is an expensive early warning that a human is going to have to " +
+                              "sit down with two versions of the same file. Over four months you get a lot of both.</p>" +
                               "<p><b>A</b> leaves four months of new code unguarded. <b>B</b> leaves the code your " +
                               "customers are running unguarded, which is worse and is chosen surprisingly often, " +
                               "because the branch is where the interesting work is.</p>" +
