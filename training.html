@@ -515,60 +515,69 @@
                 {
                     stem: "A change is going to take four months. Your release cadence is fortnightly, and your team " +
                           "has decided to do the work on a long-lived feature branch. Your director asks how confident " +
-                          "you are in the merge-back date. What is the honest answer?",
+                          "you are in the go-live date. What is the honest answer?",
                     options: [
                         "Highly confident &mdash; we will keep the branch rebased on trunk daily, which removes the merge risk.",
+                        "Highly confident &mdash; we will keep the branch explicitly merged (<code>--no-ff</code>) from " +
+                            "trunk daily, which removes the late merge risk.",
                         "Confident, provided nobody does any large refactoring on trunk during those four months.",
-                        "You cannot make that guarantee. The cost of the merge is unknown until you attempt it, and it " +
-                            "grows with every day the branch stays open.",
+                        "You cannot make that guarantee. The cost of the merge is unknown until you attempt it, it " +
+                            "grows with every day the branch stays open, and the go-live date sits on the far side of it.",
                         "Highly confident &mdash; we will freeze trunk for the final week and land it in one controlled window."
                     ],
-                    correct: 2,
-                    feedback: "<p><b>C</b>, and saying it out loud early is the single most useful thing you can do on " +
+                    correct: 3,
+                    feedback: "<p><b>D</b>, and saying it out loud early is the single most useful thing you can do on " +
                               "this track. It is the answer people avoid giving because it sounds like weakness. It is " +
-                              "not: it is the only statement here that will still be true in four months.</p>" +
-                              "<p><b>A</b> is the most seductive one, and it is the answer a good engineer gives. " +
-                              "Daily rebasing genuinely helps. It does not remove the risk, for two reasons. A rebase " +
-                              "only tells you the code combines, not that the combined behaviour is right. And the " +
-                              "rebase itself is not free: it replays your commits onto the moved trunk one by one, so " +
-                              "where your work is co-mingled with a larger upstream team's in the same files, you " +
-                              "resolve the same conflict once per replayed commit, every day, for four months. What " +
-                              "you have bought is not the absence of a big merge &mdash; it is the same merge, paid " +
-                              "in daily instalments, with interest.</p>" +
-                              "<p><b>B</b> makes your delivery date depend on other teams not improving the codebase, " +
-                              "which is both unenforceable and a bad thing to ask for. <b>D</b> is a trunk freeze with a " +
-                              "friendlier name, and freezes get extended.</p>"
+                              "not: it is the only statement here that will still be true in four months. Note also " +
+                              "what was asked. The director asked about go-live, not about the merge &mdash; and " +
+                              "go-live is downstream of a merge whose cost nobody can size yet.</p>" +
+                              "<p><b>A</b> and <b>B</b> are the same answer with different plumbing, and both are what " +
+                              "an inexperienced engineer says: confident, technically literate, and promising " +
+                              "something the tool cannot deliver. <b>B</b> is the better practice of the two &mdash; " +
+                              "explicit merges keep each reconciliation to one event and leave a record of it, where " +
+                              "a rebase replays every commit and can make a contested file a conflict once per " +
+                              "replayed commit. But \"removes the late merge risk\" is still false. It relocates the " +
+                              "risk into a daily cost, and a cost paid daily for four months against a larger " +
+                              "upstream team is not obviously smaller than the one it replaced.</p>" +
+                              "<p><b>C</b> makes your delivery date depend on other teams not improving the codebase, " +
+                              "which is both unenforceable and a bad thing to ask for. <b>E</b> is a trunk freeze with " +
+                              "a friendlier name, and freezes get extended.</p>"
                 },
                 {
-                    stem: "You are four weeks into the branch. What practice most reduces your eventual merge pain?",
+                    stem: "You are four weeks into the branch. A much larger group is committing to trunk, in the same " +
+                          "subsystem. Which practice makes the eventual merge safe?",
                     options: [
-                        "Merge trunk into your branch daily, and keep the branch's test suite green against that merge.",
-                        "Ask other teams to hold back their larger changes until your branch has landed.",
-                        "Batch the merges weekly, so the team spends less time context-switching on conflicts.",
-                        "Wait until the work is functionally complete, then do one careful merge with the whole team available."
+                        "Merge trunk into the branch daily, keeping the branch's test suite green against each merge.",
+                        "Rebase the branch onto trunk daily, so the history stays linear and the final merge is a fast-forward.",
+                        "None of them. Daily merging reduces the size of each reconciliation and guarantees nothing about " +
+                            "the total, which can still become unaffordable &mdash; and under a daily rebase the branch " +
+                            "can reach a state nobody is willing to finish resolving.",
+                        "Merge trunk in daily and additionally have the branch's author review every upstream commit " +
+                            "that touches the same subsystem."
                     ],
-                    correct: 0,
-                    feedback: "<p><b>A</b>, and note that it is the least bad option rather than a good one. If you " +
-                              "are going to be on a branch, be on a branch that knows what trunk is doing. Daily is " +
-                              "the correct frequency and it is not a comfortable one &mdash; it means absorbing other " +
-                              "people's refactorings continuously rather than all at once.</p>" +
-                              "<p>Be clear about what it does not fix. The work is asymmetric: a handful of you are " +
-                              "pulling from a trunk that a much larger group is pushing to, so every day you are " +
-                              "reconciling your few commits against everyone else's many. Merge daily and you do that " +
-                              "reconciliation once per day, forever, and the same conflicts in the same files " +
-                              "reappear each time because the upstream work keeps moving through them.</p>" +
-                              "<p>Rebasing instead of merging makes this worse, not better. A rebase replays your " +
-                              "commits onto the new trunk one at a time, so a file that both sides have been editing " +
-                              "is a conflict you resolve once per replayed commit rather than once. Four weeks of " +
-                              "commits, resolved again every day, against changes that are co-mingled with yours " +
-                              "because everyone is working in the same subsystem &mdash; this is the point at which " +
-                              "teams start resolving conflicts by picking a side quickly, and that is where the " +
-                              "silent behavioural breakage enters.</p>" +
-                              "<p><b>C</b> sounds efficient and is the wrong direction: conflict cost grows faster " +
-                              "than linearly with time. <b>D</b> is the default behaviour this whole site exists to " +
-                              "argue against, and \"with the whole team available\" is a tell &mdash; you are " +
-                              "pre-booking the disaster. <b>B</b> asks everyone else to slow down so that you can " +
-                              "appear not to be.</p>"
+                    correct: 2,
+                    feedback: "<p><b>C</b>. The question asks which practice makes the merge <i>safe</i>, and the " +
+                              "honest answer is that none of them does. Every option here is a way of paying earlier " +
+                              "and more often. None is a way of paying less, and none converts an unknown cost into a " +
+                              "known one.</p>" +
+                              "<p>The work is asymmetric: a handful of you are pulling from a trunk that a much larger " +
+                              "group is pushing to. Merge daily and the same conflicts in the same files reappear " +
+                              "each time, because the upstream work keeps moving through them. You are not " +
+                              "converging on anything &mdash; you are holding position against a current, and the " +
+                              "effort is proportional to how long you hold it.</p>" +
+                              "<p><b>B</b> is worse than <b>A</b>, not better, and it is the option most likely to be " +
+                              "proposed by someone who cares about the repository. A rebase replays your commits onto " +
+                              "the moved trunk one at a time, so a file both sides have edited is a conflict resolved " +
+                              "once per replayed commit rather than once. Four weeks of commits, replayed again every " +
+                              "day, against changes co-mingled with yours: that is the state in which a branch stops " +
+                              "being rebased at all, because nobody will sit through it again. Teams start resolving " +
+                              "by picking a side quickly, which is where silent behavioural breakage enters, or they " +
+                              "abandon the rebase and the branch is effectively unmergeable by any route its authors " +
+                              "still have the appetite for.</p>" +
+                              "<p><b>A</b> is nonetheless what you should do, and this is the distinction the module " +
+                              "is drawing: it is the least bad practice available and it is still not a guarantee. " +
+                              "<b>D</b> adds real value and adds it to the wrong side of the ledger &mdash; it is " +
+                              "more of your small team's time spent tracking a larger team's output.</p>"
                 },
                 {
                     stem: "Which part of the change should go on the branch, and which should go straight to trunk?",
@@ -1020,7 +1029,7 @@
         }
     ];
 
-    var KEYS = ["A", "B", "C", "D"];
+    var KEYS = ["A", "B", "C", "D", "E"];
     var PASS_MARK = 6;
 
     // Per-track progress, so switching modules does not lose where you were.
