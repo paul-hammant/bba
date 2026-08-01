@@ -82,6 +82,61 @@
 
         .lms-body { padding: 18px 20px 20px 20px; }
 
+        /* Track chooser - three modules, one per strategy. */
+        .tracks {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        @media screen and (max-width: 700px) {
+            .tracks { grid-template-columns: 1fr; }
+        }
+
+        .track {
+            text-align: left;
+            background: #fff;
+            border: 1px solid #c8d2dc;
+            border-top: 3px solid #c8d2dc;
+            border-radius: 3px;
+            padding: 10px 12px;
+            font: inherit;
+            cursor: pointer;
+            color: #16202b;
+        }
+
+        .track:hover { background: #f4f7fa; }
+        .track:focus-visible { outline: 3px solid #1b4f82; outline-offset: 2px; }
+
+        .track[aria-current="true"] {
+            border-top-color: #1b4f82;
+            background: #eef3f8;
+            box-shadow: inset 0 0 0 1px #1b4f82;
+        }
+
+        .track .code {
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            color: #7a8b9c;
+        }
+
+        .track[aria-current="true"] .code { color: #1b4f82; }
+
+        .track .name {
+            display: block;
+            font-size: 0.98rem;
+            line-height: 1.3;
+            margin: 3px 0 5px 0;
+        }
+
+        .track[aria-current="true"] .name { font-weight: 700; }
+
+        .track .state { font-size: 0.76rem; color: #7a8b9c; }
+        .track .state.done { color: #1f8f3a; font-weight: 700; }
+        .track .state.failed { color: #c0170f; font-weight: 700; }
+
         .pips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 
         .pip {
@@ -352,8 +407,10 @@
         the merge back from the branch that you've now avoided.</p>
 
     <p id="choice" class="flow-text">Here is the same idea told as <b>the test at the end of a compliance module</b> &mdash;
-        the eight-question knowledge check that follows the slides you clicked through. The answers that feel obviously
-        right are mostly the ones that will cost you.</p>
+        the eight-question knowledge check that follows the slides you clicked through. There are three modules, one
+        per strategy. Take the one you have most affinity with, or take all three: the questions are deliberately the
+        same eight situations each time, so the difference between the modules is only ever what the honest answer
+        turns out to be.</p>
 
     <div class="container card-panel red lighten-5 flow-text">
         <div class="row s12">Current branch by abstraction example:</div>
@@ -391,9 +448,11 @@
         <div class="lms-body">
             <p style="margin: 0 0 14px 0; color: #3d4d5d; line-height: 1.55;">
                 Well done for completing the education. Now take a quick test to gauge your understanding of
-                <b>a large change that will span more than one release</b>. Select one answer per question.
-                A pass is 6 out of 8.
+                <b>a large change that will span more than one release</b>. Three modules are available. Select the
+                one matching the approach your team uses. Select one answer per question. A pass is 6 out of 8.
             </p>
+
+            <div class="tracks" id="tracks"></div>
 
             <div class="pips" id="pips" aria-hidden="true"></div>
 
@@ -402,10 +461,12 @@
     </div>
 
     <div class="caveat">
-        <p class="flow-text" style="margin: 0;">The joke, such as it is: every wrong answer here is something a
-            reasonable person has said out loud in a real planning meeting, usually to agreement in the room. They are
-            wrong for the same reason each time &mdash; they are all ways of arranging for the hard part to happen
-            later, all at once, on a date nobody has yet had to name.</p>
+        <p class="flow-text" style="margin: 0;">The three modules ask the same eight questions, and none of them has
+            a wrong module to be in. Each has a genuinely correct answer, because each approach really does have a
+            best way to be practised. The difference is what the correct answer is allowed to promise you. In 114-A
+            the honest answers are mostly about what you cannot guarantee; in 114-B they are mostly about how much
+            you will have to find and count later. Only in 114-C does the correct answer get to be the one you would
+            actually want to give a stakeholder.</p>
     </div>
 
 </div>
@@ -436,174 +497,562 @@
 <script type="text/javascript">
 
     /*
-     * Eight questions. In most of them the first option is the one that sounds
-     * like the responsible, grown-up answer in a planning meeting - and is the
-     * trap. `correct` is an index into `options`.
+     * Three modules, one per strategy, each asking the same eight situations.
+     * That symmetry is the point: the questions do not change, only what the
+     * honest answer is allowed to be. Every module has real correct answers -
+     * 114-A is not a module full of jokes, it is what doing branch by source
+     * control well actually looks like, including the promises it cannot make.
+     *
+     * `correct` is an index into `options`.
      */
-    var QUESTIONS = [
+    var TRACKS = [
         {
-            stem: "A change is going to take four months. Your release cadence is fortnightly. " +
-                  "What is the correct approach?",
-            options: [
-                "Take a feature branch, and merge it back when the work is complete and tested.",
-                "Put the change behind an abstraction on trunk, and ship the half-finished work to " +
-                    "production every fortnight with the old path still switched on.",
-                "Freeze the fortnightly cadence for four months so the team can land the change safely.",
-                "Do the change in place on trunk, and ask everyone else to avoid those files until it is done."
-            ],
-            correct: 1,
-            feedback: "<p><b>A</b> is the answer this module exists to talk you out of. Four months of divergence, " +
-                      "and the merge cannot be rehearsed &mdash; you find out whether it works on the day you have " +
-                      "already promised it. The branch gets harder every day it is open, and it is open for eight " +
-                      "releases.</p>" +
-                      "<p><b>C</b> trades a code problem for a business problem, which is a worse trade than it " +
-                      "sounds. <b>D</b> is a branch with no tooling: the same divergence, held in people's heads.</p>" +
-                      "<p><b>B</b> sounds reckless and is not. The new implementation goes live disabled. Nobody " +
-                      "routes to it. It is exercised in production, at production scale, for months before anyone " +
-                      "depends on it.</p>"
+            id: "scm",
+            code: "114-A",
+            name: "Branch by source control",
+            blurb: "You are doing the work on a long-lived feature branch and merging back when it is complete.",
+            questions: [
+                {
+                    stem: "A change is going to take four months. Your release cadence is fortnightly, and your team " +
+                          "has decided to do the work on a long-lived feature branch. Your director asks how confident " +
+                          "you are in the merge-back date. What is the honest answer?",
+                    options: [
+                        "Highly confident &mdash; we will keep the branch rebased on trunk daily, which removes the merge risk.",
+                        "Confident, provided nobody does any large refactoring on trunk during those four months.",
+                        "You cannot make that guarantee. The cost of the merge is unknown until you attempt it, and it " +
+                            "grows with every day the branch stays open.",
+                        "Highly confident &mdash; we will freeze trunk for the final week and land it in one controlled window."
+                    ],
+                    correct: 2,
+                    feedback: "<p><b>C</b>, and saying it out loud early is the single most useful thing you can do on " +
+                              "this track. It is the answer people avoid giving because it sounds like weakness. It is " +
+                              "not: it is the only statement here that will still be true in four months.</p>" +
+                              "<p><b>A</b> is the most seductive one. Daily rebasing genuinely helps &mdash; it converts " +
+                              "one enormous merge into many small ones &mdash; but it does not remove the risk, because " +
+                              "a rebase only tells you the code combines, not that the combined behaviour is right.</p>" +
+                              "<p><b>B</b> makes your delivery date depend on other teams not improving the codebase, " +
+                              "which is both unenforceable and a bad thing to ask for. <b>D</b> is a trunk freeze with a " +
+                              "friendlier name, and freezes get extended.</p>"
+                },
+                {
+                    stem: "You are four weeks into the branch. What practice most reduces your eventual merge pain?",
+                    options: [
+                        "Merge trunk into your branch daily, and keep the branch's test suite green against that merge.",
+                        "Ask other teams to hold back their larger changes until your branch has landed.",
+                        "Batch the merges weekly, so the team spends less time context-switching on conflicts.",
+                        "Wait until the work is functionally complete, then do one careful merge with the whole team available."
+                    ],
+                    correct: 0,
+                    feedback: "<p><b>A</b>. If you are going to be on a branch, be on a branch that knows what trunk is " +
+                              "doing. Daily is the correct frequency and it is not a comfortable one &mdash; it means " +
+                              "absorbing other people's refactorings continuously rather than all at once.</p>" +
+                              "<p><b>C</b> sounds efficient and is the wrong direction: conflict cost grows faster than " +
+                              "linearly with time, so weekly batches are more than five times worse than daily ones.</p>" +
+                              "<p><b>D</b> is the default behaviour this whole site exists to argue against, and " +
+                              "\"with the whole team available\" is a tell &mdash; you are pre-booking the disaster. " +
+                              "<b>B</b> asks everyone else to slow down so that you can appear not to be.</p>"
+                },
+                {
+                    stem: "Which part of the change should go on the branch, and which should go straight to trunk?",
+                    options: [
+                        "All of it on the branch. Splitting the work across two places is how you get an inconsistent codebase.",
+                        "Anything that can stand alone &mdash; renames, extractions, test additions, dependency bumps &mdash; " +
+                            "goes to trunk immediately. Only the genuinely new implementation stays on the branch.",
+                        "Put the risky parts on the branch and the safe parts on the branch too, then cherry-pick to trunk " +
+                            "at the end if anything turns out to be independently useful.",
+                        "Whatever is easiest to keep in one place, since the branch will be merged back anyway."
+                    ],
+                    correct: 1,
+                    feedback: "<p><b>B</b>, and it is the discipline that separates a survivable branch from a doomed " +
+                              "one. Every commit you can honestly land on trunk is a commit that cannot conflict later. " +
+                              "Most large changes are eighty per cent preparatory work that nobody would object to.</p>" +
+                              "<p><b>A</b> is the instinct that makes branches enormous. Consistency is a real concern, " +
+                              "but a rename that is true in both worlds is not an inconsistency.</p>" +
+                              "<p><b>C</b> defers the split to the end, when you will have neither the time nor the " +
+                              "appetite for it. Cherry-picking at the end is a thing people plan and do not do.</p>"
+                },
+                {
+                    stem: "Your CI currently builds trunk. What should it do about the branch?",
+                    options: [
+                        "Build the branch too, and additionally build the branch merged with current trunk on every commit to either.",
+                        "Build the branch only. Trunk is already covered by the team's normal work.",
+                        "Build the branch nightly, to keep the CI bill proportionate to a change that is not live yet.",
+                        "Build trunk only, and test the branch thoroughly by hand before the merge."
+                    ],
+                    correct: 0,
+                    feedback: "<p><b>A</b>. The build that matters is the one nobody has asked for: trunk-plus-branch. " +
+                              "Building each in isolation tells you two things that are both true and neither of which " +
+                              "is the thing you need to know on merge day.</p>" +
+                              "<p><b>C</b> and <b>D</b> both save money by lengthening the gap between breaking " +
+                              "something and finding out, which on a four-month branch is exactly the wrong variable " +
+                              "to economise on. <b>B</b> leaves the code your customers are running unguarded.</p>" +
+                              "<p>Note what this costs: you are now running roughly three pipelines to deliver one " +
+                              "change. Branching is not the cheap option, it is the option whose cost arrives later.</p>"
+                },
+                {
+                    stem: "Six weeks in, an executive cancels the work. You have been working on a long-lived feature " +
+                          "branch. What do you have?",
+                    options: [
+                        "Working software in production containing six weeks of progress, since the team was committing throughout.",
+                        "Six weeks of work that has never run in production, and a branch that will now be kept " +
+                            "\"in case we resume\" and quietly rot.",
+                        "A partially delivered change that can be finished later at roughly the cost of the work remaining.",
+                        "Nothing lost &mdash; the branch can simply be merged as-is to bank the progress."
+                    ],
+                    correct: 1,
+                    feedback: "<p><b>B</b>, and this is the question that decides how people feel about branching " +
+                              "after they have lived through it once.</p>" +
+                              "<p><b>A</b> is not available on this track: the commits went to the branch, which is " +
+                              "the definition of the approach. <b>D</b> would merge a half-finished implementation " +
+                              "into the codebase your customers run, which is worse than losing the work.</p>" +
+                              "<p><b>C</b> is the hopeful one, and it is wrong for a reason worth naming: the cost of " +
+                              "resuming is not the work remaining, it is the work remaining plus the cost of " +
+                              "re-merging however many months of trunk have gone by. That second term is usually the " +
+                              "larger one, and it is why resumed branches are so often restarted instead.</p>"
+                },
+                {
+                    stem: "The branch is complete and the merge is scheduled. How should the switch-over reach production?",
+                    options: [
+                        "One release containing the merged branch, tested on a staging environment beforehand.",
+                        "Merge to trunk, then release the merged code with the new behaviour still switched off, and " +
+                            "enable it separately.",
+                        "Merge to trunk and release immediately, so that any problems are found while the change is fresh " +
+                            "in everyone's mind.",
+                        "Merge and release during a maintenance window, so any fallout lands outside business hours."
+                    ],
+                    correct: 1,
+                    feedback: "<p><b>B</b>, which is the point at which a well-run branch quietly borrows from the other " +
+                              "two modules. Even here, you want the deployment and the behaviour change to be separate " +
+                              "events, so that a bad release and a bad feature are distinguishable.</p>" +
+                              "<p><b>A</b> is the standard plan and it couples the two: if anything goes wrong you " +
+                              "cannot tell which of \"we deployed four months of merged code\" and \"we turned on the " +
+                              "new behaviour\" caused it, and your only remedy is to revert both.</p>" +
+                              "<p><b>C</b> is <b>A</b> in a hurry. <b>D</b> is scheduling, not strategy &mdash; it " +
+                              "reduces the audience for the failure, not its likelihood.</p>"
+                },
+                {
+                    stem: "The merge has landed and the new behaviour is live. What is the follow-up work?",
+                    options: [
+                        "Delete the branch, delete any temporary switch, and remove the superseded code from trunk.",
+                        "Keep the branch. It is the only record of how the change was developed.",
+                        "Nothing. The merge was the completion of the work.",
+                        "Keep the superseded code in trunk behind the switch indefinitely, as a rollback path."
+                    ],
+                    correct: 0,
+                    feedback: "<p><b>A</b>. There is a real deletion step on this track too, and it is skipped for the " +
+                              "same reason as everywhere else: nothing visibly improves when you do it.</p>" +
+                              "<p><b>B</b> confuses a branch with history. The commits are in trunk after the merge; " +
+                              "the branch ref is not the record, it is a pointer people are afraid to delete.</p>" +
+                              "<p><b>D</b> is an untested rollback path, which is not a rollback path. <b>C</b> is how " +
+                              "a repository accumulates hundreds of stale branches, each one a small unanswered " +
+                              "question about whether it contains something that was needed.</p>"
+                },
+                {
+                    stem: "Finally: which single statement about branch by source control is true?",
+                    options: [
+                        "It isolates the team from risk, because the unfinished work cannot affect production.",
+                        "It is the fastest of the three approaches in total elapsed time, because there is no abstraction " +
+                            "to build or remove.",
+                        "It guarantees a coherent final result, because the change lands complete or not at all.",
+                        "It concentrates the risk instead of removing it, into a merge that cannot be rehearsed and " +
+                            "a date on which it must succeed."
+                    ],
+                    correct: 3,
+                    feedback: "<p><b>D</b>. Everything the approach gives you is real, and it is all bought with the " +
+                              "same coin: the difficulty is not reduced, it is postponed and concentrated.</p>" +
+                              "<p><b>A</b> is true right up until the merge, which is precisely when it stops being " +
+                              "true and does so all at once. <b>B</b> can be true for a small change and is the " +
+                              "argument for using a branch when the work is short &mdash; on a four-month change it " +
+                              "is not.</p>" +
+                              "<p><b>C</b> is the most defensible wrong answer: landing complete-or-not-at-all is a " +
+                              "genuine property. But \"not at all\" is a real outcome here, and this module's fifth " +
+                              "question is what it looks like.</p>"
+                }
+            ]
         },
+
         {
-            stem: "Your team lead says: \"Fine, no branch &mdash; we will just wrap the new behaviour in an " +
-                  "if-statement at each call site.\" How should you respond?",
-            options: [
-                "Agree. It keeps everything on trunk, which is the stated goal of the module.",
-                "Agree, but insist the conditions all read from one central configuration object.",
-                "Push back: the fork belongs at one seam, not at every call site.",
-                "Agree, provided each if-statement carries a comment naming the ticket that will remove it."
-            ],
-            correct: 2,
-            feedback: "<p><b>A</b> gets the letter of trunk-based development and misses the point of it. The " +
-                      "conditionals multiply &mdash; once per call site, in the middle tier, in the browser code, " +
-                      "in the SQL, in whatever else the system happens to be written in. Nobody can tell you how " +
-                      "many there are.</p>" +
-                      "<p><b>B</b> centralises the <i>flag</i> and leaves the <i>forks</i> scattered, which is the " +
-                      "half of the problem that actually hurts. <b>D</b> is <b>A</b> with better manners; the " +
-                      "comments will outlive everyone who wrote them.</p>" +
-                      "<p><b>C</b> is the whole idea. One abstraction, one place where the choice is made, one " +
-                      "thing to delete afterwards.</p>"
+            id: "iffy",
+            code: "114-B",
+            name: "Branch by if-condition",
+            blurb: "You are keeping the work on trunk by wrapping new behaviour in conditionals at each call site.",
+            questions: [
+                {
+                    stem: "A change is going to take four months. Your team has decided to stay on trunk by wrapping the " +
+                          "new behaviour in a conditional at each call site. Before starting, what should you establish?",
+                    options: [
+                        "A naming convention for the flags, so they are easy to find later.",
+                        "How many call sites there are, in every language and tier the system uses &mdash; and accept " +
+                            "that this number is the size of the job and that it will grow.",
+                        "That the flags all read from one configuration service, so they can be changed without a deploy.",
+                        "A code review rule that no pull request may add more than three new conditionals."
+                    ],
+                    correct: 1,
+                    feedback: "<p><b>B</b>. On this track the count is the whole ball game, because everything painful " +
+                              "later is a function of it: the testing matrix, the removal work, and how confident " +
+                              "anyone can be about what production is currently doing.</p>" +
+                              "<p><b>A</b> and <b>C</b> are both good practice and both address the flag rather than " +
+                              "the fork. Centralised configuration tells you what the switches are set to; it does not " +
+                              "tell you how many places branch on them, which is the number that hurts.</p>" +
+                              "<p><b>D</b> rations the symptom. The conditionals are needed wherever the behaviour " +
+                              "differs; a quota just spreads them over more pull requests.</p>"
+                },
+                {
+                    stem: "Your system is a browser front end, a middle tier and a database. Where do the conditionals end up?",
+                    options: [
+                        "In the middle tier only, if the seam is chosen carefully.",
+                        "In the middle tier and the browser code, but not in SQL, which is declarative.",
+                        "In all of them &mdash; including SQL, where the same choice appears as a different query or an " +
+                            "inverted condition &mdash; and each tier has its own way of getting the flag's value.",
+                        "Wherever the team decides to put them; the distribution is a design choice rather than a consequence."
+                    ],
+                    correct: 2,
+                    feedback: "<p><b>C</b>, and this is the specific reason this approach is harder than it sounds " +
+                              "when you sketch it on a whiteboard with one <code>if</code> in it.</p>" +
+                              "<p>The fork does not respect tier boundaries. It appears in JavaScript, in whatever the " +
+                              "middle tier is written in, and in SQL &mdash; where it will be a differently shaped " +
+                              "query rather than a conditional, so your search for the flag name will not find it.</p>" +
+                              "<p><b>D</b> is the wrong model of what is happening. You do not choose where the " +
+                              "conditionals go; the call sites choose for you. <b>A</b> is what branch by abstraction " +
+                              "achieves, and it achieves it by having a seam rather than a flag.</p>"
+                },
+                {
+                    stem: "Where should the migration start on this track?",
+                    options: [
+                        "With the component most depended on and least depending, as with any large change.",
+                        "With the call sites that are easiest to reach, to build momentum and show progress.",
+                        "With a single vertical slice &mdash; one journey, forked consistently from browser to database " +
+                            "&mdash; so that at least one path through the system is coherent.",
+                        "With whichever call sites the current sprint's feature work happens to touch anyway."
+                    ],
+                    correct: 2,
+                    feedback: "<p><b>C</b> is the best available answer here, and it is a damage-limitation answer " +
+                              "rather than a good one. If the fork is going to be everywhere, then at minimum keep it " +
+                              "coherent along one journey, so that some part of the system has a describable state.</p>" +
+                              "<p><b>A</b> is the right answer to a different module: it depends on having a seam that " +
+                              "components sit behind, which is what this approach declines to build.</p>" +
+                              "<p><b>B</b> and <b>D</b> both produce the characteristic failure of this track &mdash; " +
+                              "a scattering of converted and unconverted call sites with no pattern to them, so " +
+                              "nobody can say what fraction is done except by counting.</p>"
+                },
+                {
+                    stem: "How many code paths must your test suite now cover?",
+                    options: [
+                        "Two: flag on and flag off.",
+                        "Two per flag, tested independently, since the flags are for unrelated call sites.",
+                        "Potentially every combination of the flags that can be set independently &mdash; and in practice " +
+                            "you will test a chosen few and hope.",
+                        "One: whichever configuration production is currently running."
+                    ],
+                    correct: 2,
+                    feedback: "<p><b>C</b>. This is the cost that arrives quietly. Independent flags multiply rather " +
+                              "than add, and \"test a chosen few and hope\" is not cynicism &mdash; it is what every " +
+                              "team on this track actually does, because the full matrix is not affordable.</p>" +
+                              "<p><b>A</b> is true only if there is one flag, which is the sketch on the whiteboard " +
+                              "rather than the system in four months. <b>B</b> assumes independence that nobody has " +
+                              "verified; two flags on unrelated call sites will interact if those call sites share " +
+                              "any state, and they usually do.</p>" +
+                              "<p><b>D</b> is what teams fall back to, and it means your tests can no longer tell you " +
+                              "whether the flip is safe &mdash; only that today was fine.</p>"
+                },
+                {
+                    stem: "Six weeks in, an executive cancels the work. You have been using conditionals at each call " +
+                          "site. What do you have?",
+                    options: [
+                        "Working software in production, and a partly forked codebase you must now unpick by hand, " +
+                            "with no reliable list of where the forks are.",
+                        "Nothing shippable, since the conditionals were never enabled in production.",
+                        "A clean stopping point &mdash; leave every flag switched off and the old behaviour simply continues.",
+                        "Working software plus a half-finished second implementation cleanly separated behind a seam."
+                    ],
+                    correct: 0,
+                    feedback: "<p><b>A</b>. The good news on this track is real: everything went to trunk and " +
+                              "production has been fine throughout. The bad news is what stopping actually involves.</p>" +
+                              "<p><b>C</b> is the answer most people give and it is a trap with a long fuse. Leaving " +
+                              "the flags off does work &mdash; today. What you have left behind is dead branches at " +
+                              "every converted call site, in several languages, which the next person to read that " +
+                              "code must reason about forever, and which no tool will tell them are obsolete.</p>" +
+                              "<p><b>D</b> describes the third module. <b>B</b> understates it &mdash; you did ship " +
+                              "continuously, which is the one genuine advantage this approach has over a branch.</p>"
+                },
+                {
+                    stem: "The work is complete and every call site is forked. How do you switch over?",
+                    options: [
+                        "Flip all the flags at once, so the system is never in a mixed state.",
+                        "Flip them one at a time, starting with the lowest-traffic path, watching each before continuing.",
+                        "Ship a release with the conditionals removed and the new path hard-coded.",
+                        "Flip them by tier &mdash; database first, then middle tier, then browser."
+                    ],
+                    correct: 1,
+                    feedback: "<p><b>B</b> is the correct answer and it is genuinely a real advantage of this approach: " +
+                              "fine-grained control means you can move in small, observable steps.</p>" +
+                              "<p><b>A</b> throws away that advantage for a property you do not have anyway &mdash; " +
+                              "with flags spread across tiers, \"at once\" is not achievable; there is always a window " +
+                              "where the browser and the middle tier disagree.</p>" +
+                              "<p><b>D</b> guarantees a mixed state across tiers, which is the worst version of it. " +
+                              "<b>C</b> couples the flip to a deployment and discards your ability to undo it in " +
+                              "seconds, which was the reason for the flags.</p>"
+                },
+                {
+                    stem: "The new behaviour has been live and stable for a month. What is the follow-up work?",
+                    options: [
+                        "Remove every conditional and the dead branch behind it, everywhere, in every language &mdash; " +
+                            "and find them first, since no list is trustworthy.",
+                        "Remove the flag definitions, which makes the remaining conditionals harmlessly constant.",
+                        "Leave the conditionals in place. They are proven rollback paths and cost nothing at runtime.",
+                        "Nothing. The flags are all set the same way now, so the code is effectively single-path."
+                    ],
+                    correct: 0,
+                    feedback: "<p><b>A</b>, and it is the largest deletion job of the three modules by a wide margin, " +
+                              "because it is not one seam but every call site you ever touched. The finding is the " +
+                              "hard part: four months of forks, some of them SQL that never mentioned the flag name.</p>" +
+                              "<p><b>B</b> is a real and popular half-measure that makes things worse &mdash; now the " +
+                              "code still has both paths but the reader has no flag to search for.</p>" +
+                              "<p><b>C</b> and <b>D</b> are how this ends in practice. The cost is not runtime, it is " +
+                              "that every future reader of every one of those call sites must work out which branch " +
+                              "is live, forever.</p>"
+                },
+                {
+                    stem: "Finally: which single statement about branch by if-condition is true?",
+                    options: [
+                        "It is the worst of the three in every respect, and there is no situation in which to choose it.",
+                        "It keeps the work on trunk and shippable, and pays for that with a fork at every call site " +
+                            "that must later be found and removed.",
+                        "It is equivalent to branch by abstraction, differing only in style.",
+                        "It removes merge risk entirely, since there is no branch to merge."
+                    ],
+                    correct: 1,
+                    feedback: "<p><b>B</b>. It is a real technique with a real benefit &mdash; and the benefit is the " +
+                              "same one branch by abstraction offers, obtained at considerably higher cost.</p>" +
+                              "<p><b>A</b> is too strong to be useful. For a change touching two call sites, this is " +
+                              "the correct approach and building an abstraction would be overkill. The trouble is " +
+                              "that it does not scale, and the point at which it stops working arrives long after " +
+                              "the point at which you committed to it.</p>" +
+                              "<p><b>C</b> is the misconception the whole site exists to correct: one seam versus many " +
+                              "forks is the entire difference. <b>D</b> is true and incomplete &mdash; there is no " +
+                              "merge, but the removal work is the debt you took on instead.</p>"
+                }
+            ]
         },
+
         {
-            stem: "You have introduced the abstraction. Where do you start the migration work?",
-            options: [
-                "With the component that is most painful to work with day to day, to get the benefit soonest.",
-                "With the component most depended on and least depending.",
-                "With a small, low-traffic component nobody will notice if you get it wrong.",
-                "With whichever component the team is least familiar with, while there is budget for learning it."
-            ],
-            correct: 1,
-            feedback: "<p><b>A</b> is a reasonable instinct that gets you stuck. The most painful component is " +
-                      "usually painful because everything else hangs off it &mdash; start there and you cannot " +
-                      "finish anything until you have finished most of it.</p>" +
-                      "<p><b>C</b> feels safe and teaches you nothing that transfers. <b>D</b> is a training " +
-                      "budget dressed as a migration plan.</p>" +
-                      "<p><b>B</b> is the one with the fewest things beneath it and the most things above it. " +
-                      "Get it across and everything above it can follow, one at a time, each shippable.</p>"
-        },
-        {
-            stem: "Mid-migration, your CI bill goes up noticeably. Both the old and the new implementations are " +
-                  "under test. What is the correct action?",
-            options: [
-                "Test the new implementation only. The old one has been in production for years.",
-                "Test the old implementation only until switch-over, then move the tests across in one go.",
-                "Scale up CI and keep testing both.",
-                "Run the full suite against both nightly rather than per-commit, to control the cost."
-            ],
-            correct: 2,
-            feedback: "<p><b>A</b> is the expensive one. The old implementation is what your customers are " +
-                      "actually running for the whole of the migration &mdash; right up to the switch, it is the " +
-                      "only one that matters to them.</p>" +
-                      "<p><b>B</b> leaves the new implementation unguarded for months and then discovers " +
-                      "everything at once. <b>D</b> saves money by lengthening the gap between breaking something " +
-                      "and learning you broke it, which is the one variable you least want to grow.</p>" +
-                      "<p><b>C</b> costs money. Carrying two of everything for a while is the honest price of the " +
-                      "approach, and it is a smaller number than the one on the invoice for a bad merge.</p>"
-        },
-        {
-            stem: "Six weeks in, an executive cancels the work. What do you have?",
-            options: [
-                "Nothing shippable &mdash; the change was only ever going to be valuable once complete.",
-                "A branch to keep alive in case the decision is reversed next quarter.",
-                "Working software in production, plus a half-finished second implementation behind the abstraction.",
-                "A rollback to perform, to get the codebase back to how it was before the work started."
-            ],
-            correct: 2,
-            feedback: "<p>This is the question the whole approach is built around, and it is the one people are " +
-                      "most surprised by.</p>" +
-                      "<p><b>A</b> and <b>D</b> both describe the branch outcome: six weeks of work that leaves " +
-                      "the codebase where it started. <b>B</b> is how long-lived branches actually die &mdash; " +
-                      "not by decision, but by nobody being willing to delete them.</p>" +
-                      "<p><b>C</b> is what you get. Every commit went to trunk and shipped. The system has been " +
-                      "in production and correct the entire time. If the decision is reversed in two quarters, " +
-                      "you resume &mdash; the seam is still there, and it still says which components have moved.</p>"
-        },
-        {
-            stem: "The new implementation is complete and has been running dark in production for three weeks. " +
-                  "How do you switch over?",
-            options: [
-                "A release that ships the switch already flipped, so the change is atomic with the deployment.",
-                "Flip the toggle in production, with the old implementation still deployed and one flip away.",
-                "Delete the old implementation, which makes the new one the only path by construction.",
-                "Switch over in a maintenance window, so any fallout lands outside business hours."
-            ],
-            correct: 1,
-            feedback: "<p><b>A</b> couples two independent decisions &mdash; \"is this code deployable\" and " +
-                      "\"is this behaviour live\" &mdash; and so a problem with either forces a rollback of both.</p>" +
-                      "<p><b>C</b> is the right action performed in the wrong order, and it is irreversible from " +
-                      "production. <b>D</b> is fine as scheduling and is not a strategy; it makes the flip less " +
-                      "visible without making it less risky.</p>" +
-                      "<p><b>B</b> is a configuration change, not a deployment. If it goes badly you flip it back " +
-                      "in seconds, and you are back on the implementation that has been serving customers all along.</p>"
-        },
-        {
-            stem: "The switch has been live and stable for a month. Which item belongs in the next sprint?",
-            options: [
-                "Nothing further. The migration is done and delivered.",
-                "Leave the abstraction in place permanently &mdash; it is a useful seam for future work.",
-                "Delete the old implementation and the abstraction itself.",
-                "Keep the old implementation behind the toggle indefinitely, as a documented rollback path."
-            ],
-            correct: 2,
-            feedback: "<p><b>C</b>, and it is the step that gets skipped, because it is the only one with no " +
-                      "visible payoff. Skipping it is how a codebase ends up with four abstractions from four " +
-                      "migrations, three of them with one implementation each.</p>" +
-                      "<p><b>B</b> is the most persuasive wrong answer on this test. The abstraction was built to " +
-                      "hold two implementations during a migration; it was not designed as a lasting seam and it " +
-                      "will not earn its keep as one.</p>" +
-                      "<p><b>D</b> is a rollback path that nobody exercises, and an untested rollback path is not " +
-                      "one. That deletion is the merge back. It is the last piece of work, and it is not optional.</p>"
-        },
-        {
-            stem: "Finally: which single statement about this approach is true?",
-            options: [
-                "It is faster in total elapsed time than doing the work on a branch.",
-                "It removes the risk from a large change.",
-                "It guarantees a delivery date, because the work is broken into shippable increments.",
-                "It is probably the slowest of the options in total elapsed time, and you can stop at any point " +
-                    "with something that ships."
-            ],
-            correct: 3,
-            feedback: "<p><b>D</b>, and anyone selling you <b>A</b>, <b>B</b> or <b>C</b> is selling you " +
-                      "something.</p>" +
-                      "<p>It is slower: you carry two implementations for months and then pay again to delete " +
-                      "one. It does not remove risk, it spreads it into pieces small enough to survive " +
-                      "individually. And nothing here guarantees a date &mdash; no approach does.</p>" +
-                      "<p>What you get instead is that the work is never in a state where stopping loses it. " +
-                      "Every point along the way is shippable, and shipped. That is the trade, stated plainly.</p>"
+            id: "bba",
+            code: "114-C",
+            name: "Branch by abstraction",
+            blurb: "You are putting the change behind one abstraction on trunk, shipping throughout, and deleting the seam at the end.",
+            questions: [
+                {
+                    stem: "A change is going to take four months. Your release cadence is fortnightly, and your team has " +
+                          "decided to put the work behind an abstraction on trunk. What ships at the end of the first " +
+                          "fortnight?",
+                    options: [
+                        "Nothing yet &mdash; the abstraction is introduced but no work goes to production until there is " +
+                            "something worth switching to.",
+                        "The abstraction, the first migrated component, and the old path still serving every request in " +
+                            "production.",
+                        "The abstraction and the first migrated component, with a small percentage of traffic routed to " +
+                            "the new path to prove it.",
+                        "Whatever is complete, released behind a flag that is switched on for internal users only."
+                    ],
+                    correct: 1,
+                    feedback: "<p><b>B</b>. Everything goes to production from the first fortnight, and none of it is " +
+                              "load-bearing. That combination is what makes the rest of this module work.</p>" +
+                              "<p><b>A</b> is the instinct to wait until something is worth shipping, and it gives up " +
+                              "the approach's main benefit &mdash; the new code being exercised, built, and deployed " +
+                              "for months before anyone depends on it.</p>" +
+                              "<p><b>C</b> and <b>D</b> are both good techniques and both premature here. Routing real " +
+                              "traffic or internal users to a one-component-deep implementation tests something you " +
+                              "have not built yet. Those come later, at the switch.</p>"
+                },
+                {
+                    stem: "Where do you start the migration work?",
+                    options: [
+                        "With the component that is most painful to work with day to day, to get the benefit soonest.",
+                        "With the component most depended on and least depending.",
+                        "With a small, low-traffic component nobody will notice if you get it wrong.",
+                        "With whichever component the team is least familiar with, while there is budget for learning it."
+                    ],
+                    correct: 1,
+                    feedback: "<p><b>B</b> is the one with the fewest things beneath it and the most things above it. " +
+                              "Get it across and everything above it can follow, one at a time, each shippable.</p>" +
+                              "<p><b>A</b> is a reasonable instinct that gets you stuck. The most painful component is " +
+                              "usually painful because everything else hangs off it &mdash; start there and you cannot " +
+                              "finish anything until you have finished most of it.</p>" +
+                              "<p><b>C</b> feels safe and teaches you nothing that transfers. <b>D</b> is a training " +
+                              "budget dressed as a migration plan.</p>"
+                },
+                {
+                    stem: "A colleague proposes skipping the abstraction and using a conditional at each call site instead, " +
+                          "on the grounds that it is less up-front work. What is the strongest response?",
+                    options: [
+                        "Agree for now, and introduce the abstraction later if the number of conditionals becomes a problem.",
+                        "Disagree: the up-front work buys one place where the choice is made, and therefore one thing to " +
+                            "test, one thing to switch, and one thing to delete.",
+                        "Agree, provided the conditionals all read from a single central configuration object.",
+                        "Disagree, on the grounds that conditionals are always bad practice."
+                    ],
+                    correct: 1,
+                    feedback: "<p><b>B</b>, and note that your colleague is right about the up-front work. The " +
+                              "abstraction genuinely is more effort in week one. The argument for it is entirely about " +
+                              "weeks two through sixteen and the deletion at the end.</p>" +
+                              "<p><b>A</b> is the most realistic-sounding wrong answer. Introducing the seam later " +
+                              "means retrofitting it across however many call sites have already forked &mdash; you " +
+                              "pay the abstraction's cost anyway, plus the unpicking.</p>" +
+                              "<p><b>C</b> centralises the flag and leaves the forks scattered, which is the half that " +
+                              "hurts. <b>D</b> overstates it into something false, and loses the argument on contact " +
+                              "with anyone who has written a useful conditional.</p>"
+                },
+                {
+                    stem: "Mid-migration your CI bill goes up noticeably. Both implementations are under test. What is " +
+                          "the correct action?",
+                    options: [
+                        "Test the new implementation only. The old one has been in production for years.",
+                        "Test the old implementation only until switch-over, then move the tests across in one go.",
+                        "Scale up CI and keep testing both.",
+                        "Run the full suite against both nightly rather than per-commit, to control the cost."
+                    ],
+                    correct: 2,
+                    feedback: "<p><b>C</b> costs money. Carrying two of everything for a while is the honest price of " +
+                              "the approach, and it is a smaller number than the one on the invoice for a bad merge.</p>" +
+                              "<p><b>A</b> is the expensive one. The old implementation is what your customers are " +
+                              "actually running for the whole of the migration &mdash; right up to the switch, it is " +
+                              "the only one that matters to them.</p>" +
+                              "<p><b>B</b> leaves the new implementation unguarded for months and then discovers " +
+                              "everything at once. <b>D</b> saves money by lengthening the gap between breaking " +
+                              "something and learning you broke it.</p>"
+                },
+                {
+                    stem: "Six weeks in, an executive cancels the work. You have been working behind an abstraction on " +
+                          "trunk. What do you have?",
+                    options: [
+                        "Nothing shippable &mdash; the change was only ever going to be valuable once complete.",
+                        "A branch to keep alive in case the decision is reversed next quarter.",
+                        "Working software in production, plus a half-finished second implementation behind the abstraction.",
+                        "A rollback to perform, to get the codebase back to how it was before the work started."
+                    ],
+                    correct: 2,
+                    feedback: "<p><b>C</b>, and this is the question the whole approach is built around.</p>" +
+                              "<p>Every commit went to trunk and shipped. The system has been in production and " +
+                              "correct the entire time. If the decision is reversed in two quarters you resume &mdash; " +
+                              "the seam is still there, and it still says which components have moved.</p>" +
+                              "<p><b>A</b> and <b>D</b> both describe the branch outcome, and <b>B</b> is not " +
+                              "available here because there is no branch. Compare this answer with the same question " +
+                              "in the other two modules; it is the clearest difference between them.</p>"
+                },
+                {
+                    stem: "The new implementation is complete and has been running dark in production for three weeks. " +
+                          "How do you switch over?",
+                    options: [
+                        "A release that ships the switch already flipped, so the change is atomic with the deployment.",
+                        "Flip the toggle in production, with the old implementation still deployed and one flip away.",
+                        "Delete the old implementation, which makes the new one the only path by construction.",
+                        "Switch over in a maintenance window, so any fallout lands outside business hours."
+                    ],
+                    correct: 1,
+                    feedback: "<p><b>B</b> is a configuration change, not a deployment. If it goes badly you flip it " +
+                              "back in seconds, and you are back on the implementation that has been serving customers " +
+                              "all along.</p>" +
+                              "<p><b>A</b> couples two independent decisions &mdash; \"is this code deployable\" and " +
+                              "\"is this behaviour live\" &mdash; so a problem with either forces a rollback of both.</p>" +
+                              "<p><b>C</b> is the right action performed in the wrong order, and it is irreversible " +
+                              "from production. <b>D</b> is fine as scheduling and is not a strategy.</p>"
+                },
+                {
+                    stem: "The switch has been live and stable for a month. Which item belongs in the next sprint?",
+                    options: [
+                        "Nothing further. The migration is done and delivered.",
+                        "Leave the abstraction in place permanently &mdash; it is a useful seam for future work.",
+                        "Delete the old implementation and the abstraction itself.",
+                        "Keep the old implementation behind the toggle indefinitely, as a documented rollback path."
+                    ],
+                    correct: 2,
+                    feedback: "<p><b>C</b>, and it is the step that gets skipped, because it is the only one with no " +
+                              "visible payoff. Skipping it is how a codebase ends up with four abstractions from four " +
+                              "migrations, three of them with one implementation each.</p>" +
+                              "<p><b>B</b> is the most persuasive wrong answer in this module. The abstraction was " +
+                              "built to hold two implementations during a migration; it was not designed as a lasting " +
+                              "seam and it will not earn its keep as one.</p>" +
+                              "<p><b>D</b> is a rollback path that nobody exercises, and an untested rollback path is " +
+                              "not one. That deletion is the merge back. It is the last piece of work, and it is not " +
+                              "optional.</p>"
+                },
+                {
+                    stem: "Finally: which single statement about branch by abstraction is true?",
+                    options: [
+                        "It is faster in total elapsed time than doing the work on a branch.",
+                        "It removes the risk from a large change.",
+                        "It guarantees a delivery date, because the work is broken into shippable increments.",
+                        "It is probably the slowest of the options in total elapsed time, and you can stop at any point " +
+                            "with something that ships."
+                    ],
+                    correct: 3,
+                    feedback: "<p><b>D</b>, and anyone selling you <b>A</b>, <b>B</b> or <b>C</b> is selling you " +
+                              "something.</p>" +
+                              "<p>It is slower: you carry two implementations for months and then pay again to delete " +
+                              "one. It does not remove risk, it spreads it into pieces small enough to survive " +
+                              "individually. And nothing here guarantees a date &mdash; no approach does.</p>" +
+                              "<p>What you get instead is that the work is never in a state where stopping loses it. " +
+                              "Every point along the way is shippable, and shipped. That is the trade, stated " +
+                              "plainly.</p>"
+                }
+            ]
         }
     ];
 
     var KEYS = ["A", "B", "C", "D"];
+    var PASS_MARK = 6;
 
-    var at = 0;
-    var answers = [];   // index picked per question, or null while unanswered
+    // Per-track progress, so switching modules does not lose where you were.
+    var state = {};
+    TRACKS.forEach(function (t) { state[t.id] = { at: 0, answers: [], finished: false }; });
+
+    var track = TRACKS[0];
+
+    function st() { return state[track.id]; }
+    function questions() { return track.questions; }
+
+    function scoreOf(t) {
+        var s = state[t.id];
+        return t.questions.reduce(function (n, q, i) {
+            return n + (s.answers[i] === q.correct ? 1 : 0);
+        }, 0);
+    }
+
+    function answeredCount(t) {
+        var s = state[t.id];
+        return t.questions.reduce(function (n, q, i) { return n + (s.answers[i] != null ? 1 : 0); }, 0);
+    }
+
+    function tracks() {
+        document.getElementById("tracks").innerHTML = TRACKS.map(function (t) {
+            var done = answeredCount(t);
+            var label, cls = "state";
+            if (state[t.id].finished) {
+                var sc = scoreOf(t);
+                cls += sc >= PASS_MARK ? " done" : " failed";
+                label = sc + "/" + t.questions.length + (sc >= PASS_MARK ? " &middot; pass" : " &middot; not yet");
+            } else if (done) {
+                label = done + " of " + t.questions.length + " answered";
+            } else {
+                label = "not started";
+            }
+            return '<button type="button" class="track" data-track="' + t.id + '"' +
+                   ' aria-current="' + (t.id === track.id) + '">' +
+                   '<span class="code">' + t.code + '</span>' +
+                   '<span class="name">' + t.name + '</span>' +
+                   '<span class="' + cls + '">' + label + '</span>' +
+                   '</button>';
+        }).join("");
+    }
 
     function pips() {
+        var s = st(), qs = questions();
         var html = "";
-        for (var i = 0; i < QUESTIONS.length; i++) {
+        for (var i = 0; i < qs.length; i++) {
             var cls = "pip";
-            if (answers[i] != null) {
-                cls += (answers[i] === QUESTIONS[i].correct) ? " right" : " wrong";
-            } else if (i === at) {
+            if (s.answers[i] != null) {
+                cls += (s.answers[i] === qs[i].correct) ? " right" : " wrong";
+            } else if (i === s.at && !s.finished) {
                 cls += " current";
             }
             html += '<span class="' + cls + '">' + (i + 1) + '</span>';
@@ -611,16 +1060,16 @@
         document.getElementById("pips").innerHTML = html;
     }
 
-    function esc(s) { return s; }
-
     function question() {
-        var q = QUESTIONS[at];
-        var picked = answers[at];
+        var s = st(), qs = questions();
+        var q = qs[s.at];
+        var picked = s.answers[s.at];
         var answered = picked != null;
 
-        var html = '<div class="qnum">Question ' + (at + 1) + ' of ' + QUESTIONS.length + '</div>';
-        html += '<p class="stem">' + esc(q.stem) + '</p>';
-        if (q.scenario) { html += '<div class="scenario">' + q.scenario + '</div>'; }
+        var html = '<div class="qnum">' + track.code + ' &middot; Question ' + (s.at + 1) +
+                   ' of ' + qs.length + '</div>';
+        html += '<p class="stem">' + q.stem + '</p>';
+        html += '<div class="scenario"><b>' + track.name + '.</b> ' + track.blurb + '</div>';
 
         q.options.forEach(function (opt, i) {
             var cls = "opt";
@@ -642,53 +1091,71 @@
         if (answered) {
             html += '<div class="feedback"><h6>Show correct answer</h6>' + q.feedback + '</div>';
             html += '<div class="controls">';
-            if (at < QUESTIONS.length - 1) {
+            if (s.at < qs.length - 1) {
                 html += '<button type="button" class="lms-btn" id="next">Next question &rsaquo;</button>';
             } else {
                 html += '<button type="button" class="lms-btn" id="finish">See your result</button>';
             }
-            if (at > 0) {
+            if (s.at > 0) {
                 html += '<button type="button" class="lms-btn ghost" id="prev">&lsaquo; Back</button>';
             }
             html += '</div>';
-        } else if (at > 0) {
+        } else if (s.at > 0) {
             html += '<div class="controls"><button type="button" class="lms-btn ghost" id="prev">&lsaquo; Back</button></div>';
         }
 
         document.getElementById("quiz").innerHTML = html;
         pips();
+        tracks();
     }
 
-    function score() {
-        return QUESTIONS.reduce(function (n, q, i) {
-            return n + (answers[i] === q.correct ? 1 : 0);
-        }, 0);
-    }
+    // Closing remarks are per module, because what a good score means differs.
+    var VERDICTS = {
+        scm: {
+            top: "Full marks on the branching module, which means you answered \"you cannot guarantee that\" when " +
+                 "it was true. That is the hardest answer to give in a room that wants a date, and it is the one " +
+                 "that makes the difference between a branch that is managed and a branch that is hoped over.",
+            pass: "A pass. The questions worth revisiting are the ones about what you can promise: almost everything " +
+                  "that goes wrong on a long-lived branch was visible at the start, in the form of a guarantee " +
+                  "somebody gave that was not theirs to give.",
+            low: "Not a pass, and the pattern is probably that you picked the confident answer each time. That is " +
+                 "the failure mode of this approach in a sentence &mdash; it is not that branching cannot be done " +
+                 "well, it is that doing it well requires saying uncomfortable things early."
+        },
+        iffy: {
+            top: "Full marks. You answered as someone who has had to remove these conditionals afterwards rather " +
+                 "than only add them, which is where the whole cost of this approach lives.",
+            pass: "A pass. Note how many of the correct answers were about counting and finding rather than about " +
+                  "building &mdash; that ratio is the honest summary of this technique at scale.",
+            low: "Not a pass. The answers you picked were mostly the ones that are true on the day and expensive " +
+                 "later: leave the flags off, remove the definitions, test the two obvious paths. Every one of " +
+                 "those is fine in week one and a problem in month six."
+        },
+        bba: {
+            top: "Full marks. You have either done this before or you read the rest of this site first, and both " +
+                 "count. The module cannot tell the difference and neither can your next migration.",
+            pass: "A pass. Worth noting which ones you lost, though &mdash; the questions people miss on this " +
+                  "module are almost always the last two, and those are the two that decide whether the " +
+                  "abstraction ever gets deleted.",
+            low: "Not a pass, which is the normal result on a first attempt. Every wrong answer offered here is " +
+                 "something that has been said in earnest in a real planning meeting, and agreed to."
+        }
+    };
 
     function result() {
-        var s = score();
-        var pass = s >= 6;
+        var s = st(), qs = questions();
+        s.finished = true;
+        var sc = scoreOf(track);
+        var pass = sc >= PASS_MARK;
+        var v = VERDICTS[track.id];
+        var verdict = sc === qs.length ? v.top : (pass ? v.pass : v.low);
 
-        var verdict;
-        if (s === QUESTIONS.length) {
-            verdict = "Full marks. You have either done this before or you read the rest of this site first, " +
-                      "and both count. The module cannot tell the difference and neither can your next migration.";
-        } else if (pass) {
-            verdict = "A pass. Worth noting which ones you lost, though &mdash; the questions people miss on this " +
-                      "test are almost always the last two, and those are the two that decide whether the " +
-                      "abstraction ever gets deleted.";
-        } else if (s >= 3) {
-            verdict = "Not a pass, which is the normal result on a first attempt and not a very interesting one. " +
-                      "Every wrong answer offered here is something that has been said in earnest in a real " +
-                      "planning meeting, and agreed to.";
-        } else {
-            verdict = "You have answered the way the meeting usually answers. Each of those choices defers the " +
-                      "hard part to a single future date that nobody has yet had to name &mdash; which is the " +
-                      "one thing all four wrong answers on this test have in common.";
-        }
+        var others = TRACKS.filter(function (t) { return t.id !== track.id; });
+        var untaken = others.filter(function (t) { return !answeredCount(t); });
 
         var html = '<div class="scorecard">' +
-                   '<div class="big">' + s + '/' + QUESTIONS.length + '</div>' +
+                   '<div class="qnum" style="text-align:center">' + track.code + ' &middot; ' + track.name + '</div>' +
+                   '<div class="big">' + sc + '/' + qs.length + '</div>' +
                    '<div class="band ' + (pass ? "pass" : "fail") + '">' +
                    (pass ? "PASS" : "NOT YET COMPETENT") + '</div>' +
                    '<p class="verdict">' + verdict + '</p>' +
@@ -696,48 +1163,69 @@
 
         html += '<div class="cert">' +
                 (pass
-                    ? "A record of completion has been filed against your name. It certifies that you clicked " +
-                      "eight times in the correct order on one particular afternoon. It does not survive contact " +
-                      "with a delivery date, an executive, or a merge conflict, and it is not evidence of anything " +
-                      "except this."
-                    : "No record of completion has been filed. You may retake this test as many times as you " +
-                      "like, which is the clearest possible statement of what the record would have been worth.") +
+                    ? "A record of completion has been filed against your name for " + track.code + ". It certifies " +
+                      "that you clicked eight times in the correct order on one particular afternoon. It does not " +
+                      "survive contact with a delivery date, an executive, or a merge conflict, and it is not " +
+                      "evidence of anything except this."
+                    : "No record of completion has been filed. You may retake this module as many times as you like, " +
+                      "which is the clearest possible statement of what the record would have been worth.") +
                 '</div>';
 
+        if (untaken.length) {
+            html += '<p class="smallprint" style="font-size:0.92rem;color:#3d4d5d">' +
+                    'The same eight situations are asked in ' +
+                    untaken.map(function (t) { return '<b>' + t.code + '</b> (' + t.name.toLowerCase() + ')'; })
+                           .join(" and ") +
+                    '. Question 5 is the one to compare.</p>';
+        }
+
         html += '<div class="controls">' +
-                '<button type="button" class="lms-btn" id="retake">Retake the test</button>' +
+                '<button type="button" class="lms-btn" id="retake">Retake ' + track.code + '</button>' +
                 '<button type="button" class="lms-btn ghost" id="review">Review my answers</button>' +
                 '</div>';
 
-        html += '<p class="smallprint">ENG-114 is a fiction. There is no learning management system, no ' +
-                'completion record and no compliance officer &mdash; only the eight steps further up this page, ' +
-                'which is all the module ever was.</p>';
+        html += '<p class="smallprint">ENG-114 is a fiction. There is no learning management system, no completion ' +
+                'record and no compliance officer &mdash; only the eight steps further up this page, which is all ' +
+                'the module ever was.</p>';
 
         document.getElementById("quiz").innerHTML = html;
         pips();
+        tracks();
     }
+
+    document.getElementById("tracks").addEventListener("click", function (e) {
+        var t = e.target.closest ? e.target.closest(".track") : null;
+        if (!t) { return; }
+        var id = t.getAttribute("data-track");
+        if (id === track.id) { return; }
+        track = TRACKS.filter(function (x) { return x.id === id; })[0];
+        // Resume where this module was left, including on its result screen.
+        if (st().finished) { result(); } else { question(); }
+    });
 
     document.getElementById("quiz").addEventListener("click", function (e) {
         var t = e.target.closest ? e.target.closest("button") : null;
         if (!t) { return; }
+        var s = st();
 
         if (t.hasAttribute("data-opt")) {
             // One shot per question. The feedback is the point, so it opens on answering.
-            if (answers[at] == null) {
-                answers[at] = parseInt(t.getAttribute("data-opt"), 10);
+            if (s.answers[s.at] == null) {
+                s.answers[s.at] = parseInt(t.getAttribute("data-opt"), 10);
                 question();
             }
             return;
         }
 
         switch (t.id) {
-            case "next":   at++; question(); break;
-            case "prev":   at--; question(); break;
+            case "next":   s.at++; question(); break;
+            case "prev":   s.at--; question(); break;
             case "finish": result(); break;
-            case "review": at = 0; question(); break;
+            case "review": s.at = 0; s.finished = false; question(); break;
             case "retake":
-                answers = [];
-                at = 0;
+                s.answers = [];
+                s.at = 0;
+                s.finished = false;
                 question();
                 break;
         }
