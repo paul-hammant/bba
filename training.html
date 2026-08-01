@@ -545,7 +545,7 @@
                 },
                 {
                     stem: "You are four weeks into the branch. A much larger group is committing to trunk, in the same " +
-                          "subsystem. Which practice makes the eventual merge safe?",
+                          "subsystem. Which drama-free practice locks in the eventual go-live date?",
                     options: [
                         "Merge trunk into the branch daily, keeping the branch's test suite green against each merge.",
                         "Rebase the branch onto trunk daily, so the history stays linear and the final merge is a fast-forward.",
@@ -558,10 +558,15 @@
                             "can reach a state nobody is willing to finish resolving."
                     ],
                     correct: 4,
-                    feedback: "<p><b>E</b>. The question asks which practice makes the merge <i>safe</i>, and the " +
-                              "honest answer is that none of them does. Every option here is a way of paying earlier " +
-                              "and more often, or of paying with someone else's time. None is a way of paying less, " +
-                              "and none converts an unknown cost into a known one.</p>" +
+                    feedback: "<p><b>E</b>. The question asks which practice <i>locks in the date</i>, and the honest " +
+                              "answer is that none of them does. Every option here is a way of paying earlier and " +
+                              "more often, or of paying with someone else's time. None is a way of paying less, and " +
+                              "none converts an unknown cost into a known one &mdash; which is what locking in a date " +
+                              "would require.</p>" +
+                              "<p>Note the word <i>drama-free</i>, because it is doing the work here. Several of these " +
+                              "options are drama-free in the sense that meant: they are quiet, disciplined, and " +
+                              "nobody has to have an uncomfortable conversation about the date. That is exactly why " +
+                              "they get chosen, and it is not the same property as the date being safe.</p>" +
                               "<p>The work is asymmetric: a handful of you are pulling from a trunk that a much larger " +
                               "group is pushing to. Merge daily and the same conflicts in the same files reappear " +
                               "each time, because the upstream work keeps moving through them. You are not " +
@@ -578,8 +583,11 @@
                               "still have the appetite for.</p>" +
                               "<p><b>C</b> is the one to watch for, because it is where teams go next when the daily " +
                               "reconciliation starts hurting, and it is usually proposed as fairness &mdash; if we " +
-                              "are on a branch, why should they not be. It does work, in the sense that your merge " +
-                              "gets easier. It works by moving the problem onto a larger group and multiplying it: " +
+                              "are on a branch, why should they not be. It is also the least drama-free option on " +
+                              "the list, which is worth noticing: it is the only one that requires other teams to " +
+                              "agree to something, and it will be remembered. It does work, in the sense that your " +
+                              "merge gets easier. It works by moving the problem onto a larger group and " +
+                              "multiplying it: " +
                               "now several branches are diverging from a trunk nobody is integrating into, each " +
                               "team's merge is deferred behind yours, and they will conflict with each other as well " +
                               "as with you. You have also just made your go-live the gating event for everyone " +
