@@ -872,19 +872,24 @@
                     stem: "A change is going to take four months. Your team has decided to stay on trunk by wrapping the " +
                           "new behaviour in a conditional at each call site. Before starting, what should you establish?",
                     options: [
-                        "A naming convention for the flags, so they are easy to find later.",
+                        "A single well-named toggle that every conditional will read, so the whole change is " +
+                            "controlled from one place.",
                         "How many call sites there are, in every language and tier the system uses &mdash; and accept " +
                             "that this number is the size of the job and that it will grow.",
-                        "That the flags all read from one configuration service, so they can be changed without a deploy.",
+                        "That the toggle is served from configuration rather than compiled in, so it can be changed " +
+                            "without a deploy.",
                         "A code review rule that no pull request may add more than three new conditionals."
                     ],
                     correct: 1,
                     feedback: "<p><b>B</b>. On this track the count is the whole ball game, because everything painful " +
-                              "later is a function of it: the testing matrix, the removal work, and how confident " +
-                              "anyone can be about what production is currently doing.</p>" +
-                              "<p><b>A</b> and <b>C</b> are both good practice and both address the flag rather than " +
-                              "the fork. Centralised configuration tells you what the switches are set to; it does not " +
-                              "tell you how many places branch on them, which is the number that hurts.</p>" +
+                              "later is a function of it: what your tests actually mean, the removal work, and how " +
+                              "confident anyone can be about what production is currently doing.</p>" +
+                              "<p><b>A</b> and <b>C</b> are both correct practice &mdash; you should do both, and " +
+                              "almost every team does &mdash; and neither is the answer, because both are about the " +
+                              "toggle and the difficulty is in the forks. One toggle is genuinely the right design " +
+                              "here. It also means the number of switches tells you nothing at all about the size of " +
+                              "the change: one toggle can be read in nine places or nine hundred, and only the second " +
+                              "number predicts anything about your next four months.</p>" +
                               "<p><b>D</b> rations the symptom. The conditionals are needed wherever the behaviour " +
                               "differs; a quota just spreads them over more pull requests.</p>"
                 },
@@ -894,7 +899,7 @@
                         "In the middle tier only, if the seam is chosen carefully.",
                         "In the middle tier and the browser code, but not in SQL, which is declarative.",
                         "In all of them &mdash; including SQL, where the same choice appears as a different query or an " +
-                            "inverted condition &mdash; and each tier has its own way of getting the flag's value.",
+                            "inverted condition &mdash; and each tier has its own way of reading that one toggle's value.",
                         "Wherever the team decides to put them; the distribution is a design choice rather than a consequence."
                     ],
                     correct: 2,
@@ -902,10 +907,10 @@
                               "when you sketch it on a whiteboard with one <code>if</code> in it.</p>" +
                               "<p>The fork does not respect tier boundaries. It appears in JavaScript, in whatever the " +
                               "middle tier is written in, and in SQL &mdash; where it will be a differently shaped " +
-                              "query rather than a conditional, so your search for the flag name will not find it.</p>" +
+                              "query rather than a conditional, so your search for the toggle name will not find it.</p>" +
                               "<p><b>D</b> is the wrong model of what is happening. You do not choose where the " +
                               "conditionals go; the call sites choose for you. <b>A</b> is what branch by abstraction " +
-                              "achieves, and it achieves it by having a seam rather than a flag.</p>"
+                              "achieves, and it achieves it by having a seam rather than a toggle.</p>"
                 },
                 {
                     stem: "Where should the migration start on this track?",
@@ -927,24 +932,39 @@
                               "nobody can say what fraction is done except by counting.</p>"
                 },
                 {
-                    stem: "How many code paths must your test suite now cover?",
+                    stem: "One toggle drives every if and else you have added. How many code paths must your test " +
+                          "suite now cover?",
                     options: [
-                        "Two: flag on and flag off.",
-                        "Two per flag, tested independently, since the flags are for unrelated call sites.",
-                        "Potentially every combination of the flags that can be set independently &mdash; and in practice " +
-                            "you will test a chosen few and hope.",
-                        "One: whichever configuration production is currently running."
+                        "Two: toggle on and toggle off.",
+                        "Two, but neither of them is a path anybody has designed. With one toggle over a half-migrated " +
+                            "codebase, \"on\" means every converted call site takes the new route and every " +
+                            "unconverted one still takes the old, so the two paths are whatever the migration " +
+                            "happens to have reached this week.",
+                        "One: whichever setting production is currently running.",
+                        "Two per tier, since the browser, the middle tier and the database each read the toggle " +
+                            "separately."
                     ],
-                    correct: 2,
-                    feedback: "<p><b>C</b>. This is the cost that arrives quietly. Independent flags multiply rather " +
-                              "than add, and \"test a chosen few and hope\" is not cynicism &mdash; it is what every " +
-                              "team on this track actually does, because the full matrix is not affordable.</p>" +
-                              "<p><b>A</b> is true only if there is one flag, which is the sketch on the whiteboard " +
-                              "rather than the system in four months. <b>B</b> assumes independence that nobody has " +
-                              "verified; two flags on unrelated call sites will interact if those call sites share " +
-                              "any state, and they usually do.</p>" +
-                              "<p><b>D</b> is what teams fall back to, and it means your tests can no longer tell you " +
-                              "whether the flip is safe &mdash; only that today was fine.</p>"
+                    correct: 1,
+                    feedback: "<p><b>B</b>. A single toggle is the sane way to do this, and the arithmetic looks " +
+                              "reassuring: two settings, two paths, a tractable test matrix. <b>A</b> is what that " +
+                              "reasoning concludes and it is the trap, because it counts settings rather than " +
+                              "behaviours.</p>" +
+                              "<p>What \"toggle on\" actually selects is a mixture: new behaviour everywhere you have " +
+                              "converted so far, old behaviour everywhere you have not. That mixture is different " +
+                              "this week from last week, so the thing your suite verified on Monday is not the thing " +
+                              "it verifies on Friday, and neither is the thing you will ship. The pairing of new " +
+                              "and old is not designed; it is a side effect of how far you have got.</p>" +
+                              "<p>That has a specific consequence. Each newly converted call site changes the " +
+                              "meaning of the toggle-on path for every other call site that shares state with it, " +
+                              "so a green suite is evidence about one particular moment in the migration and not " +
+                              "about the flip. Only when the last call site is converted does toggle-on mean what " +
+                              "the name suggests, and by then you have been running the intermediate mixtures in " +
+                              "production for months.</p>" +
+                              "<p><b>C</b> is what teams fall back to, and it means your tests can no longer tell " +
+                              "you whether the flip is safe &mdash; only that today was fine. <b>D</b> understates " +
+                              "it in the other direction: the tiers are not separate paths, they are one path that " +
+                              "can be internally inconsistent, which is worse and is the subject of the next " +
+                              "question but one.</p>"
                 },
                 {
                     stem: "Six weeks in, an executive cancels the work. You have been using conditionals at each call " +
@@ -953,52 +973,70 @@
                         "Working software in production, and a partly forked codebase you must now unpick by hand, " +
                             "with no reliable list of where the forks are.",
                         "Nothing shippable, since the conditionals were never enabled in production.",
-                        "A clean stopping point &mdash; leave every flag switched off and the old behaviour simply continues.",
+                        "A clean stopping point &mdash; leave the toggle off and the old behaviour simply continues.",
                         "Working software plus a half-finished second implementation cleanly separated behind a seam."
                     ],
                     correct: 0,
                     feedback: "<p><b>A</b>. The good news on this track is real: everything went to trunk and " +
                               "production has been fine throughout. The bad news is what stopping actually involves.</p>" +
                               "<p><b>C</b> is the answer most people give and it is a trap with a long fuse. Leaving " +
-                              "the flags off does work &mdash; today. What you have left behind is dead branches at " +
+                              "the toggle off does work &mdash; today. What you have left behind is dead branches at " +
                               "every converted call site, in several languages, which the next person to read that " +
                               "code must reason about forever, and which no tool will tell them are obsolete.</p>" +
                               "<p><b>D</b> describes the third module. <b>B</b> understates it &mdash; you did ship " +
                               "continuously, which is the one genuine advantage this approach has over a branch.</p>"
                 },
                 {
-                    stem: "The work is complete and every call site is forked. How do you switch over?",
+                    stem: "The work is complete and every call site is forked, all reading the one toggle. How do you " +
+                          "switch over?",
                     options: [
-                        "Flip all the flags at once, so the system is never in a mixed state.",
-                        "Flip them one at a time, starting with the lowest-traffic path, watching each before continuing.",
-                        "Ship a release with the conditionals removed and the new path hard-coded.",
-                        "Flip them by tier &mdash; database first, then middle tier, then browser."
+                        "Flip it one call site at a time, starting with the lowest-traffic path, watching each before " +
+                            "continuing.",
+                        "Split the single toggle into per-subsystem toggles first, so the switch-over can be staged.",
+                        "Flip the toggle, and accept that it lands everywhere at once &mdash; unevenly, because each " +
+                            "tier picks it up on its own schedule &mdash; then watch, with the flip back as the " +
+                            "remedy.",
+                        "Ship a release with the conditionals removed and the new path hard-coded."
                     ],
-                    correct: 1,
-                    feedback: "<p><b>B</b> is the correct answer and it is genuinely a real advantage of this approach: " +
-                              "fine-grained control means you can move in small, observable steps.</p>" +
-                              "<p><b>A</b> throws away that advantage for a property you do not have anyway &mdash; " +
-                              "with flags spread across tiers, \"at once\" is not achievable; there is always a window " +
-                              "where the browser and the middle tier disagree.</p>" +
-                              "<p><b>D</b> guarantees a mixed state across tiers, which is the worst version of it. " +
-                              "<b>C</b> couples the flip to a deployment and discards your ability to undo it in " +
-                              "seconds, which was the reason for the flags.</p>"
+                    correct: 2,
+                    feedback: "<p><b>C</b>, and the reason is the shape you chose four months ago. One toggle means " +
+                              "one decision: there is no dial, only a switch. Everything that reads it changes " +
+                              "together, which is the good news, and it does not change simultaneously, which is the " +
+                              "rest of it &mdash; a browser holding a cached value, a connection pool, a queued job " +
+                              "and a running transaction will each notice at their own moment, so for some window the " +
+                              "system runs new behaviour in one tier against old in another.</p>" +
+                              "<p>The genuine advantage survives and is worth naming: the remedy is another " +
+                              "configuration change, not a deployment. You can be wrong for seconds rather than for " +
+                              "a release cycle. That is the one thing this approach buys that a branch does not.</p>" +
+                              "<p><b>A</b> is what everyone assumes they will be able to do, and it is the assumption " +
+                              "the single toggle quietly removed. Flipping one call site at a time requires one " +
+                              "toggle per call site, which is the design nobody chose, because it means a " +
+                              "configuration surface as large as the migration itself.</p>" +
+                              "<p><b>B</b> is <b>A</b> admitting the problem, and it is retrofitting granularity at " +
+                              "the least convenient moment: you are now editing every call site again, at the end, " +
+                              "to introduce a distinction you will delete a fortnight later. <b>D</b> couples the " +
+                              "flip to a deployment and discards the only real advantage the approach had &mdash; " +
+                              "undo in seconds.</p>"
                 },
                 {
                     stem: "The new behaviour has been live and stable for a month. What is the follow-up work?",
                     options: [
                         "Remove every conditional and the dead branch behind it, everywhere, in every language &mdash; " +
                             "and find them first, since no list is trustworthy.",
-                        "Remove the flag definitions, which makes the remaining conditionals harmlessly constant.",
+                        "Remove the toggle definition, which makes the remaining conditionals harmlessly constant.",
                         "Leave the conditionals in place. They are proven rollback paths and cost nothing at runtime.",
-                        "Nothing. The flags are all set the same way now, so the code is effectively single-path."
+                        "Nothing. The toggle is on everywhere now, so the code is effectively single-path."
                     ],
                     correct: 0,
                     feedback: "<p><b>A</b>, and it is the largest deletion job of the three modules by a wide margin, " +
                               "because it is not one seam but every call site you ever touched. The finding is the " +
-                              "hard part: four months of forks, some of them SQL that never mentioned the flag name.</p>" +
-                              "<p><b>B</b> is a real and popular half-measure that makes things worse &mdash; now the " +
-                              "code still has both paths but the reader has no flag to search for.</p>" +
+                              "hard part: four months of forks, some of them SQL that never mentioned the toggle by " +
+                              "name. One toggle made the change easy to control and did nothing to make it easy to " +
+                              "find.</p>" +
+                              "<p><b>B</b> is a real and popular half-measure that makes things worse &mdash; and " +
+                              "with a single toggle it is one line to delete, which is exactly why it is tempting. " +
+                              "The code still has both paths afterwards, and now the reader has no toggle name to " +
+                              "search for and no way to tell which branch is live.</p>" +
                               "<p><b>C</b> and <b>D</b> are how this ends in practice. The cost is not runtime, it is " +
                               "that every future reader of every one of those call sites must work out which branch " +
                               "is live, forever.</p>"
