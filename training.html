@@ -781,6 +781,11 @@
                     feedback: "<p><b>B</b>, which is the point at which a well-run branch quietly borrows from the other " +
                               "two modules. Even here, you want the deployment and the behaviour change to be separate " +
                               "events, so that a bad release and a bad feature are distinguishable.</p>" +
+                              "<p>Be clear about what that switch is for. It exists to decouple one deployment from " +
+                              "one behaviour change, and its life is measured in days &mdash; it is not a seam, and " +
+                              "it is not holding two implementations apart, because the old one was replaced on the " +
+                              "branch as the work went. Once the new behaviour has settled, the switch comes out. " +
+                              "That is the next question.</p>" +
                               "<p><b>A</b> is the standard plan and it couples the two: if anything goes wrong you " +
                               "cannot tell which of \"we deployed four months of merged code\" and \"we turned on the " +
                               "new behaviour\" caused it, and your only remedy is to revert both.</p>" +
@@ -790,19 +795,35 @@
                 {
                     stem: "The merge has landed and the new behaviour is live. What is the follow-up work?",
                     options: [
-                        "Delete the branch, delete any temporary switch, and remove the superseded code from trunk.",
+                        "Delete the branch, and remove the switch that kept the new behaviour off through the release.",
                         "Keep the branch. It is the only record of how the change was developed.",
-                        "Nothing. The merge was the completion of the work.",
-                        "Keep the superseded code in trunk behind the switch indefinitely, as a rollback path."
+                        "Nothing of substance. The old implementation was replaced on the branch as the work went, so " +
+                            "there is no second implementation left in trunk to remove.",
+                        "Remove the old implementation from trunk, which the merge left behind alongside the new one.",
+                        "Keep the old implementation in trunk behind a permanent switch, as a rollback path."
                     ],
                     correct: 0,
-                    feedback: "<p><b>A</b>. There is a real deletion step on this track too, and it is skipped for the " +
-                              "same reason as everywhere else: nothing visibly improves when you do it.</p>" +
+                    feedback: "<p><b>A</b>. Note how much smaller this step is than the equivalent in the other two " +
+                              "modules, and be clear about why: on this track the old code was replaced as you went. " +
+                              "You edited it in place on the branch. There was never a period when both " +
+                              "implementations existed side by side in one working tree, so at merge time there is no " +
+                              "second implementation to delete. That is a genuine advantage of branching and it is " +
+                              "worth stating plainly.</p>" +
+                              "<p>What is left is smaller and still real: the branch ref, and the switch from the " +
+                              "previous question that kept the merged code dormant through its release. That switch " +
+                              "was scaffolding for one deployment. It has done its job.</p>" +
+                              "<p><b>D</b> describes something that is not there. If you did find two implementations " +
+                              "in trunk after the merge, something has gone wrong &mdash; either someone rebuilt the " +
+                              "old path during conflict resolution, or the branch was not actually replacing what it " +
+                              "claimed to.</p>" +
+                              "<p><b>C</b> is right about the code and wrong about the conclusion. It is the reasoning " +
+                              "that leaves the switch in place forever, and a release toggle nobody removes becomes a " +
+                              "permanent branch in the code with no owner and no expiry.</p>" +
                               "<p><b>B</b> confuses a branch with history. The commits are in trunk after the merge; " +
-                              "the branch ref is not the record, it is a pointer people are afraid to delete.</p>" +
-                              "<p><b>D</b> is an untested rollback path, which is not a rollback path. <b>C</b> is how " +
-                              "a repository accumulates hundreds of stale branches, each one a small unanswered " +
-                              "question about whether it contains something that was needed.</p>"
+                              "the branch ref is not the record, it is a pointer people are afraid to delete, and it " +
+                              "is how a repository accumulates hundreds of stale ones. <b>E</b> is an untested " +
+                              "rollback path, which is not a rollback path &mdash; and it reintroduces exactly the " +
+                              "old-implementation problem this track had just avoided.</p>"
                 },
                 {
                     stem: "Finally: which single statement about branch by source control is true?",
