@@ -549,17 +549,19 @@
                     options: [
                         "Merge trunk into the branch daily, keeping the branch's test suite green against each merge.",
                         "Rebase the branch onto trunk daily, so the history stays linear and the final merge is a fast-forward.",
+                        "Ask the larger group to put their own work on a branch too, and to hold their merge back to " +
+                            "trunk until after your change has gone live.",
+                        "Merge trunk in daily and additionally have the branch's author review every upstream commit " +
+                            "that touches the same subsystem.",
                         "None of them. Daily merging reduces the size of each reconciliation and guarantees nothing about " +
                             "the total, which can still become unaffordable &mdash; and under a daily rebase the branch " +
-                            "can reach a state nobody is willing to finish resolving.",
-                        "Merge trunk in daily and additionally have the branch's author review every upstream commit " +
-                            "that touches the same subsystem."
+                            "can reach a state nobody is willing to finish resolving."
                     ],
-                    correct: 2,
-                    feedback: "<p><b>C</b>. The question asks which practice makes the merge <i>safe</i>, and the " +
+                    correct: 4,
+                    feedback: "<p><b>E</b>. The question asks which practice makes the merge <i>safe</i>, and the " +
                               "honest answer is that none of them does. Every option here is a way of paying earlier " +
-                              "and more often. None is a way of paying less, and none converts an unknown cost into a " +
-                              "known one.</p>" +
+                              "and more often, or of paying with someone else's time. None is a way of paying less, " +
+                              "and none converts an unknown cost into a known one.</p>" +
                               "<p>The work is asymmetric: a handful of you are pulling from a trunk that a much larger " +
                               "group is pushing to. Merge daily and the same conflicts in the same files reappear " +
                               "each time, because the upstream work keeps moving through them. You are not " +
@@ -574,6 +576,16 @@
                               "by picking a side quickly, which is where silent behavioural breakage enters, or they " +
                               "abandon the rebase and the branch is effectively unmergeable by any route its authors " +
                               "still have the appetite for.</p>" +
+                              "<p><b>C</b> is the one to watch for, because it is where teams go next when the daily " +
+                              "reconciliation starts hurting, and it is usually proposed as fairness &mdash; if we " +
+                              "are on a branch, why should they not be. It does work, in the sense that your merge " +
+                              "gets easier. It works by moving the problem onto a larger group and multiplying it: " +
+                              "now several branches are diverging from a trunk nobody is integrating into, each " +
+                              "team's merge is deferred behind yours, and they will conflict with each other as well " +
+                              "as with you. You have also just made your go-live the gating event for everyone " +
+                              "else's, which converts a delivery risk into an organisational one. This is how a " +
+                              "codebase acquires a merge queue, an integration branch, and a person whose job is " +
+                              "that queue.</p>" +
                               "<p><b>A</b> is nonetheless what you should do, and this is the distinction the module " +
                               "is drawing: it is the least bad practice available and it is still not a guarantee. " +
                               "<b>D</b> adds real value and adds it to the wrong side of the ledger &mdash; it is " +
