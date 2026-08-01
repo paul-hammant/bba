@@ -653,22 +653,41 @@
                               "is how the branch ends up containing everything.</p>"
                 },
                 {
-                    stem: "Your CI currently builds trunk. What should it do about the branch?",
+                    stem: "CI should build trunk, or the change-that-takes-a-while branch? Budget is finite and " +
+                          "your build agents are already busy.",
                     options: [
-                        "Build the branch too, and additionally build the branch merged with current trunk on every commit to either.",
-                        "Build the branch only. Trunk is already covered by the team's normal work.",
-                        "Build the branch nightly, to keep the CI bill proportionate to a change that is not live yet.",
-                        "Build trunk only, and test the branch thoroughly by hand before the merge."
+                        "Trunk. It is what customers are running, and the branch is not live yet.",
+                        "The branch. Trunk is already covered by everyone else's normal work, and the branch is the " +
+                            "part that is changing fastest.",
+                        "Both, alternating &mdash; trunk on even commits, branch on odd &mdash; which halves the cost " +
+                            "and still watches both lines.",
+                        "Both, plus a third build of the branch merged with current trunk, triggered by commits to " +
+                            "either. That third one is the only build that answers the question you actually have.",
+                        "Both, with the branch's suite trimmed to the subsystem being changed, since the rest of it " +
+                            "cannot be affected by work that is confined to one area."
                     ],
-                    correct: 0,
-                    feedback: "<p><b>A</b>. The build that matters is the one nobody has asked for: trunk-plus-branch. " +
-                              "Building each in isolation tells you two things that are both true and neither of which " +
-                              "is the thing you need to know on merge day.</p>" +
-                              "<p><b>C</b> and <b>D</b> both save money by lengthening the gap between breaking " +
-                              "something and finding out, which on a four-month branch is exactly the wrong variable " +
-                              "to economise on. <b>B</b> leaves the code your customers are running unguarded.</p>" +
-                              "<p>Note what this costs: you are now running roughly three pipelines to deliver one " +
-                              "change. Branching is not the cheap option, it is the option whose cost arrives later.</p>"
+                    correct: 3,
+                    feedback: "<p><b>D</b>, and the question is a false choice &mdash; which is the trap. Trunk and " +
+                              "branch are the two builds people argue about, and neither of them tells you the thing " +
+                              "you need to know. Both are green right up to merge day, and merge day is when you find " +
+                              "out they were answering a different question.</p>" +
+                              "<p>Trunk green says the code your customers run is fine. Branch green says your work " +
+                              "is fine. The combination of the two is the only artefact that will ever ship, and " +
+                              "until you build it, nobody has ever compiled it, let alone tested it.</p>" +
+                              "<p><b>A</b> leaves four months of new code unguarded. <b>B</b> leaves the code your " +
+                              "customers are running unguarded, which is worse and is chosen surprisingly often, " +
+                              "because the branch is where the interesting work is.</p>" +
+                              "<p><b>C</b> is the plausible one and it is the worst of the five. Alternating means " +
+                              "each line is unguarded half the time, and a broken commit is attributed to whichever " +
+                              "build happened to run next, so you get red builds that bisect to the wrong change. " +
+                              "Halving the cost by halving the signal is not a saving.</p>" +
+                              "<p><b>E</b> sounds disciplined and rests on an assumption the branch itself " +
+                              "invalidates: \"confined to one area\" is exactly what a four-month non-functional " +
+                              "change is not, and the tests most likely to catch a bad merge are the ones furthest " +
+                              "from the code you edited.</p>" +
+                              "<p>Note what <b>D</b> costs: roughly three pipelines to deliver one change, and the " +
+                              "third of them exists only because you branched. Branching is not the cheap option. It " +
+                              "is the option whose cost arrives later, and some of it arrives on the CI invoice.</p>"
                 },
                 {
                     stem: "Six weeks in, an executive cancels the work. You have been working on a long-lived feature " +
