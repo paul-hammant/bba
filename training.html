@@ -137,7 +137,23 @@
         .track .state.done { color: #1f8f3a; font-weight: 700; }
         .track .state.failed { color: #c0170f; font-weight: 700; }
 
-        .pips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+        .pips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; align-items: center; }
+
+        /* Advance button sitting with the pips, so a reader who has finished
+           the feedback does not have to scroll back down past it to continue. */
+        .pips .lms-btn { margin-left: 10px; padding: 5px 13px; font-size: 0.86rem; }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
 
         .pip {
             width: 26px;
@@ -454,7 +470,7 @@
 
             <div class="tracks" id="tracks"></div>
 
-            <div class="pips" id="pips" aria-hidden="true"></div>
+            <div class="pips" id="pips"></div>
 
             <div id="quiz" aria-live="polite"></div>
         </div>
@@ -607,16 +623,34 @@
                             "goes to trunk immediately. Only the genuinely new implementation stays on the branch.",
                         "Put the risky parts on the branch and the safe parts on the branch too, then cherry-pick to trunk " +
                             "at the end if anything turns out to be independently useful.",
+                        "Land the standalone parts on trunk, then cherry-pick each one back to the release branch you are " +
+                            "working on, so both lines have it.",
                         "Whatever is easiest to keep in one place, since the branch will be merged back anyway."
                     ],
                     correct: 1,
                     feedback: "<p><b>B</b>, and it is the discipline that separates a survivable branch from a doomed " +
-                              "one. Every commit you can honestly land on trunk is a commit that cannot conflict later. " +
-                              "Most large changes are eighty per cent preparatory work that nobody would object to.</p>" +
-                              "<p><b>A</b> is the instinct that makes branches enormous. Consistency is a real concern, " +
-                              "but a rename that is true in both worlds is not an inconsistency.</p>" +
-                              "<p><b>C</b> defers the split to the end, when you will have neither the time nor the " +
-                              "appetite for it. Cherry-picking at the end is a thing people plan and do not do.</p>"
+                              "one. Every commit you can honestly land on trunk is a commit that cannot conflict " +
+                              "later. Most large changes are eighty per cent preparatory work that nobody would " +
+                              "object to.</p>" +
+                              "<p>It is also the answer with the biggest asterisk in this module, and it is worth " +
+                              "being precise about where it applies. <b>B</b> assumes the branch is downstream of " +
+                              "trunk, so that landing on trunk and then merging trunk into the branch carries the " +
+                              "change to you as part of the daily reconciliation you are doing anyway. If instead " +
+                              "the work originated on a release branch, or on anything you cannot simply pull trunk " +
+                              "into, then \"straight to trunk\" is only half a transfer.</p>" +
+                              "<p><b>D</b> is that second half made explicit, and it is not a free operation. " +
+                              "Cherry-picking each change back is a per-item transfer onto a different base, with no " +
+                              "merge record afterwards to say it happened, so the two lines can drift while both " +
+                              "appear to contain the same fix. Do it fifty times over four months and some of them " +
+                              "will be subtly wrong &mdash; picked in the wrong order, applied to a file that has " +
+                              "since moved, or silently conflicting with a neighbouring pick. It is a real technique " +
+                              "and it is defect-prone at volume, which is a reason to prefer being downstream of " +
+                              "trunk rather than beside it.</p>" +
+                              "<p><b>A</b> is the instinct that makes branches enormous. Consistency is a real " +
+                              "concern, but a rename that is true in both worlds is not an inconsistency. <b>C</b> " +
+                              "defers the split to the end, when you will have neither the time nor the appetite for " +
+                              "it &mdash; cherry-picking at the end is a thing people plan and do not do. <b>E</b> " +
+                              "is how the branch ends up containing everything.</p>"
                 },
                 {
                     stem: "Your CI currently builds trunk. What should it do about the branch?",
@@ -1099,14 +1133,31 @@
         var s = st(), qs = questions();
         var html = "";
         for (var i = 0; i < qs.length; i++) {
-            var cls = "pip";
+            var cls = "pip", note = "unanswered";
             if (s.answers[i] != null) {
-                cls += (s.answers[i] === qs[i].correct) ? " right" : " wrong";
+                var right = s.answers[i] === qs[i].correct;
+                cls += right ? " right" : " wrong";
+                note = right ? "correct" : "incorrect";
             } else if (i === s.at && !s.finished) {
                 cls += " current";
+                note = "current";
             }
-            html += '<span class="' + cls + '">' + (i + 1) + '</span>';
+            html += '<span class="' + cls + '" title="Question ' + (i + 1) + ': ' + note + '">' +
+                    '<span aria-hidden="true">' + (i + 1) + '</span>' +
+                    '<span class="sr-only">Question ' + (i + 1) + ', ' + note + '.</span>' +
+                    '</span>';
         }
+
+        // Mirror of the control below the feedback, so a reader who has just
+        // finished reading does not have to scroll back past it to advance.
+        // Ids differ from the lower pair; both are handled by the same click
+        // routing, since an id must be unique in the document.
+        if (!s.finished && s.answers[s.at] != null) {
+            html += (s.at < qs.length - 1)
+                ? '<button type="button" class="lms-btn" id="next-top">Next &rsaquo;</button>'
+                : '<button type="button" class="lms-btn" id="finish-top">See your result</button>';
+        }
+
         document.getElementById("pips").innerHTML = html;
     }
 
@@ -1253,6 +1304,33 @@
         if (st().finished) { result(); } else { question(); }
     });
 
+    // Shared by both control rows - the one under the feedback and the one up
+    // with the pips - so the pair cannot drift apart. Ids are suffixed rather
+    // than duplicated, since an id must be unique in the document.
+    function control(id) {
+        var s = st();
+        switch (id) {
+            case "next":
+            case "next-top":   s.at++; question(); return true;
+            case "prev":       s.at--; question(); return true;
+            case "finish":
+            case "finish-top": result(); return true;
+            case "review":     s.at = 0; s.finished = false; question(); return true;
+            case "retake":
+                s.answers = [];
+                s.at = 0;
+                s.finished = false;
+                question();
+                return true;
+        }
+        return false;
+    }
+
+    document.getElementById("pips").addEventListener("click", function (e) {
+        var t = e.target.closest ? e.target.closest("button") : null;
+        if (t) { control(t.id); }
+    });
+
     document.getElementById("quiz").addEventListener("click", function (e) {
         var t = e.target.closest ? e.target.closest("button") : null;
         if (!t) { return; }
@@ -1267,18 +1345,7 @@
             return;
         }
 
-        switch (t.id) {
-            case "next":   s.at++; question(); break;
-            case "prev":   s.at--; question(); break;
-            case "finish": result(); break;
-            case "review": s.at = 0; s.finished = false; question(); break;
-            case "retake":
-                s.answers = [];
-                s.at = 0;
-                s.finished = false;
-                question();
-                break;
-        }
+        control(t.id);
     });
 
     question();
