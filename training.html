@@ -527,9 +527,14 @@
                     feedback: "<p><b>C</b>, and saying it out loud early is the single most useful thing you can do on " +
                               "this track. It is the answer people avoid giving because it sounds like weakness. It is " +
                               "not: it is the only statement here that will still be true in four months.</p>" +
-                              "<p><b>A</b> is the most seductive one. Daily rebasing genuinely helps &mdash; it converts " +
-                              "one enormous merge into many small ones &mdash; but it does not remove the risk, because " +
-                              "a rebase only tells you the code combines, not that the combined behaviour is right.</p>" +
+                              "<p><b>A</b> is the most seductive one, and it is the answer a good engineer gives. " +
+                              "Daily rebasing genuinely helps. It does not remove the risk, for two reasons. A rebase " +
+                              "only tells you the code combines, not that the combined behaviour is right. And the " +
+                              "rebase itself is not free: it replays your commits onto the moved trunk one by one, so " +
+                              "where your work is co-mingled with a larger upstream team's in the same files, you " +
+                              "resolve the same conflict once per replayed commit, every day, for four months. What " +
+                              "you have bought is not the absence of a big merge &mdash; it is the same merge, paid " +
+                              "in daily instalments, with interest.</p>" +
                               "<p><b>B</b> makes your delivery date depend on other teams not improving the codebase, " +
                               "which is both unenforceable and a bad thing to ask for. <b>D</b> is a trunk freeze with a " +
                               "friendlier name, and freezes get extended.</p>"
@@ -543,14 +548,27 @@
                         "Wait until the work is functionally complete, then do one careful merge with the whole team available."
                     ],
                     correct: 0,
-                    feedback: "<p><b>A</b>. If you are going to be on a branch, be on a branch that knows what trunk is " +
-                              "doing. Daily is the correct frequency and it is not a comfortable one &mdash; it means " +
-                              "absorbing other people's refactorings continuously rather than all at once.</p>" +
-                              "<p><b>C</b> sounds efficient and is the wrong direction: conflict cost grows faster than " +
-                              "linearly with time, so weekly batches are more than five times worse than daily ones.</p>" +
-                              "<p><b>D</b> is the default behaviour this whole site exists to argue against, and " +
-                              "\"with the whole team available\" is a tell &mdash; you are pre-booking the disaster. " +
-                              "<b>B</b> asks everyone else to slow down so that you can appear not to be.</p>"
+                    feedback: "<p><b>A</b>, and note that it is the least bad option rather than a good one. If you " +
+                              "are going to be on a branch, be on a branch that knows what trunk is doing. Daily is " +
+                              "the correct frequency and it is not a comfortable one &mdash; it means absorbing other " +
+                              "people's refactorings continuously rather than all at once.</p>" +
+                              "<p>Be clear about what it does not fix. The work is asymmetric: a handful of you are " +
+                              "pulling from a trunk that a much larger group is pushing to, so every day you are " +
+                              "reconciling your few commits against everyone else's many. Merge daily and you do that " +
+                              "reconciliation once per day, forever, and the same conflicts in the same files " +
+                              "reappear each time because the upstream work keeps moving through them.</p>" +
+                              "<p>Rebasing instead of merging makes this worse, not better. A rebase replays your " +
+                              "commits onto the new trunk one at a time, so a file that both sides have been editing " +
+                              "is a conflict you resolve once per replayed commit rather than once. Four weeks of " +
+                              "commits, resolved again every day, against changes that are co-mingled with yours " +
+                              "because everyone is working in the same subsystem &mdash; this is the point at which " +
+                              "teams start resolving conflicts by picking a side quickly, and that is where the " +
+                              "silent behavioural breakage enters.</p>" +
+                              "<p><b>C</b> sounds efficient and is the wrong direction: conflict cost grows faster " +
+                              "than linearly with time. <b>D</b> is the default behaviour this whole site exists to " +
+                              "argue against, and \"with the whole team available\" is a tell &mdash; you are " +
+                              "pre-booking the disaster. <b>B</b> asks everyone else to slow down so that you can " +
+                              "appear not to be.</p>"
                 },
                 {
                     stem: "Which part of the change should go on the branch, and which should go straight to trunk?",
@@ -661,9 +679,12 @@
                     feedback: "<p><b>D</b>. Everything the approach gives you is real, and it is all bought with the " +
                               "same coin: the difficulty is not reduced, it is postponed and concentrated.</p>" +
                               "<p><b>A</b> is true right up until the merge, which is precisely when it stops being " +
-                              "true and does so all at once. <b>B</b> can be true for a small change and is the " +
-                              "argument for using a branch when the work is short &mdash; on a four-month change it " +
-                              "is not.</p>" +
+                              "true and does so all at once. <b>B</b> is the one to be most careful with. It can be " +
+                              "true for a small change, and it is the honest argument for using a branch when the " +
+                              "work is short. On a four-month change with a large upstream team it is not, and the " +
+                              "reason is not the merge at the end &mdash; it is the daily cost of keeping the branch " +
+                              "current, which is engineering effort that produces nothing a customer will ever " +
+                              "see.</p>" +
                               "<p><b>C</b> is the most defensible wrong answer: landing complete-or-not-at-all is a " +
                               "genuine property. But \"not at all\" is a real outcome here, and this module's fifth " +
                               "question is what it looks like.</p>"
