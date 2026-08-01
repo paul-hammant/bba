@@ -770,60 +770,70 @@
                 {
                     stem: "The branch is complete and the merge is scheduled. How should the switch-over reach production?",
                     options: [
-                        "One release containing the merged branch, tested on a staging environment beforehand.",
-                        "Merge to trunk, then release the merged code with the new behaviour still switched off, and " +
-                            "enable it separately.",
+                        "One release containing the merged branch, tested on a staging environment beforehand. There " +
+                            "is nothing to switch: the branch replaced the old code rather than sitting beside it, so " +
+                            "deploying the merge is the switch-over.",
+                        "Merge to trunk, then release the merged code with the new behaviour switched off, and enable " +
+                            "it separately.",
                         "Merge to trunk and release immediately, so that any problems are found while the change is fresh " +
                             "in everyone's mind.",
                         "Merge and release during a maintenance window, so any fallout lands outside business hours."
                     ],
-                    correct: 1,
-                    feedback: "<p><b>B</b>, which is the point at which a well-run branch quietly borrows from the other " +
-                              "two modules. Even here, you want the deployment and the behaviour change to be separate " +
-                              "events, so that a bad release and a bad feature are distinguishable.</p>" +
-                              "<p>Be clear about what that switch is for. It exists to decouple one deployment from " +
-                              "one behaviour change, and its life is measured in days &mdash; it is not a seam, and " +
-                              "it is not holding two implementations apart, because the old one was replaced on the " +
-                              "branch as the work went. Once the new behaviour has settled, the switch comes out. " +
-                              "That is the next question.</p>" +
-                              "<p><b>A</b> is the standard plan and it couples the two: if anything goes wrong you " +
-                              "cannot tell which of \"we deployed four months of merged code\" and \"we turned on the " +
-                              "new behaviour\" caused it, and your only remedy is to revert both.</p>" +
-                              "<p><b>C</b> is <b>A</b> in a hurry. <b>D</b> is scheduling, not strategy &mdash; it " +
-                              "reduces the audience for the failure, not its likelihood.</p>"
+                    correct: 0,
+                    feedback: "<p><b>A</b>, and it is an uncomfortable answer, which is the point. On this track the " +
+                              "deployment <i>is</i> the switch-over. There is no toggle, because nobody built one: " +
+                              "the branch replaced the old code in place as the work went, so at merge time there is " +
+                              "no second path to route away from and nothing to leave switched off.</p>" +
+                              "<p>That is the cost of this approach stated exactly. Four months of work arrives in " +
+                              "production as one event, and the only rehearsal available is a staging environment " +
+                              "that is not production and does not have production's data, traffic or " +
+                              "configuration.</p>" +
+                              "<p><b>B</b> is what you would want, and it is the answer people pick because it is " +
+                              "obviously better. Look at what it actually requires. To ship the merged code dormant " +
+                              "you need both implementations present and a switch between them &mdash; which means " +
+                              "going back into four months of completed work and reinstating the old path alongside " +
+                              "the new one, at the end, under merge-week pressure, in order to build the seam you " +
+                              "declined to build at the start. Teams do attempt this. It is the most expensive " +
+                              "possible moment to do it, and the resulting switch is untested precisely where it " +
+                              "matters, because the old path it selects has not been exercised since it was " +
+                              "reinstated.</p>" +
+                              "<p>Notice that wanting <b>B</b> is wanting branch by abstraction, four months late.</p>" +
+                              "<p><b>C</b> is <b>A</b> in a hurry, giving up the one rehearsal you did have. " +
+                              "<b>D</b> is scheduling, not strategy &mdash; it reduces the audience for the failure, " +
+                              "not its likelihood.</p>"
                 },
                 {
                     stem: "The merge has landed and the new behaviour is live. What is the follow-up work?",
                     options: [
-                        "Delete the branch, and remove the switch that kept the new behaviour off through the release.",
+                        "Delete the branch. That is all there is: the old code went as the work went, so nothing " +
+                            "survives in trunk waiting to be removed.",
                         "Keep the branch. It is the only record of how the change was developed.",
-                        "Nothing of substance. The old implementation was replaced on the branch as the work went, so " +
-                            "there is no second implementation left in trunk to remove.",
                         "Remove the old implementation from trunk, which the merge left behind alongside the new one.",
+                        "Remove the switch that kept the new behaviour off through the release.",
                         "Keep the old implementation in trunk behind a permanent switch, as a rollback path."
                     ],
                     correct: 0,
-                    feedback: "<p><b>A</b>. Note how much smaller this step is than the equivalent in the other two " +
-                              "modules, and be clear about why: on this track the old code was replaced as you went. " +
-                              "You edited it in place on the branch. There was never a period when both " +
-                              "implementations existed side by side in one working tree, so at merge time there is no " +
-                              "second implementation to delete. That is a genuine advantage of branching and it is " +
-                              "worth stating plainly.</p>" +
-                              "<p>What is left is smaller and still real: the branch ref, and the switch from the " +
-                              "previous question that kept the merged code dormant through its release. That switch " +
-                              "was scaffolding for one deployment. It has done its job.</p>" +
-                              "<p><b>D</b> describes something that is not there. If you did find two implementations " +
-                              "in trunk after the merge, something has gone wrong &mdash; either someone rebuilt the " +
-                              "old path during conflict resolution, or the branch was not actually replacing what it " +
-                              "claimed to.</p>" +
-                              "<p><b>C</b> is right about the code and wrong about the conclusion. It is the reasoning " +
-                              "that leaves the switch in place forever, and a release toggle nobody removes becomes a " +
-                              "permanent branch in the code with no owner and no expiry.</p>" +
+                    feedback: "<p><b>A</b>, and this is the one question in the module where this track comes out " +
+                              "ahead. Compare it with the same question in the other two: 114-B has to find and " +
+                              "remove a conditional at every call site in every language, and 114-C has an " +
+                              "abstraction and an old implementation to delete. Here there is a branch ref, and " +
+                              "that is the whole list.</p>" +
+                              "<p>The reason is structural. You edited the old code in place, on the branch, as you " +
+                              "went. Both versions existed in two different commits rather than side by side in one " +
+                              "working tree, so the merge did not leave a duplicate behind. Whatever else branching " +
+                              "costs you &mdash; and this module has spent seven questions on that &mdash; it does " +
+                              "not leave you a deletion backlog.</p>" +
+                              "<p><b>C</b> and <b>D</b> both describe things that are not there. There is no " +
+                              "superseded implementation in trunk, and there is no switch, because nobody built one " +
+                              "&mdash; that was the previous question. If you do find either, something has gone " +
+                              "wrong: someone reinstated the old path during conflict resolution, or the branch was " +
+                              "not replacing what it claimed to.</p>" +
                               "<p><b>B</b> confuses a branch with history. The commits are in trunk after the merge; " +
                               "the branch ref is not the record, it is a pointer people are afraid to delete, and it " +
                               "is how a repository accumulates hundreds of stale ones. <b>E</b> is an untested " +
-                              "rollback path, which is not a rollback path &mdash; and it reintroduces exactly the " +
-                              "old-implementation problem this track had just avoided.</p>"
+                              "rollback path, which is not a rollback path &mdash; and it would mean deliberately " +
+                              "reinstating the old implementation you just finished replacing, which is the one " +
+                              "cleanup burden this track had avoided.</p>"
                 },
                 {
                     stem: "Finally: which single statement about branch by source control is true?",
