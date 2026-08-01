@@ -137,6 +137,50 @@
         .track .state.done { color: #1f8f3a; font-weight: 700; }
         .track .state.failed { color: #c0170f; font-weight: 700; }
 
+        /* Vocabulary switch. Compliance modules always have one setting that
+           exists purely so the reader cannot object on a technicality. */
+        .naming {
+            border: 1px solid #c8d2dc;
+            border-radius: 3px;
+            padding: 8px 12px 10px 12px;
+            margin: 0 0 16px 0;
+            background: #f9fbfd;
+        }
+
+        .naming legend {
+            font-size: 0.74rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: #7a8b9c;
+            font-weight: 700;
+            padding: 0 4px;
+        }
+
+        .naming-opts { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+
+        .naming label {
+            font-size: 0.92rem;
+            color: #16202b;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Materialize hides native radios and draws its own via label::before,
+           which this fieldset does not use - so opt back out of that. */
+        .naming input[type="radio"] {
+            position: static;
+            opacity: 1;
+            pointer-events: auto;
+            cursor: pointer;
+            margin: 0;
+            width: auto;
+            height: auto;
+        }
+
+        .naming label.chosen { font-weight: 700; color: #1b4f82; }
+
         .pips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; align-items: center; }
 
         /* Advance button sitting with the pips, so a reader who has finished
@@ -469,6 +513,11 @@
             </p>
 
             <div class="tracks" id="tracks"></div>
+
+            <fieldset class="naming" id="naming">
+                <legend>In this organisation, the integration line is called:</legend>
+                <span class="naming-opts" id="naming-opts"></span>
+            </fieldset>
 
             <div class="pips" id="pips"></div>
 
@@ -1105,6 +1154,26 @@
     var KEYS = ["A", "B", "C", "D", "E"];
     var PASS_MARK = 6;
 
+    /*
+     * Every question is written saying "trunk". Teams that do exactly this call
+     * it five different things, and arguing about the noun is a very effective
+     * way of not discussing the practice - so the reader picks their word and
+     * the module speaks it.
+     *
+     * Substitution happens at render time on a word boundary, preserving the
+     * leading capital. Deliberately narrow: "the approach's main benefit" must
+     * not become "the approach's develop benefit", which is what a careless
+     * replace of the other names would do in reverse.
+     */
+    var NAMES = ["trunk", "main", "mainline", "master", "develop"];
+    var naming = "trunk";
+
+    function say(text) {
+        if (naming === "trunk") { return text; }
+        return text.replace(/\bTrunk\b/g, naming.charAt(0).toUpperCase() + naming.slice(1))
+                   .replace(/\btrunk\b/g, naming);
+    }
+
     // Per-track progress, so switching modules does not lose where you were.
     var state = {};
     TRACKS.forEach(function (t) { state[t.id] = { at: 0, answers: [], finished: false }; });
@@ -1148,6 +1217,14 @@
         }).join("");
     }
 
+    function namingRadios() {
+        document.getElementById("naming-opts").innerHTML = NAMES.map(function (n) {
+            return '<label class="' + (n === naming ? "chosen" : "") + '">' +
+                   '<input type="radio" name="bba-naming" value="' + n + '"' +
+                   (n === naming ? " checked" : "") + '>' + n + '</label>';
+        }).join("");
+    }
+
     function pips() {
         var s = st(), qs = questions();
         var html = "";
@@ -1188,8 +1265,8 @@
 
         var html = '<div class="qnum">' + track.code + ' &middot; Question ' + (s.at + 1) +
                    ' of ' + qs.length + '</div>';
-        html += '<p class="stem">' + q.stem + '</p>';
-        html += '<div class="scenario"><b>' + track.name + '.</b> ' + track.blurb + '</div>';
+        html += '<p class="stem">' + say(q.stem) + '</p>';
+        html += '<div class="scenario"><b>' + track.name + '.</b> ' + say(track.blurb) + '</div>';
 
         q.options.forEach(function (opt, i) {
             var cls = "opt";
@@ -1205,11 +1282,11 @@
             }
             html += '<button type="button" class="' + cls + '" data-opt="' + i + '"' +
                     (answered ? " disabled" : "") + '>' +
-                    tag + '<span class="key">' + KEYS[i] + '</span>' + opt + '</button>';
+                    tag + '<span class="key">' + KEYS[i] + '</span>' + say(opt) + '</button>';
         });
 
         if (answered) {
-            html += '<div class="feedback"><h6>Show correct answer</h6>' + q.feedback + '</div>';
+            html += '<div class="feedback"><h6>Show correct answer</h6>' + say(q.feedback) + '</div>';
             html += '<div class="controls">';
             if (s.at < qs.length - 1) {
                 html += '<button type="button" class="lms-btn" id="next">Next question &rsaquo;</button>';
@@ -1278,7 +1355,7 @@
                    '<div class="big">' + sc + '/' + qs.length + '</div>' +
                    '<div class="band ' + (pass ? "pass" : "fail") + '">' +
                    (pass ? "PASS" : "NOT YET COMPETENT") + '</div>' +
-                   '<p class="verdict">' + verdict + '</p>' +
+                   '<p class="verdict">' + say(verdict) + '</p>' +
                    '</div>';
 
         html += '<div class="cert">' +
@@ -1350,6 +1427,14 @@
         if (t) { control(t.id); }
     });
 
+    document.getElementById("naming").addEventListener("change", function (e) {
+        if (!e.target || e.target.name !== "bba-naming") { return; }
+        naming = e.target.value;
+        namingRadios();
+        // Repaint whatever is on screen, keeping the reader's place and score.
+        if (st().finished) { result(); } else { question(); }
+    });
+
     document.getElementById("quiz").addEventListener("click", function (e) {
         var t = e.target.closest ? e.target.closest("button") : null;
         if (!t) { return; }
@@ -1367,6 +1452,7 @@
         control(t.id);
     });
 
+    namingRadios();
     question();
 
     (function ($) {
