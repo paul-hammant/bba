@@ -1,0 +1,846 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <meta name="theme-color" content="#EE6E73">
+    <meta property="og:image" content="https://branchbyabstraction.com/bba_og.png">
+    <title>Branch By Abstraction - The last minute rethink</title>
+
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <link href="prism.css" rel="stylesheet"/>
+
+    <style>
+        nav ul a {
+            color: #96a5b2;
+        }
+
+        nav ul li.active a {
+            color: white;
+        }
+
+        /* From a picture frame codepen - https://codepen.io/PaFF/pen/khydI ... */
+        .picture {
+            position: relative;
+            float: left;
+            margin: 0 20px 25px 20px;
+        }
+
+        .hook {
+            width: 5px;
+            height: 5px;
+            background-color: #2F4F4F;
+            margin: 0 auto 32px auto;
+            border-radius: 50%;
+            box-shadow: 0 1px 0 1px #a49c7c;
+        }
+
+        .hook:before {
+            content: '';
+            width: 43px;
+            height: 43px;
+            left: calc(50% - 22px);
+            border: 2px #a49c7c;
+            border-style: solid hidden hidden solid;
+            position: absolute;
+
+            top: 13px;
+            transform: rotate(45deg);
+        }
+
+        .frame {
+            border-top: 6px solid #b89675;
+            border-right: 6px solid #7b654f;
+            border-bottom: 6px solid #7b654f;
+            border-left: 6px solid #a67c52;
+            box-shadow: 4px 4px 0 0 rgba(189, 166, 72, 0.6);
+            z-index: 1;
+        }
+
+        .inside {
+            background: linear-gradient(149deg, #d3d4d5 0%, #d3d4d5 50%, #ccc 51%, #ccc 100%);
+            border: 10px solid #fff;
+            box-shadow: 1px 1px 1px 1px rgba(189, 193, 194, 0.3) inset;
+        }
+
+        .page-footer {
+            color: black;
+            background-color: white
+        }
+
+        .page-footer .footer-copyright {
+            color: black;
+            background-color: aliceblue
+        }
+
+        a svg {
+            margin-left: 3px;
+        }
+
+        /* The commits down the page are dressed as a git log read backwards:
+           a sha, a subject line, and then the files as they stood after it. */
+        .commit {
+            border: 1px solid #d9d9d1;
+            border-left: 4px solid #607d8b;
+            background: #fbfbf8;
+            padding: 12px 16px;
+            margin: 26px 0 14px 0;
+        }
+
+        .commit .sha {
+            font-family: "Andale Mono", monospace;
+            background: #eceff1;
+            border: 1px solid #cfd8dc;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 0.95rem;
+        }
+
+        .commit .subject {
+            font-weight: 600;
+            font-size: 1.15rem;
+        }
+
+        .commit .meta {
+            color: #607d8b;
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        .commit.regret {
+            border-left-color: #c62828;
+        }
+
+        .commit.fix {
+            border-left-color: #2e7d32;
+        }
+
+        /* A GitHub-style unified diff. Prism has no diff language in the
+           bundle this site ships, so the red/green is done with rows and the
+           Java highlighting is left to Prism per line. */
+        .diff {
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            margin: 14px 0 18px 0;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .diff-file {
+            background: #f6f8fa;
+            border-bottom: 1px solid #d0d7de;
+            padding: 8px 12px;
+            font-family: "Andale Mono", monospace;
+            font-size: 0.85rem;
+            color: #24292f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .diff-filename {
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .diff-stat .added {
+            color: #1a7f37;
+            font-weight: 600;
+        }
+
+        .diff-stat .removed {
+            color: #cf222e;
+            font-weight: 600;
+        }
+
+        .diff-body {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Consolas, Monaco, "Andale Mono", monospace;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            display: block;
+            overflow-x: auto;
+        }
+
+        .diff-body tr {
+            /* Rows must not stretch when the table scrolls horizontally. */
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .diff-body td {
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .diff-body td.ln {
+            width: 42px;
+            min-width: 42px;
+            text-align: right;
+            padding: 0 8px;
+            color: rgba(27, 31, 36, 0.4);
+            background: #fff;
+            border-right: 1px solid #eaeef2;
+            user-select: none;
+            vertical-align: top;
+        }
+
+        .diff-body td.dl {
+            padding: 0 10px 0 0;
+            white-space: pre;
+            width: auto;
+        }
+
+        .diff-body .sign {
+            display: inline-block;
+            width: 1.1em;
+            padding-left: 6px;
+            color: rgba(27, 31, 36, 0.5);
+            user-select: none;
+            background: none;
+        }
+
+        /* Prism's own code[class*="language-"] rules would otherwise paint a
+           background and text-shadow over the red/green rows, and would trim
+           the leading indent that the continuation lines depend on. */
+        .diff-body code[class*="language-"] {
+            background: none !important;
+            padding: 0;
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            text-shadow: none;
+            white-space: pre !important;
+            display: inline;
+        }
+
+        .diff-body tr.hunk td {
+            background: #f6f8fa;
+            color: #57606a;
+            border-top: 1px solid #eaeef2;
+            border-bottom: 1px solid #eaeef2;
+            padding: 2px 10px;
+        }
+
+        .diff-body tr.add td.dl {
+            background: #e6ffec;
+        }
+
+        .diff-body tr.add td.ln {
+            background: #ccffd8;
+            color: rgba(27, 31, 36, 0.6);
+        }
+
+        .diff-body tr.add .sign {
+            color: #1a7f37;
+        }
+
+        .diff-body tr.del td.dl {
+            background: #ffebe9;
+        }
+
+        .diff-body tr.del td.ln {
+            background: #ffd7d5;
+            color: rgba(27, 31, 36, 0.6);
+        }
+
+        .diff-body tr.del .sign {
+            color: #cf222e;
+        }
+
+        @media screen and (max-width: 600px) {
+            .diff-body {
+                font-size: 0.74rem;
+            }
+
+            .diff-body td.ln {
+                width: 32px;
+                min-width: 32px;
+                padding: 0 4px;
+            }
+        }
+
+        .aside-note {
+            background: #fff8e1;
+            border-left: 4px solid #f5a623;
+            padding: 12px 16px;
+            margin: 20px 0;
+        }
+
+        .regret-note {
+            background: #ffebee;
+            border-left: 4px solid #c62828;
+            padding: 12px 16px;
+            margin: 20px 0;
+        }
+
+        /* The punchline block. Deliberately styled as a thing you could copy
+           out of the page and paste into a coding agent, because that is the
+           joke and also the invitation. */
+        .prompt-box {
+            background: #263238;
+            color: #eceff1;
+            border: 1px solid #37474f;
+            border-radius: 4px;
+            padding: 16px 18px;
+            margin: 18px 0;
+            font-family: "Andale Mono", monospace;
+            font-size: 1rem;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .prompt-box .prompt-caret {
+            color: #80cbc4;
+            user-select: none;
+        }
+
+        .prompt-box a {
+            color: #80cbc4;
+        }
+    </style>
+
+</head>
+<body style="background-color: aliceblue">
+
+<main>
+<div class="container" style="background-color: white; padding-left: 10px; padding-right: 10px; padding-top: 5px; margin-top: 15px; margin-bottom: 15px; padding-bottom: 15px">
+
+    <div class="wrapper">
+        <div class="picture">
+            <div class="nail"></div>
+            <div class="hook"></div>
+            <div class="frame">
+                <div class="inside">
+                    <img alt="Abstract Branch by Paul Hammant" height="auto" width="100%" src="abstract_branch.svg"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 align="center">Branch By Abstraction?</h3>
+
+    <ul id="slide-out" class="sidenav">
+        <li>
+            <div class="user-view">
+                <iframe width='160' height='400' src='https://leanpub.com/trunk-based-development/embed' frameborder='0'
+                        allowtransparency='true'></iframe>
+            </div>
+        </li>
+    </ul>
+
+    <div class="col s2 m2">
+        <div class="card-panel small grey lighten-5 z-depth-1">
+            <div class="row valign-wrapper">
+                <div class="col s8">
+                  <span class="black-text">
+                    "Trunk-Based Development and Branch by Abstraction" book is now available on Leanpub
+                  </span>
+                </div>
+                <div class="col s4">
+                    <a href="#" data-target="slide-out" class="sidenav-trigger btn-small">☜ See details in sidebar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p id="choice" class="flow-text">Here is the same idea told as <b>a change you already merged and expected to ship,
+        but have started to regret</b>. Every other telling on this site starts before the work does, with someone weighing up how to begin
+        something long. This one starts too late for that. The algorithm has been rewritten, the commit is merged, the
+        release branch is cut with that commit among a series of changes, but the final build has not been made. A
+        week before go-live somebody says the thing nobody wants to hear: <i>I am not sure we got that right.</i></p>
+
+    <div class="container card-panel red lighten-5 flow-text">
+        <div class="row s12">Current branch by abstraction example:</div>
+        <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12 m6 z-depth-3">
+                    <select class="flow-text">
+                        <optgroup label="non-language centric">
+                            <option value="index">UML sequence diagrams</option>
+                            <option value="building">Building Construction metaphor</option>
+                            <option value="storyboard">Storyboard room metaphor</option>
+                            <option value="openmic">Open mic night review</option>
+                            <option value="buttons">The button panel</option>
+                            <option value="training">The compliance test</option>
+                            <option selected value="last-minute-rethink">The last minute rethink</option>
+                        </optgroup>
+                        <optgroup label="Language centric">
+                            <option value="java">Java source changes</option>
+                            <option disabled value="ruby">Ruby source changes</option>
+                            <option disabled value="python">Python source changes</option>
+                            <option value="csharp">C# source changes</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="row s12 right-align">(click to change)</div>
+    </div>
+
+    <h4 id="1">1. The change that seemed finished</h4>
+
+    <p class="flow-text">A lending team is asked to correct how loan amortization is calculated. The existing schedule
+        is a straight-line split: the principal is divided evenly across the term, and interest is charged on what is
+        left. Finance want the industry-standard annuity method instead, where the monthly payment is constant and the
+        split between interest and principal moves over the life of the loan. It is a real change with a real
+        justification, and there is a regulation cited in the ticket.</p>
+
+    <p class="flow-text">One developer picks it up. It is not a months-long migration &mdash; it is one class, a
+        formula, and a fortnight. Nobody involved thinks this needs branch by abstraction, and on the day, nobody is
+        wrong about that. The commit replaces the old formula with the new one.</p>
+
+    <div class="commit">
+        <div><span class="sha">abab33f</span> &nbsp; <span class="subject">Amortize on the annuity method, not straight-line</span></div>
+        <div class="meta">Merged to trunk. Included when the release branch for the September drop was cut; not yet built or released.</div>
+    </div>
+
+    <div class="diff">
+        <div class="diff-file">
+            <span class="diff-filename">src/main/java/com/mycompany/lending/AmortizationSchedule.java</span>
+            <span class="diff-stat"><span class="added">+6</span> <span class="removed">&minus;5</span></span>
+        </div>
+        <table class="diff-body">
+            <tr class="hunk"><td class="ln" colspan="2">&nbsp;</td><td class="dl">@@ -13,16 +13,17 @@ public class AmortizationSchedule {</td></tr>
+            <tr><td class="ln">13</td><td class="ln">13</td><td class="dl"><span class="sign"> </span><code class="language-java">    public List&lt;Installment&gt; scheduleFor(Loan loan) {</code></td></tr>
+            <tr><td class="ln">14</td><td class="ln">14</td><td class="dl"><span class="sign"> </span><code class="language-java">        List&lt;Installment&gt; installments = new ArrayList&lt;&gt;();</code></td></tr>
+            <tr><td class="ln">15</td><td class="ln">15</td><td class="dl"><span class="sign"> </span><code class="language-java">        BigDecimal rate = loan.monthlyRate();</code></td></tr>
+            <tr class="del"><td class="ln">16</td><td class="ln"></td><td class="dl"><span class="sign">-</span><code class="language-java">        BigDecimal perMonth = loan.principal()</code></td></tr>
+            <tr class="del"><td class="ln">17</td><td class="ln"></td><td class="dl"><span class="sign">-</span><code class="language-java">                .divide(BigDecimal.valueOf(loan.termInMonths()), SCALE, HALF_UP);</code></td></tr>
+            <tr class="add"><td class="ln"></td><td class="ln">16</td><td class="dl"><span class="sign">+</span><code class="language-java">        BigDecimal growth = BigDecimal.ONE.add(rate).pow(loan.termInMonths());</code></td></tr>
+            <tr class="add"><td class="ln"></td><td class="ln">17</td><td class="dl"><span class="sign">+</span><code class="language-java">        BigDecimal payment = loan.principal().multiply(rate).multiply(growth)</code></td></tr>
+            <tr class="add"><td class="ln"></td><td class="ln">18</td><td class="dl"><span class="sign">+</span><code class="language-java">                .divide(growth.subtract(BigDecimal.ONE), SCALE, HALF_UP);</code></td></tr>
+            <tr><td class="ln">18</td><td class="ln">19</td><td class="dl"><span class="sign"> </span><code class="language-java"></code></td></tr>
+            <tr><td class="ln">19</td><td class="ln">20</td><td class="dl"><span class="sign"> </span><code class="language-java">        BigDecimal balance = loan.principal();</code></td></tr>
+            <tr><td class="ln">20</td><td class="ln">21</td><td class="dl"><span class="sign"> </span><code class="language-java">        for (int month = 1; month &lt;= loan.termInMonths(); month++) {</code></td></tr>
+            <tr><td class="ln">21</td><td class="ln">22</td><td class="dl"><span class="sign"> </span><code class="language-java">            BigDecimal interest = balance.multiply(rate).setScale(SCALE, HALF_UP);</code></td></tr>
+            <tr class="del"><td class="ln">22</td><td class="ln"></td><td class="dl"><span class="sign">-</span><code class="language-java">            BigDecimal payment = perMonth.add(interest);</code></td></tr>
+            <tr class="del"><td class="ln">23</td><td class="ln"></td><td class="dl"><span class="sign">-</span><code class="language-java">            balance = balance.subtract(perMonth);</code></td></tr>
+            <tr class="add"><td class="ln"></td><td class="ln">23</td><td class="dl"><span class="sign">+</span><code class="language-java">            BigDecimal principal = payment.subtract(interest);</code></td></tr>
+            <tr class="add"><td class="ln"></td><td class="ln">24</td><td class="dl"><span class="sign">+</span><code class="language-java">            balance = balance.subtract(principal);</code></td></tr>
+            <tr><td class="ln">24</td><td class="ln">25</td><td class="dl"><span class="sign"> </span><code class="language-java">            installments.add(new Installment(</code></td></tr>
+            <tr class="del"><td class="ln">25</td><td class="ln"></td><td class="dl"><span class="sign">-</span><code class="language-java">                    month, payment, interest, perMonth, balance.max(BigDecimal.ZERO)));</code></td></tr>
+            <tr class="add"><td class="ln"></td><td class="ln">26</td><td class="dl"><span class="sign">+</span><code class="language-java">                    month, payment, interest, principal, balance.max(BigDecimal.ZERO)));</code></td></tr>
+            <tr><td class="ln">26</td><td class="ln">27</td><td class="dl"><span class="sign"> </span><code class="language-java">        }</code></td></tr>
+            <tr><td class="ln">27</td><td class="ln">28</td><td class="dl"><span class="sign"> </span><code class="language-java">        return installments;</code></td></tr>
+            <tr><td class="ln">28</td><td class="ln">29</td><td class="dl"><span class="sign"> </span><code class="language-java">    }</code></td></tr>
+        </table>
+    </div>
+
+    <p class="flow-text">Eleven lines. That is worth dwelling on for a second, because the size of that diff is
+        exactly why nobody reached for branch by abstraction on the day, and it is also why the regret in the next
+        section is so awkward: there is no obvious seam in it. The change is not <i>additive</i>. It rewrites the
+        variables in place &mdash; <code>perMonth</code> becomes <code>growth</code>, and <code>payment</code> moves
+        from being computed per-month to being computed once up front. You cannot keep both behaviors by keeping both
+        halves of this diff, which is what makes the naive "just put an if around it" answer fail.</p>
+
+    <p class="flow-text">The same commit touched the test file too, and that part is not shown above &mdash; picture
+        a seven-line test method swapped out for a slightly longer nine, because the expected numbers all moved and
+        the annuity method wants an extra assertion or two to pin the payment being constant. Nothing surprising, and
+        at review time nobody would look twice at it. But it is the more consequential half of the commit for what happens next.
+        The old behavior is now absent from the test suite as well as from the codebase, which means nothing in CI is
+        watching it any more. When section 3 goes back for it, the expectations have to be recovered from history
+        alongside the implementation.</p>
+
+    <h4 id="2">2. The regret, which is not yet a decision</h4>
+
+    <div class="regret-note">
+        <p class="flow-text" style="margin: 0;">Six days before go-live, someone reads the regulation again and says
+            the annuity method may be correct in general but wrong for the fixed-term products that make up most of the
+            book, because of how early settlement is rebated. They are not certain. The person who could settle it is
+            on leave until after the release.</p>
+    </div>
+
+    <p class="flow-text">Notice the shape of this problem. It is not "the new code is broken" &mdash; if it were, you
+        would revert <span class="sha">abab33f</span> and be done in a minute. It is "the new code may be answering a
+        question we have asked wrongly, and we will not know for a fortnight." Those two look similar at 5pm on a
+        Thursday and they are not the same thing at all.</p>
+
+    <p class="flow-text">The obvious moves are all bad in the same way, which is that each of them makes the decision
+        now, on behalf of somebody who is not in the room:</p>
+
+    <ul class="collection">
+        <li class="collection-item"><b>Revert it</b> &mdash; or, as someone might have said before modern VCS
+            terminology settled, <b>unmerge it.</b> But where? Revert it on trunk and cherry-pick that revert to the
+            release branch, and the annuity work disappears from the continuing line of development too. Revert it
+            only on the release branch, and the team has created a difference that somebody must remember and
+            reconcile later. Either way, if the original rationale was right after all, the next move is a
+            revert-of-the-revert under more pressure.</li>
+        <li class="collection-item"><b>Ship it and watch.</b> Also cheap today. If it is wrong, you have mis-stated the
+            interest split on live loan accounts, and the fix is not a deploy, it is a remediation letter.</li>
+        <li class="collection-item"><b>Hold the release.</b> The rest of the drop &mdash; everything else the team
+            finished this quarter &mdash; now waits on one unavailable reviewer's opinion about one formula.</li>
+        <li class="collection-item"><b>Branch it off and decide later.</b> The classic. Cut another branch with the old
+            formula restored, keep it alive until the answer arrives, then merge whichever one wins. But this commit
+            sits in the middle of other work, and the amortization code will not necessarily stand still while the
+            answer is pending. Every intervening rounding fix or fee-handling change then has to be understood and
+            applied across two divergent lines.</li>
+    </ul>
+
+    <p class="flow-text">What the team actually wants is to <i>not decide yet</i>, and to make not-deciding cost
+        almost nothing. That is what the abstraction buys. Every other page on this site introduces the abstraction to
+        make a long change survivable while it is in progress. Here the change is already finished, and the abstraction
+        is introduced to make a finished change <b>reversible in production without a code change</b>.</p>
+
+    <h4 id="3">3. Resurrect the old algorithm as a peer, not as a revert</h4>
+
+    <p class="flow-text">The next commit does not undo <span class="sha">abab33f</span>. It goes to the commit's
+        parent, lifts the old formula back out of history, and gives both formulas a name and a shared shape. The
+        wording in the commit message is deliberate &mdash; <i>resurrect</i>, not <i>revert</i> &mdash; because the
+        old code is coming back as a living peer of the new one, both compiled, both tested, both shippable.</p>
+
+    <div class="commit fix">
+        <div><span class="sha">7c41e0d</span> &nbsp; <span class="subject">Resurrect straight-line amortization behind an abstraction, toggled at boot</span></div>
+        <div class="meta">Merged on trunk, then cherry-picked to the already-cut release branch. No behavior change by default.</div>
+    </div>
+
+    <p class="flow-text">First, the seam. It is the smallest interface that both implementations can honestly
+        satisfy, which in this case is the method that already existed:</p>
+
+    <pre class="language-java"><code>package com.mycompany.lending;
+
+import java.util.List;
+
+public interface AmortizationSchedule {
+
+    List&lt;Installment&gt; scheduleFor(Loan loan);
+}
+</code></pre>
+
+    <p class="flow-text">Then the old algorithm, recovered from <span class="sha">abab33f^</span> &mdash; the state of
+        the file immediately before the change &mdash; and renamed. Not rewritten from memory, and not reconstructed
+        from the ticket. Taken out of git verbatim, so that it is exactly the behavior that is live in production
+        today:</p>
+
+    <pre data-line="1,9-11" class="language-java"><code>public class StraightLineAmortizationSchedule implements AmortizationSchedule {
+
+    private static final int SCALE = 2;
+    private static final RoundingMode HALF_UP = RoundingMode.HALF_UP;
+
+    @Override
+    public List&lt;Installment&gt; scheduleFor(Loan loan) {
+        List&lt;Installment&gt; installments = new ArrayList&lt;&gt;();
+        BigDecimal rate = loan.monthlyRate();
+        BigDecimal perMonth = loan.principal()
+                .divide(BigDecimal.valueOf(loan.termInMonths()), SCALE, HALF_UP);
+
+        BigDecimal balance = loan.principal();
+        for (int month = 1; month &lt;= loan.termInMonths(); month++) {
+            BigDecimal interest = balance.multiply(rate).setScale(SCALE, HALF_UP);
+            BigDecimal payment = perMonth.add(interest);
+            balance = balance.subtract(perMonth);
+            installments.add(new Installment(
+                    month, payment, interest, perMonth, balance.max(BigDecimal.ZERO)));
+        }
+        return installments;
+    }
+}
+</code></pre>
+
+    <p class="flow-text">And the new algorithm, which is the body of <span class="sha">abab33f</span> moved across
+        unchanged. This is a rename and an <code>implements</code> clause, nothing more. If the diff for this file
+        shows anything else, the commit is doing too much:</p>
+
+    <pre data-line="1,5" class="language-java"><code>public class AnnuityAmortizationSchedule implements AmortizationSchedule {
+
+    private static final int SCALE = 2;
+
+    @Override
+    public List&lt;Installment&gt; scheduleFor(Loan loan) {
+        // ... body moved verbatim from abab33f, not retyped ...
+    }
+}
+</code></pre>
+
+    <h4 id="4">4. One toggle, read once at boot</h4>
+
+    <p class="flow-text">The choice is made in exactly one place. Not at each call site, not per request, and not
+        inside either implementation &mdash; neither algorithm knows the other exists, and neither has an
+        <code>if</code> in it:</p>
+
+    <pre data-line="9-12" class="language-java"><code>public class ReleaseToggles {
+
+    private final boolean annuityAmortization;
+
+    public ReleaseToggles(Config config) {
+        this.annuityAmortization = config.getBoolean("toggles.annuityAmortization");
+    }
+
+    public AmortizationSchedule amortizationSchedule() {
+        return annuityAmortization
+                ? new AnnuityAmortizationSchedule()
+                : new StraightLineAmortizationSchedule();
+    }
+}
+</code></pre>
+
+    <p class="flow-text">Wired in at composition time, so that everything downstream keeps holding an
+        <code>AmortizationSchedule</code> and stays entirely unaware that there is a question outstanding:</p>
+
+    <pre data-line="4" class="language-java"><code>public class LendingModule {
+
+    public LoanService loanService(ReleaseToggles toggles, LoanRepository repository) {
+        return new LoanService(repository, toggles.amortizationSchedule());
+    }
+}
+</code></pre>
+
+    <pre data-line="5" class="language-yaml"><code>toggles {
+  # September drop ships on the resurrected straight-line method while the
+  # annuity rationale is confirmed. Flip to true to switch; delete both this
+  # and the loser once the answer lands. See BBA-1140.
+  annuityAmortization = false
+}
+</code></pre>
+
+    <div class="aside-note">
+        <p class="flow-text" style="margin: 0;">That default is the whole point of the exercise. When the final build
+            is made, the release will contain the behavior that is already live, which is the conservative choice, and
+            it will contain it having been
+            <i>chosen</i> rather than having been reverted to. The annuity code will still be in the final binary; it
+            is still compiling, still under test, and one config line away. Nobody has to decide yet, and the release
+            does not have to wait.</p>
+    </div>
+
+    <p class="flow-text">QA may enjoy this arrangement more than the developer does. During release testing they can
+        exercise both choices, and at the last minute they can select the old, existing behavior in release config
+        without asking a developer to change code or prepare another build. That is the kind of control that prevents
+        uncertainty late in release week from turning into another eighteen-hour day.</p>
+
+    <p class="flow-text">For the developer, branch by abstraction can feel like an irritating amount of extra typing
+        after the real work was supposedly finished: recover the old code, name two implementations, extract an
+        interface, wire a toggle and restore tests. The optionality can feel alien too, because it asks them to preserve
+        the possibility that their completed change &mdash; reviewed, merged and believed correct &mdash; may not be
+        the behavior the business finally chooses. That discomfort is real. It is also the small, visible cost being
+        exchanged for QA not having to improvise a code change during the release.</p>
+
+    <details class="aside-note">
+        <summary class="flow-text"><b>By the way: boot-time toggles versus hot switches</b></summary>
+
+    <p class="flow-text">"One config line away" is doing some quiet work in that sentence, though, because it does not
+        say <i>how far away</i>. Toggles come in more than one flavour, and the choice between them is a separate
+        decision from the one this page has been making:</p>
+
+    <ul class="collection">
+        <li class="collection-item"><b>Boot-time toggles</b> are read once as the process starts, which is what the
+            <code>ReleaseToggles</code> constructor above does. Changing your mind means editing config and restarting
+            the stack &mdash; a deploy, or at least a rolling bounce. In exchange, the value cannot change underneath
+            a request, every instance in the fleet is unambiguously on one side or the other, and a stack trace from
+            production tells you which implementation ran.</li>
+        <li class="collection-item"><b>Hot switches</b> are read at the point of use, so ops or an admin can flip
+            them in the running stack &mdash; an admin screen, a feature-flag service, a watched config key &mdash;
+            with no restart and no deploy. The switch takes effect in seconds, and it can be flipped back just as
+            fast at three in the morning by somebody who was not involved in writing either implementation.</li>
+    </ul>
+
+    <p class="flow-text">For the seam itself, the difference is small: the abstraction does not care who is asking or
+        how often. It is the composition that moves. A boot-time toggle can hand the chosen implementation to
+        <code>LoanService</code> once at startup, as above. A hot switch cannot, because the answer has to be allowed
+        to change after startup &mdash; so the toggle is consulted per call instead, and the thing injected downstream
+        becomes the chooser rather than the choice:</p>
+
+    <pre data-line="11-12" class="language-java"><code>public class SwitchableAmortizationSchedule implements AmortizationSchedule {
+
+    private final LiveToggles toggles;
+    private final AmortizationSchedule annuity = new AnnuityAmortizationSchedule();
+    private final AmortizationSchedule straightLine = new StraightLineAmortizationSchedule();
+
+    @Override
+    public List&lt;Installment&gt; scheduleFor(Loan loan) {
+        // Re-read per call - that is the whole difference from ReleaseToggles,
+        // whose field is final and set once in the constructor.
+        AmortizationSchedule chosen = toggles.isOn("annuityAmortization") ? annuity : straightLine;
+        return chosen.scheduleFor(loan);
+    }
+}
+</code></pre>
+
+    <p class="flow-text">Note what that class is and is not. It is still one decision in one place &mdash; it is not
+        an <code>if</code> sprinkled through the call sites, which is the thing this whole site exists to argue
+        against. Both implementations remain ignorant of each other, and it gets deleted in section 6 along with
+        everything else. What it does add is a second thing to get right: <code>LiveToggles</code> is now read on
+        every call from somewhere that another thread can change, so it has to be cheap and it has to be safe to read
+        concurrently. A boot-time <code>final</code> field is neither of those problems.</p>
+
+    <div class="aside-note">
+        <p class="flow-text" style="margin: 0;">Which one suits this story? Probably the boot-time toggle, and it is
+            worth being clear why, because the hot switch is the more impressive-sounding option. The team here is
+            waiting on a reviewer to settle a question of correctness, not watching a dashboard for a bad rollout.
+            Nobody is going to need to flip this at 3am. And an amortization schedule is not a thing you want changing
+            between two loans in the same batch: mid-flight switching means two loans processed a second apart get
+            different interest splits, and reconciling that afterwards is worse than the restart you avoided.</p>
+        <p class="flow-text" style="margin: 12px 0 0 0;">The hot switch earns its keep on the other kind of change
+            &mdash; the long migration the rest of this site describes, where you are moving live traffic onto a new
+            implementation and want to be able to back it out in seconds when the error rate climbs, without waiting
+            for a deploy. Same abstraction, same deletion at the end; only the wiring differs.</p>
+    </div>
+
+    </details>
+
+    <h4 id="5">5. Both implementations stay guarded by CI</h4>
+
+    <p class="flow-text">Two implementations means twice the tests, and this is the cost you accept in exchange for
+        the option. The test that <span class="sha">abab33f</span> rewrote gets its old expectations back &mdash;
+        again lifted from history rather than re-derived &mdash; and both are now run against their own
+        implementation, with a third test that pins the toggle itself:</p>
+
+    <pre data-line="6,14,22-25" class="language-java"><code>public class AmortizationScheduleTest {
+
+    private static final Loan LOAN = new Loan("10000.00", "0.06", 12);
+
+    @Test
+    public void straightLineSplitsPrincipalEvenly() {
+        List&lt;Installment&gt; schedule =
+                new StraightLineAmortizationSchedule().scheduleFor(LOAN);
+        assertEquals("833.33", schedule.get(0).principal().toString());
+        assertEquals("833.33", schedule.get(11).principal().toString());
+    }
+
+    @Test
+    public void annuityHoldsThePaymentConstant() {
+        List&lt;Installment&gt; schedule =
+                new AnnuityAmortizationSchedule().scheduleFor(LOAN);
+        assertEquals("860.66", schedule.get(0).payment().toString());
+        assertEquals("860.66", schedule.get(11).payment().toString());
+    }
+
+    @Test
+    public void septemberDropUsesStraightLine() {
+        ReleaseToggles toggles = togglesWith("annuityAmortization", false);
+        assertThat(toggles.amortizationSchedule(),
+                instanceOf(StraightLineAmortizationSchedule.class));
+    }
+}
+</code></pre>
+
+    <p class="flow-text">Suppose a rounding fix and a fee-handling change land on trunk while the reviewer is away.
+        Shared changes go into shared code; behavior-specific changes go into the implementation they concern. They
+        do not have to be ported between two branches whose only purpose is to preserve the two possible answers.
+        That repeated reconciliation is the cost the branch alternative was quietly promising to charge.</p>
+
+    <h4 id="6">6. Delete the loser and the abstraction with it</h4>
+
+    <p class="flow-text">The reviewer eventually comes back and settles it &mdash; whichever way. That may be weeks or
+        months after this release, and the cleanup can happen later on trunk without keeping a release branch alive or
+        reconciling two divergent versions in the meantime. The follow-up work is the same either way and it is not
+        optional: flip the toggle if the answer is annuity, let it run, then delete the losing implementation, delete
+        the toggle, delete its config entry and its test, delete the switcher class if you took the hot-switch route,
+        and collapse the interface back into the one surviving class. There is no deadline imposed by this release;
+        the modest cost of waiting is that CI must keep guarding both implementations and people must continue to
+        understand why the temporary choice exists. That deletion is the merge back. A team that leaves the abstraction standing "in case
+        we want to switch again" has not finished the job; it has swapped a temporary period of branch divergence for a
+        permanent fork in the codebase, and the next person to read it will not know which side is the real one.</p>
+
+    <div class="aside-note">
+        <p class="flow-text" style="margin: 0;">Worth being honest about what this telling is not. Branch by
+            abstraction did not save the team from a long migration here, because there was not one. It saved them from
+            having to be certain on a Thursday. The abstraction may exist for weeks or months before it is deleted,
+            and its entire value is that period of not-yet-deciding it buys at a cost of one interface, one toggle, and
+            an additional CI path for as long as both implementations remain.</p>
+    </div>
+
+    <h4 id="7">Epilogue: automate the mechanical part</h4>
+
+    <p class="flow-text">Now read back what commit <span class="sha">7c41e0d</span> actually did. Every step of it is
+        mechanical. Go to a commit's parent. Take the file as it stood. Give both versions a name. Extract the
+        interface they already share. Put the choice behind a toggle read once at startup. Restore the old
+        expectations into the test suite. Default to the incumbent. None of it required judgement about
+        <i>amortization</i> at all &mdash; the judgement was in noticing the regret, and that part is still yours.</p>
+
+    <p class="flow-text">Which raises a question this site is not too proud to ask out loud. What if the whole of
+        section 3, 4 and 5 were one prompt to a coding agent?</p>
+
+    <div class="prompt-box">
+        <span class="prompt-caret">&gt;</span> Redo commit <b>abab33f</b> as an abstraction of old and new,
+        as described in <a target="_blank" href="https://branchbyabstraction.com/last-minute-rethink.html">http://branchbyabstraction.com/last-minute-rethink.html</a>
+    </div>
+
+    <p class="flow-text">That is about as self-referential as a page about branch by abstraction can get: a document
+        whose last section asks to be pasted into a coding agent as the specification for the change the rest of the
+        document just described by hand. If it works, the initial mechanical setup for those weeks or months of
+        optionality costs about ninety seconds, and the calculation in section 2 changes for every team that ever
+        shipped something and then had second thoughts
+        about it on the Thursday.</p>
+
+    <p class="flow-text">Two caveats, because the joke should not eat the point. The first is that an agent doing this
+        well has to lift the old implementation out of git rather than reconstruct it from the ticket &mdash; a
+        plausible-looking reimplementation of the old formula is worse than useless here, because the entire reason to
+        resurrect it is that it is <i>exactly</i> what is running in production today. The second is section 6. The
+        deletion is the part that a prompt will not remind you about, and it is the part that separates branch by
+        abstraction from a codebase slowly filling up with toggles that nobody dares remove.</p>
+
+</div>
+
+<footer id="footer" class="page-footer">
+    <div class="container">
+        <p class="flow-text">I'm Paul Hammant<a target="_blank" href="https://hammant.org/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a> and I put this site together to attempt to
+            distill what branch by abstraction is.
+            I led the pioneering work on branch by abstraction at a former client (a bank's foreign exchange
+            group in Chicago in 2005 &amp; 2006) and wrote the first article on it in 2007 <a target="_blank" href="https://paulhammant.com/blog/branch_by_abstraction.html"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            based on that work.
+            The artwork and message from that article were then included in Jez Humble and Dave Farley's
+            best-selling Continuous Delivery book<a target="_blank" href="https://www.amazon.com/dp/0321601912?tag=contindelive-20"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            in 2010.</p>
+        <p class="flow-text">I'm UK&mdash;based, and have previously visited enterprises in the US to help them plan their migrations from bad
+            branching models and slower release cadences to Trunk-Based Development<a target="_blank" href="https://trunkbaseddevelopment.com/"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>
+            with feature flags/toggles <i>and of course branch by abstraction</i>.</p>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            &copy; 2018-2026, Paul Hammant. Thanks to Netlify for hosting<a href="https://www.netlify.com"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20"><path fill="none" stroke="#06D" stroke-width="2" d="m8.6,7H1v12h12V11.4M9,1v2l2,2-6,6 4,4 6-6 2,2h2V1z"/></svg></a>.
+        </div>
+    </div>
+</footer>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inview/1.0.0/jquery.inview.min.js"></script>
+<script>
+    (function ($) {
+        $(function () {
+            $('.sidenav').sidenav();
+
+            $('select')
+                .on('change', function () {
+                    location.href = this.value + ".html#choice";
+                })
+                .not('.disabled').formSelect();
+
+            $("a svg").attr("stroke", "#06D").attr("width", "0.75em").attr("height", "0.75em").removeClass("z-depth-2");
+        });
+    })(jQuery);
+</script>
+<script src="prism.js"></script>
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+    var sc_project=11608253;
+    var sc_invisible=1;
+    var sc_security="3d0246f7";
+    var scJsHost = (("https:" == document.location.protocol) ?
+        "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+        scJsHost+
+        "statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+                                      href="http://statcounter.com/" target="_blank"><img
+        class="statcounter"
+        src="//c.statcounter.com/11608253/0/3d0246f7/1/" alt="Web
+Analytics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+<script src="branch_anim.js"></script>
+</body>
+</html>
